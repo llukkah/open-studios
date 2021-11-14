@@ -18,8 +18,6 @@ Inspirit of this movement, Open Studios has gone digital !
 
 [Figma Renderings](https://www.figma.com/file/swX0nC10J7guJpvcw0Cle6/Open-Studios?node-id=0%3A1)
 [MockFlow Renderings](https://wireframepro.mockflow.com/view/MiKsijI6Xmb)
-[Drawio Renderings](diagrams.net https://app.diagrams.net/#Hllukkah%2Fopen-studios%2Flh-setup%2Ffinal-project.drawio)
-
 ## ERD Model
 
 Photo of ERD Model Here
