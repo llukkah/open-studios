@@ -22,7 +22,7 @@ Inspirit of this movement, Open Studios has gone digital !
 
 ## ERD Model
 
-Photo of ERD Model Here
+[Lucid Chart](https://lucid.app/lucidchart/4ed7d47e-ad4a-411d-b2e4-89fc68d5c535/edit?viewport_loc=304%2C109%2C1772%2C974%2C0_0&invitationId=inv_75523d29-9bf8-4ac4-b194-262426e46076)
 
 ## Post MVP
 
