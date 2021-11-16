@@ -4,7 +4,7 @@ The concept of Open Studios came from a yearly event in New York where artists o
 
 Inspirit of this movement, Open Studios has gone digital !
 
-[Llukkah](https://www.github.com/llukkah), [Lee Harvey](https://github.com/VirtDev337) and [Christopher Linton](https://github.com/Kwyjib0) is taking this opportunity to give artists found in all corners and crevices of the world a platform to have a voice and their vision a chance to be seen. This is the ideal platform for the artist that you haven't heard of... yet.
+[Llukkah](https://www.github.com/llukkah), [Lee Harvey](https://github.com/VirtDev337), [Christopher Linton](https://github.com/Kwyjib0) and [Jason Rolle](https://github.com/JasonRolle1990) is taking this opportunity to give artists found in all corners and crevices of the world a platform to have a voice and their vision a chance to be seen. This is the ideal platform for the artist that you haven't heard of... yet.
 
 ## MVP
 
