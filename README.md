@@ -17,13 +17,14 @@ Inspirit of this movement, Open Studios has gone digital !
 ## Wireframe
 
 [MockFlow Wireframe](https://wireframepro.mockflow.com/view/MiKsijI6Xmb)
+<div><img src="mockflow.png"/></div>
 
 [Drawio - User Flow](https://app.diagrams.net/#Hllukkah%2Fopen-studios%2Flh-setup%2Ffinal-project.drawio)
-
+<div><img src="Site-Flow.png"/></div>
 ## ERD Model
 
 [Lucid Chart](https://lucid.app/lucidchart/4ed7d47e-ad4a-411d-b2e4-89fc68d5c535/edit?viewport_loc=304%2C109%2C1772%2C974%2C0_0&invitationId=inv_75523d29-9bf8-4ac4-b194-262426e46076)
-
+<div><img src="ERD-Flow.png"/></div>
 ## Post MVP
 
 - Implementation of Accounts and Authentication
