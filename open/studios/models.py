@@ -10,6 +10,7 @@ class Image(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
     url = models.URLField(max_length=200)
+    # upload = models.ImageField(upload_to = "upload/", blank = True, max_length=255)
     # description = models.TextField()
 
 class Comment(models.Model):
