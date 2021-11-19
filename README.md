@@ -15,12 +15,14 @@ Inspirit of this movement, Open Studios has gone digital !
 -
 
 ## Wireframe
-[Mockflow](https://wireframepro.mockflow.com/editor.jsp?editor=off&publicid=M5fea97433a51863da541ae0647ea35801637193735783&projectid=MiKsijI6Xmb&perm=Owner#/page/D59a2638e5631cf8272eb577cc73fa780)
-<img src="mockflow.png"/>
-
 [Drawio - User Flow](https://app.diagrams.net/#Hllukkah%2Fopen-studios%2Flh-setup%2Ffinal-project.drawio)
 
 <img src="Site-Flow.png"/>
+
+[Mockflow](https://wireframepro.mockflow.com/editor.jsp?editor=off&publicid=M5fea97433a51863da541ae0647ea35801637193735783&projectid=MiKsijI6Xmb&perm=Owner#/page/D59a2638e5631cf8272eb577cc73fa780)
+
+<img src="mockflow.png"/>
+
 <h3> ERD Model </h3>
 
 [Lucid Chart](https://lucid.app/lucidchart/4ed7d47e-ad4a-411d-b2e4-89fc68d5c535/edit?viewport_loc=304%2C109%2C1772%2C974%2C0_0&invitationId=inv_75523d29-9bf8-4ac4-b194-262426e46076)
