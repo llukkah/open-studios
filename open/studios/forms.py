@@ -1,7 +1,7 @@
-from django import forms
-from .models import Tag
+from django import forms, MEDIA_URL
+from .models import *
 
-class EditorForm(forms.Form):
+class ExhibitForm(forms.Form):
     artist_name = forms.CharField(max_length=255, required=True)
     email = forms.EmailField(max_length=254)
     bio = forms.CharField(widget=forms.Textarea, required=True)
@@ -10,14 +10,19 @@ class EditorForm(forms.Form):
     description = forms.CharField(widget=forms.Textarea, required=True)
     choices = []
     for tag in Tag.objects.all():
-        choices.append((tag.tag_id, tag.name))
+        choices.append((tag.id, tag.name))
     tags = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=choices, required=True)
-    img_link = forms.URLField(required=True)
-    img_link = forms.URLField(required=True)
-    img_link = forms.URLField(required=True)
-    img_link = forms.URLField(required=True)
-    img_link = forms.URLField(required=True)
-    img_link = forms.URLField(required=True)
+    art = []
+    for image in Image.objects.all():
+        art.append((image.id, image.name, image.url))
+    images = forms.MultipleChoiceField(widget = forms.CheckboxSelectMultiple, choices = art, required=True)
+class CommentForm(forms.Form):
+    comment = forms.CharField(widget = forms.Textarea, max_length = 255)
+
+class ImageForm(forms.Form):
+    name = forms.CharField(max_length=255)
+    url = forms.URLField(label = "Image URL", max_length = 200)
+    # upload = forms.ClearableFileInput()
 
 # ***** BLOG FORM *****
 # class EditorForm(forms.Form):
