@@ -16,10 +16,6 @@ Inspirit of this movement, Open Studios has gone digital !
 
 ## Wireframe
 
-[MockFlow Wireframe](https://wireframepro.mockflow.com/view/MiKsijI6Xmb)
-
-<img src="mockflow.png"/>
-
 [Drawio - User Flow](https://app.diagrams.net/#Hllukkah%2Fopen-studios%2Flh-setup%2Ffinal-project.drawio)
 
 <img src="Site-Flow.png"/>
