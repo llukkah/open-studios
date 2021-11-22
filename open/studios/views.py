@@ -1,15 +1,16 @@
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
+from django.urls import reverse
+from .models import *
 from .forms import *
+import datetime
 
 # Create your views here.
 def home(request):
-    return render(request, 'base.html')
+    return render(request, 'home.html')
 
-def clean_n_add(request, form):
-    if form.is_valid(form):
-        pass
-
+def clean_n_add(form, eform):
+    eform.images.append(form.images)
 def create_exhibit(request):
     if request.method == 'GET':
         eform = ExhibitForm()
@@ -18,7 +19,7 @@ def create_exhibit(request):
     if request.method == 'POST':
         eform = ExhibitForm(request.POST)
         iform = ImageForm(request.POST)
-        clean_n_add(iform)
+        clean_n_add(iform, eform)
         if eform.is_valid():
             artist_name = eform.cleaned_data['artist_name']
             email = eform.cleaned_data['email']
@@ -27,8 +28,8 @@ def create_exhibit(request):
             exhibit_name = eform.cleaned_data['exhibit_name']
             description = eform.cleaned_data['description']
             tags = eform.cleaned_data['tags']
-            images = eform.cleaned_data['images']
-            timestamp = eform.cleaned_data['timestamp']
+            # images = eform.cleaned_data['images']
+            timestamp = datetime.datetime.now()
             Exhibit.objects.create(artist_name=artist_name,email=email,bio=bio, website=website, exhibit_name=exhibit_name, description=description, timestamp=timestamp)
             exhibit = Exhibit.objects.all().order_by('-id')
             exhibit[0].tags.set(tags)

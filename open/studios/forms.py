@@ -1,4 +1,4 @@
-from django import forms, MEDIA_URL
+from django import forms
 from .models import *
 
 class ExhibitForm(forms.Form):

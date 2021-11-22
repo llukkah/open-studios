@@ -1,2 +1,22 @@
 {% expands 'base.html' %}
+<style>
+    input[type='text'],
+    input[type='email'],
+    textarea {
+        display: block;
+    }
+    input[type='text'],
+    input[type='url'],
+    textarea {
+        display: block;
+    }
+</style>
 {% block content %}
+    <h1>Create Exhibit</h1>
+    <form action="{% url 'create_exhibit' %}" method="POST">
+        {% csrf_token %} {{ eform }} 
+        {% block image %}
+        {% endblock image %}
+        <input type="submit" name="create" value="Create" />
+    </form>
+{% endblock %}
