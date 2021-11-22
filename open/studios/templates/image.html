@@ -1,0 +1,12 @@
+{% expands create_exhibit %}
+<style>
+    input[type="text"]
+    input[type="url"]
+    /* input[type="file"] */
+</style>
+{% block image %}
+    <form action="{% url 'create_exhibit' %}" method="POST">
+        {% csrf_token %} {{ iform }}
+        <input type="submit" name="add" value="Add" />
+    </form>
+{% endblock image %}
