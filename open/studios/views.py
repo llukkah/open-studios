@@ -9,28 +9,35 @@ import datetime
 def home(request):
     return render(request, 'home.html')
 
-def clean_n_add(form, eform):
-    eform.images.append(form.images)
+def add_image(request):
+    if request.method == 'GET':
+        form = ImageForm()
+        return render(request, 'image.html', context = {'iform' : form})
+    if request.method == 'POST':
+        form = ImageForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            url = form.cleaned_data['url']
+            Image.objects.update_or_create(name = name,url = url)
+            return HttpResponseRedirect(reverse('add_image'))
+
 def create_exhibit(request):
     if request.method == 'GET':
-        eform = ExhibitForm()
-        iform = ImageForm()
-        return render(request, 'create_exhibit.html', context = {'eform' : eform, 'iform' : iform})
+        form = ExhibitForm()
+        return render(request, 'create_exhibit.html', context = {'eform' : form})
     if request.method == 'POST':
-        eform = ExhibitForm(request.POST)
-        iform = ImageForm(request.POST)
-        clean_n_add(iform, eform)
-        if eform.is_valid():
-            artist_name = eform.cleaned_data['artist_name']
-            email = eform.cleaned_data['email']
-            bio = eform.cleaned_data['bio']
-            website = eform.cleaned_data['website']
-            exhibit_name = eform.cleaned_data['exhibit_name']
-            description = eform.cleaned_data['description']
-            tags = eform.cleaned_data['tags']
-            # images = eform.cleaned_data['images']
+        form = ExhibitForm(request.POST)
+        if form.is_valid():
+            artist_name = form.cleaned_data['artist_name']
+            email = form.cleaned_data['email']
+            bio = form.cleaned_data['bio']
+            website = form.cleaned_data['website']
+            exhibit_name = form.cleaned_data['exhibit_name']
+            description = form.cleaned_data['description']
+            tags = form.cleaned_data['tags']
+            images = form.cleaned_data['images']
             timestamp = datetime.datetime.now()
-            Exhibit.objects.create(artist_name=artist_name,email=email,bio=bio, website=website, exhibit_name=exhibit_name, description=description, timestamp=timestamp)
+            Exhibit.objects.create(artist_name = artist_name, email = email, bio = bio, website = website, exhibit_name = exhibit_name, description = description, timestamp = timestamp)
             exhibit = Exhibit.objects.all().order_by('-id')
             exhibit[0].tags.set(tags)
             exhibit[0].images.set(images)
