@@ -8,14 +8,14 @@ class ExhibitForm(forms.Form):
     exhibit_name = forms.CharField(max_length=255, required=True)
     website = forms.URLField(max_length=200)
     description = forms.CharField(widget=forms.Textarea, required=True)
-    choices = []
-    for tag in Tag.objects.all():
-        choices.append((tag.id, tag.name))
-    tags = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=choices, required=True)
-    art = []
-    for image in Image.objects.all():
-        art.append((image.id, image.name, image.url))
-    images = forms.MultipleChoiceField(widget = forms.CheckboxSelectMultiple, choices = art, required=True)
+    # choices = []
+    # for tag in Tag.objects.all():
+    #     choices.append((tag.id, tag.name))
+    # tags = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=choices, required=True)
+    # art = []
+    # for image in Image.objects.all():
+    #     art.append((image.id, image.name, image.url))
+    # images = forms.MultipleChoiceField(widget = forms.CheckboxSelectMultiple, choices = art, required=True)
 class CommentForm(forms.Form):
     comment = forms.CharField(widget = forms.Textarea, max_length = 255)
 
