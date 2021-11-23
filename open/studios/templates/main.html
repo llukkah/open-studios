@@ -1,0 +1,10 @@
+{% extends 'header.html' %}
+{% block content %}
+<h1 style="text-align:center;">Open Studios</h1>
+<div class="gallery">
+    {% for item in exhibit.images %}
+        <button type="button" class="checkbox" name={{item.name}} id={{item.id}} src="{{item.url}}"/>
+    {% endfor %}
+</div>
+
+{% endblock %}

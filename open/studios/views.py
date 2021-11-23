@@ -6,8 +6,16 @@ from .forms import *
 import datetime
 
 # Create your views here.
-def home(request):
-    return render(request, 'home.html')
+def main(request):
+    featured = ''
+    exhibits = Exhibit.objects.all().order_by('-id')
+    for exhibit in exhibits:
+        if exhibit.is_featured():
+            featured = exhibit
+    return render(request, 'main.html', context = {'exhibit' : featured})
+
+def about(request):
+    return render(request, 'about.html')
 
 def add_image(request):
     if request.method == 'GET':
@@ -42,3 +50,15 @@ def create_exhibit(request):
             exhibit[0].tags.set(tags)
             exhibit[0].images.set(images)
         return HttpResponseRedirect(reverse('home'))
+
+def featured(request):
+    pass
+
+def upcoming(request):
+    pass
+
+def register(request):
+    pass
+
+def login(request):
+    pass
