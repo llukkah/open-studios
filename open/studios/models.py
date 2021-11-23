@@ -39,9 +39,13 @@ class Exhibit(models.Model):
     email = models.EmailField(max_length = 254)
     website = models.URLField(max_length = 200)
     bio = models.CharField(max_length = 255)
+    featured = models.BooleanField(default = False)
     
     def __str__(self):
         return self.exhibit_name
+    
+    def is_featured(self):
+        return self.featured
 
 class Rotation(models.Model):
     id = models.AutoField(primary_key = True)

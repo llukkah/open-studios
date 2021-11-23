@@ -1,0 +1,47 @@
+.nav{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    overflow: hidden;
+    background-color: #333;
+}
+.nav a{
+    float: left;
+    display: block;
+    text-align: center;
+    font-size: 16px;
+    padding: 14px 16px;
+    text-decoration: none;
+    color: cyan;
+}
+.subnav{
+    position: relative;
+    float: left;
+    overflow: hidden;
+}
+.subnav .subnavbtn{
+    font-size: 16px;
+    border: none;
+    outline: none;
+    color: cyan;
+    padding: 14px 16px;
+    background-color: inherit;
+    margin: 0;
+}
+.nav a:hover, .subnav:hover .subnavbtn {
+    background-color: #111;
+}
+.subnav-content a{
+    float: left;
+    color: cyan;
+    text-decoration: none;
+    position: absolute;
+    bottom: 50px;
+}
+.subnav-content a:hover{
+    background-color: #444;
+    color: cyan;
+}
+.subnav:hover .subnav-content{
+    display: block;
+}

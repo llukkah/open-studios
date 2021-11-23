@@ -5,10 +5,22 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="css/w3.css">
+    <title>Studios</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
     {% block extrastyle %}
     {% endblock extrastyle %}
+    <div class="nav">
+        <a href="#studios">Home</a>
+        <a href="#about">About</a>
+        <div class="subnav">
+            <button class="subnavbtn">Exhibit</button>
+            <div class="subnav-content">
+                <a href="#create_exhibit">Create</a>
+                <a href="#featured">Featured</a>
+                <a href="#upcoming">Upcoming</a>
+            </div>
+        </div>
+    </div> 
 </head>
 <body>
     {% block content %}
