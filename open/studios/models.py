@@ -30,9 +30,9 @@ class Exhibit(models.Model):
     id = models.AutoField(primary_key = True)
     exhibit_name = models.CharField(max_length = 255)
     description = models.CharField(max_length = 255)
-    timestamp = models.DateField(auto_now = False, auto_now_add = False)
+    timestamp = models.DateField(auto_now = True, auto_now_add = False)
     tags = models.ManyToManyField(Tag)
-    # images = models.ManyToOneRel(Image,to = models.URLField, field_name = 'url' )
+    images = models.ManyToOneRel(Image,to = models.URLField, field_name = 'url' )
     comment = models.ManyToOneRel(Comment, to = models.CharField, field_name = 'comment')
     # potentially will be moved to User model
     artist_name = models.CharField(max_length = 255)
@@ -45,7 +45,7 @@ class Exhibit(models.Model):
 
 class Rotation(models.Model):
     id = models.AutoField(primary_key = True)
-    # current = models.ForeignKey(Exhibit, on_delete = models.CASCADE)
+    # current = models.ForeignKey(Exhibit, on_delete = models.CASCADE, )
     # upcoming = models.ForeignKey(Exhibit, on_delete = models.CASCADE)
     delay = models.TimeField(auto_now = False, auto_now_add = False)
     
