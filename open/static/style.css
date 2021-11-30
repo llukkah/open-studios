@@ -7,7 +7,6 @@
 }
 .nav a{
     float: left;
-    display: block;
     text-align: center;
     font-size: 16px;
     padding: 14px 16px;
@@ -34,9 +33,10 @@
 .subnav-content{
     display: none;
     position: absolute;
-    left: 0;
+    left: 30px;
     bottom: 50px;
-    width: 100%;
+    padding: 30px;
+    width: auto;
     z-index: 1;
 }
 .subnav-content a{
@@ -46,8 +46,8 @@
 }
 .subnav-content a:hover{
     background-color: #444;
-    color: cyan;
+    color: inherit;
 }
-.subnav:hover .subnav-content{
+.nav:hover, .subnav:hover .subnav-content{
     display: block;
 }
