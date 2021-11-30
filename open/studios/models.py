@@ -40,12 +40,20 @@ class Exhibit(models.Model):
     website = models.URLField(max_length = 200)
     bio = models.CharField(max_length = 255)
     featured = models.BooleanField(default = False)
+    revealed = models.BooleanField(default = False)
     
     def __str__(self):
         return self.exhibit_name
     
     def is_featured(self):
         return self.featured
+    
+    def add_featured(self):
+        self.featured = True
+    
+    def remove_featured(self):
+        self.featured = False
+        self.revealed = True
 
 
 class Rotation(models.Model):
@@ -57,8 +65,12 @@ class Rotation(models.Model):
     def __str__(self):
         return self.current.name
     
-    # def upcoming(self):
-    #     exhibits = [ e.]
+    def upcoming(self):
+        exhibits = []
+        for e in Exhibit.objects.all().order_by('timestamp'):
+            if not e.revealed and not e.is_featured():
+                exhibits.append({'name' : e.exhibit_name, 'created' : e.timestamp, 'id' : e.id})
+        return exhibits[0]
 
 
 #*****Potential Post MVP*****
