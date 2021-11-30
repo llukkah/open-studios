@@ -2,12 +2,12 @@ from django import forms
 from .models import *
 
 class ExhibitForm(forms.Form):
-    artist_name = forms.CharField(max_length=255, required=True)
+    artist_name = forms.CharField(max_length=255, required = True)
     email = forms.EmailField(max_length=254)
-    website = forms.URLField(max_length=200)
-    bio = forms.CharField(widget=forms.Textarea, required=True)
+    website = forms.URLField(max_length=200, required = False)
+    bio = forms.CharField(widget=forms.Textarea, required = True)
     
-    exhibit_name = forms.CharField(max_length=255, required=True)
+    exhibit_name = forms.CharField(max_length=255, required = True)
     choices = []
     for tag in Tag.objects.all():
         choices.append((tag.id, tag.name))
@@ -19,7 +19,7 @@ class ExhibitForm(forms.Form):
         art.append((image.id, image.name, image.url))
     images = forms.MultipleChoiceField(widget = forms.CheckboxSelectMultiple, choices = art, required=True)
 class CommentForm(forms.Form):
-    comment = forms.CharField(widget = forms.Textarea, max_length = 255)
+    comment = forms.CharField(widget = forms.Textarea, max_length = 255, required = False)
 
 class ImageForm(forms.Form):
     name = forms.CharField(max_length=255)
