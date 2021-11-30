@@ -1,4 +1,6 @@
 from django.db import models
+import datetime
+
 
 # Create your models here.
 
@@ -31,16 +33,20 @@ class Exhibit(models.Model):
     exhibit_name = models.CharField(max_length = 255)
     description = models.CharField(max_length = 255)
     timestamp = models.DateField(auto_now = True, auto_now_add = False)
+    featured_date = models.DateField(auto_now = False, null = True)
+    featured = models.BooleanField(default = False)
+    revealed = models.BooleanField(default = False)
+    
+    # Linked classes
     tags = models.ManyToManyField(Tag)
     images = models.ForeignKey(Image, default = 1, on_delete = models.CASCADE)
     comment = models.ForeignKey(Comment, default = 1, on_delete = models.DO_NOTHING)
+    
     # potentially will be moved to User model
     artist_name = models.CharField(max_length = 255)
     email = models.EmailField(max_length = 254)
     website = models.URLField(max_length = 200)
     bio = models.CharField(max_length = 255)
-    featured = models.BooleanField(default = False)
-    revealed = models.BooleanField(default = False)
     
     def __str__(self):
         return self.exhibit_name
@@ -50,6 +56,7 @@ class Exhibit(models.Model):
     
     def add_featured(self):
         self.featured = True
+        self.featured_date = datetime.datetime.now()
     
     def remove_featured(self):
         self.featured = False
@@ -63,9 +70,9 @@ class Rotation(models.Model):
     delay = models.TimeField(auto_now = False, auto_now_add = False)
     
     def __str__(self):
-        return self.current.name
+        return self.current.exhibit_name
     
-    def upcoming(self):
+    def upcoming():
         exhibits = []
         for e in Exhibit.objects.all().order_by('timestamp'):
             if not e.revealed and not e.is_featured():

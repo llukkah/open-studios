@@ -12,7 +12,10 @@ def main(request):
     for exhibit in exhibits:
         if exhibit.is_featured():
             featured = exhibit
-    return render(request, 'main.html', context = {'exhibit' : featured})
+    upcoming = Rotation.upcoming()
+    images = Image.objects.all().order_by('-id')
+    comments = Comment.objects.all().order_by('-id')
+    return render(request, 'main.html', context = {'exhibit' : featured, 'upcoming' : upcoming, 'images' : images, 'comments' : comments})
 
 def about(request):
     return render(request, 'about.html')
