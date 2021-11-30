@@ -21,10 +21,10 @@ class Image(models.Model):
 
 class Comment(models.Model):
     id = models.AutoField(primary_key = True)
-    comment = models.CharField(max_length = 255)
+    comment = models.TextField()
     
     def __str__(self):
-        return self.name
+        return self.comment
 
 class Exhibit(models.Model):
     id = models.AutoField(primary_key = True)
@@ -32,8 +32,8 @@ class Exhibit(models.Model):
     description = models.CharField(max_length = 255)
     timestamp = models.DateField(auto_now = True, auto_now_add = False)
     tags = models.ManyToManyField(Tag)
-    images = models.ManyToOneRel(Image,to = models.URLField, field_name = 'url' )
-    comment = models.ManyToOneRel(Comment, to = models.CharField, field_name = 'comment')
+    images = models.ForeignKey(Image, default = 1, on_delete = models.CASCADE)
+    comment = models.ForeignKey(Comment, default = 1, on_delete = models.DO_NOTHING)
     # potentially will be moved to User model
     artist_name = models.CharField(max_length = 255)
     email = models.EmailField(max_length = 254)
@@ -47,14 +47,18 @@ class Exhibit(models.Model):
     def is_featured(self):
         return self.featured
 
+
 class Rotation(models.Model):
     id = models.AutoField(primary_key = True)
-    # current = models.ForeignKey(Exhibit, on_delete = models.CASCADE, )
-    # upcoming = models.ForeignKey(Exhibit, on_delete = models.CASCADE)
+    current = models.ForeignKey(Exhibit, related_name='exhibit', default = 1, on_delete = models.CASCADE)
+    # upcoming = models.OneToOneField(Exhibit, on_delete = models.CASCADE, related_name = 'timestamp',)
     delay = models.TimeField(auto_now = False, auto_now_add = False)
     
     def __str__(self):
         return self.current.name
+    
+    # def upcoming(self):
+    #     exhibits = [ e.]
 
 
 #*****Potential Post MVP*****
