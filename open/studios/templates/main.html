@@ -1,27 +1,7 @@
 {% extends 'header.html' %}
-{% block extrastyle %}
-<style>
-    body{
-        background-image: url("https://www.nam.ac.uk/sites/default/files/2018-06/temp-exhibition-space_slice.jpg");
-        min-height: 100%;
-        min-width: 100%;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        background-position: center;
-        background-size: cover;
-    }
-    h1{
-        color: blue;
-    }
-    p{
-        color: black;
-        font-size: 22px;
-        font-weight: bold;
-        font-family:Arial, Helvetica, sans-serif;
-    }
-</style>
-{% endblock %}
+
 {% block content %}
+<body class="main">
 <section class="carousel" aria-label="Gallery">
     <div class="wrapper">
         <div class="sliding-background">
@@ -41,5 +21,5 @@
         <p>{{ featured.description }}</p>
     </div>
 </section>
-
+</body>
 {% endblock %}
