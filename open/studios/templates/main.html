@@ -1,40 +1,45 @@
 {% extends 'header.html' %}
+{% block extrastyle %}
+<style>
+    body{
+        background-image: url("https://www.nam.ac.uk/sites/default/files/2018-06/temp-exhibition-space_slice.jpg");
+        min-height: 100%;
+        min-width: 100%;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position: center;
+        background-size: cover;
+    }
+    h1{
+        color: blue;
+    }
+    p{
+        color: black;
+        font-size: 22px;
+        font-weight: bold;
+        font-family:Arial, Helvetica, sans-serif;
+    }
+</style>
+{% endblock %}
 {% block content %}
-<div class="bg">
-    <section class="carousel" aria-label="Gallery">
-        <div class="wrapper">
-            <div class="sliding-background">
-                <ol class="carousel_viewport">
-                    {% for image in carousel %}
-                    <li id="carousel_slide1" tabindex="0" class="carousel_slide">
-                        <div class="carousel_snapper">
-                            <a href="{{ image.url }}" class="carousel_prev">Go to last slide</a>
-                            <label>{{ image.name }}</label>
-                            <img src="{{ image.url }}"/>
-                            <a href="{{ image.url }}" class="carousel_next">Go to next slide</a>
-                        </div>
-                    </li>
-                    {% endfor %}
-                </ol>
-            </div>
-        </div>
-        <!-- <aside class="carousel_navigation">
-            <ol class="carousel_navigation-list">
-                <li class="carousel_navigation-item">
-                    <a href="#carousel_slide1" class="carousel_navigation-button">Go to slide 1</a>
+<section class="carousel" aria-label="Gallery">
+    <div class="wrapper">
+        <div class="sliding-background">
+            <ol class="carousel_viewport">
+                {% for image in carousel %}
+                <li id="carousel_slide1" tabindex="0" class="carousel_slide">
+                    <div class="carousel_snapper">
+                        <a href="{{ image.url }}" class="carousel_prev">Go to last slide</a>
+                        <label>{{ image.name }}</label>
+                        <img src="url({{ image.url }});"/>
+                        <a href="{{ image.url }}" class="carousel_next">Go to next slide</a>
+                    </div>
                 </li>
-                <li class="carousel_navigation-item">
-                    <a href="#carousel_slide2" class="carousel_navigation-button">Go to slide 2</a>
-                </li>
-                <li class="carousel_navigation-item">
-                    <a href="#carousel_slide3" class="carousel_navigation-button">Go to slide 3</a>
-                </li>
-                <li class="carousel_navigation-item">
-                    <a href="#carousel_slide4" class="carousel_navigation-button">Go to slide 4</a>
-                </li>
+                {% endfor %}
             </ol>
-        </aside> -->
-    </section>
-    <p>featured.description</p>
-</div>
+        </div>
+        <p>{{ featured.description }}</p>
+    </div>
+</section>
+
 {% endblock %}

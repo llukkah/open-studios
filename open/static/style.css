@@ -57,9 +57,7 @@
 }
 
 /* Sliding carousel for main.html */
-.bg{
-    background-image: "https://www.nam.ac.uk/sites/default/files/2018-06/temp-exhibition-space_slice.jpg";
-}
+
 .wrapper{
     overflow: hidden;
 }
@@ -141,7 +139,7 @@ ol, li{
 .carousel{
     position: relative;
     padding-top: 75%;
-    filter: drop-shadow(0 0 10px #0003);
+    filter: drop-shadow(0 0 20px rgba(57, 58, 58, 0.7));
     perspective: 100px;
 }
 .carousel_viewport{
