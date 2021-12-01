@@ -5,17 +5,27 @@ from .models import *
 from .forms import *
 import datetime
 
+
 # Create your views here.
 def main(request):
     featured = ''
+    exhibits = images = carousel = []
     exhibits = Exhibit.objects.all().order_by('-id')
     for exhibit in exhibits:
         if exhibit.is_featured():
             featured = exhibit
-    upcoming = Rotation.upcoming()
-    images = Image.objects.all().order_by('-id')
+    
+    if len(exhibits) > 1:
+        exhibits['upcoming'] = Rotation.upcoming()
+    
+    images = Image.objects.all().order_by('-exhibit')
+    for image in images:
+        if image.exhibit == featured.exhibit_name:
+            carousel.append(image)
+    
     comments = Comment.objects.all().order_by('-id')
-    return render(request, 'main.html', context = {'exhibit' : featured, 'upcoming' : upcoming, 'images' : images, 'comments' : comments})
+    return render(request, 'main.html', context = {'featured' : featured, 'images' : images, 'comments' : comments, 'exhibits' : exhibits})
+
 
 def about(request):
     return render(request, 'about.html')
@@ -32,10 +42,12 @@ def add_image(request):
             Image.objects.update_or_create(name = name,url = url)
             return HttpResponseRedirect(reverse('add_image'))
 
+
 def create_exhibit(request):
     if request.method == 'GET':
         form = ExhibitForm()
         return render(request, 'create_exhibit.html', context = {'eform' : form})
+    
     if request.method == 'POST':
         form = ExhibitForm(request.POST)
         if form.is_valid():
@@ -48,20 +60,34 @@ def create_exhibit(request):
             tags = form.cleaned_data['tags']
             images = form.cleaned_data['images']
             timestamp = datetime.datetime.now()
-            Exhibit.objects.create(artist_name = artist_name, email = email, bio = bio, website = website, exhibit_name = exhibit_name, description = description, timestamp = timestamp)
+            
+            Exhibit.objects.create(
+                artist_name = artist_name,
+                email = email, bio = bio,
+                website = website,
+                exhibit_name = exhibit_name,
+                description = description,
+                timestamp = timestamp)
+            
             exhibit = Exhibit.objects.all().order_by('-id')
+            
             exhibit[0].tags.set(tags)
             exhibit[0].images.set(images)
+        
         return HttpResponseRedirect(reverse('home'))
+
 
 def featured(request):
     pass
 
+
 def upcoming(request):
     pass
 
+
 def register(request):
     pass
+
 
 def login(request):
     pass

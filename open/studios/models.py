@@ -31,7 +31,7 @@ class Comment(models.Model):
 class Exhibit(models.Model):
     id = models.AutoField(primary_key = True)
     exhibit_name = models.CharField(max_length = 255)
-    description = models.CharField(max_length = 255)
+    description = models.TextField()
     timestamp = models.DateField(auto_now = True, auto_now_add = False)
     featured_date = models.DateField(auto_now = False, null = True)
     featured = models.BooleanField(default = False)
@@ -39,14 +39,14 @@ class Exhibit(models.Model):
     
     # Linked classes
     tags = models.ManyToManyField(Tag)
-    images = models.ForeignKey(Image, default = 1, on_delete = models.CASCADE)
+    images = models.ForeignKey(Image, default = 1, related_name = "exhibit",  on_delete = models.CASCADE)
     comment = models.ForeignKey(Comment, default = 1, on_delete = models.DO_NOTHING)
     
     # potentially will be moved to User model
     artist_name = models.CharField(max_length = 255)
     email = models.EmailField(max_length = 254)
     website = models.URLField(max_length = 200)
-    bio = models.CharField(max_length = 255)
+    bio = models.TextField()
     
     def __str__(self):
         return self.exhibit_name
