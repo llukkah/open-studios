@@ -12,12 +12,12 @@
 
 ---
 
-<div align="center">
+
   [Llukkah](https://www.github.com/llukkah)
   [Lee Harvey](https://github.com/VirtDev337)
   [Christopher Linton](https://github.com/Kwyjib0)
   [Jason Rolle](https://github.com/JasonRolle1990)
-</div>
+
   
  ---
   
