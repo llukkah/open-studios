@@ -11,17 +11,9 @@
 >*Inspirit* of this **movement**.
 
 ---
+## <div align="center">Our Development Team</div>
+### <div align="center"> [Llukkah](https://www.github.com/llukkah)  *  [Lee Harvey](https://github.com/VirtDev337)  *  [Christopher Linton](https://github.com/Kwyjib0)  *  [Jason Rolle](https://github.com/JasonRolle1990) </div>
 
-
-<div align="center><a href="https://www.github.com/llukkah">Llukkah</a></div>
-  
-  [Lee Harvey](https://github.com/VirtDev337)
-  
-  [Christopher Linton](https://github.com/Kwyjib0)
-  
-  [Jason Rolle](https://github.com/JasonRolle1990)
-
-  
  ---
   
 > #### Open Studios!
@@ -43,17 +35,13 @@
 
 <div align="center">WireFrames</div>
 
-<div align="center">[Drawio - User Flow]</div>
-  
-<div align="center">(https://app.diagrams.net/#Hllukkah%2Fopen-studios%2Flh-setup%2Ffinal-project.drawio)</div>
+#### <div align="center"> [Drawio - User Flow](https://app.diagrams.net/#Hllukkah%2Fopen-studios%2Flh-setup%2Ffinal-project.drawio) </div>
 
 <div align="center"><img src="Site-Flow.png"/></div>
 
 ---
 
-<div align="center">[Mockflow]</div>
-  
-<div align="center">(https://wireframepro.mockflow.com/editor.jsp?editor=off&publicid=M5fea97433a51863da541ae0647ea35801637193735783&projectid=MiKsijI6Xmb&perm=Owner#/page/D59a2638e5631cf8272eb577cc73fa780)</div>
+#### <div align="center"> [Mockflow](https://wireframepro.mockflow.com/editor.jsp?editor=off&publicid=M5fea97433a51863da541ae0647ea35801637193735783&projectid=MiKsijI6Xmb&perm=Owner#/page/D59a2638e5631cf8272eb577cc73fa780) </div>
 
 <div align="center"><img src="mockflow.png"/></div>
 
@@ -61,7 +49,7 @@
 
 <div align="center"><h3> ERD Model </h3></div>
 
-<div align="center">[Lucid Chart](https://lucid.app/lucidchart/4ed7d47e-ad4a-411d-b2e4-89fc68d5c535/edit?viewport_loc=304%2C109%2C1772%2C974%2C0_0&invitationId=inv_75523d29-9bf8-4ac4-b194-262426e46076)</div>
+#### <div align="center"> [Lucid Chart](https://lucid.app/lucidchart/4ed7d47e-ad4a-411d-b2e4-89fc68d5c535/edit?viewport_loc=304%2C109%2C1772%2C974%2C0_0&invitationId=inv_75523d29-9bf8-4ac4-b194-262426e46076) </div>
 
 <div align="center"><img src="ERD-Flow.png"/></div>
   
