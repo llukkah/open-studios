@@ -32,7 +32,7 @@
 >
 ---
   
- <div align="center">MVP</div>
+ ## <div align="center">MVP</div>
 
 - Full CRUD Capability to add your own exhibit.
 - 
