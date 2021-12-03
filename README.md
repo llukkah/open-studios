@@ -12,14 +12,14 @@
 
 ---
 
-<div align="center">[Llukkah]</div>
-<div align="center">(https://www.github.com/llukkah)</div>
- <div align="center">[Lee Harvey]</div>
-  <div align="center">(https://github.com/VirtDev337)</div> 
-    <div align="center">[Christopher Linton]</div>
-      <div align="center">(https://github.com/Kwyjib0)</div> 
-        <div align="center">[Jason Rolle]</div>
-          <div align="center">(https://github.com/JasonRolle1990)</div>           
+<div align="center">[Llukkah](https://www.github.com/llukkah)</div>
+<div align="center"></div>
+ <div align="center">[Lee Harvey](https://github.com/VirtDev337)</div>
+  <div align="center"></div> 
+    <div align="center">[Christopher Linton](https://github.com/Kwyjib0)</div>
+      <div align="center"></div> 
+        <div align="center">[Jason Rolle](https://github.com/JasonRolle1990)</div>
+          <div align="center"></div>           
              <div align="center"> 
   
  ---
