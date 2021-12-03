@@ -33,7 +33,7 @@
 
 ---
 
-<div align="center">WireFrames</div>
+## <div align="center"> WireFrames </div>
 
 #### <div align="center"> [Drawio - User Flow](https://app.diagrams.net/#Hllukkah%2Fopen-studios%2Flh-setup%2Ffinal-project.drawio) </div>
 
