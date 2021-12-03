@@ -69,7 +69,6 @@
   
 <div align="center"><h3> Post MVP </h3></div>
   
->mplementation of Accounts and Authentication
->>nual Computer upload of images instead of using URLs.
-
--
+>Implementation of Accounts and Authentication
+>
+>>Annual Computer upload of images instead of using URLs.
