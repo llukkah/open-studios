@@ -82,7 +82,8 @@ def featured(request):
 
 
 def upcoming(request):
-    pass
+    exhibits = Exhibit.objects.exclude(revealed=False)
+    return render(request=request, template_name='upcoming.html', context = {'exhibits':exhibits })
 
 
 def register(request):
