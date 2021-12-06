@@ -82,7 +82,7 @@ def featured(request):
 
 
 def upcoming(request):
-    exhibits = Exhibit.objects.exclude(revealed=False)
+    exhibits = Exhibit.objects.exclude(featured=True, revealed=True)
     return render(request=request, template_name='upcoming.html', context = {'exhibits':exhibits })
 
 
