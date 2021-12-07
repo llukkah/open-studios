@@ -1,3 +1,37 @@
 {% extends 'header.html' %}
+
 {% block content %}
+<style>
+    #border {
+      border-radius: 25px;
+      border: 3px solid black;
+      padding: 10px;
+      box-shadow: 3px 3px 20px 3px #888888;
+    }
+</style>
+<h2><u>{{ exhibit.exhibit_name }}</u></h2>
+
+    <p>{{ exhibit.description }}</p>
+    <br>
+    {% for image in exhibit.images.all %}
+        <img src="{{ image.url }}" height="200" />    
+        <br>
+        <h6>image.name</h6>
+    {% endfor %}
+    <br>
+
+<h2>Artist Name</h2>
+    <p>{{ exhibit.bio }}</p>
+    <h4>Share your comments</h4>
+    <form action="{% url 'featured' %}" method="POST">
+        {% csrf_token %} {{ form }}
+        <input type="submit" value="Submit" />
+    </form>
+
+<h3><u>Comments:</u></h3>
+    {% for comment in exhibit.comment.all %}
+        <ol>
+            <li>comment</li>
+        </ol>
+    {% endfor %}
 {% endblock %}
