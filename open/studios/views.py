@@ -78,7 +78,15 @@ def create_exhibit(request):
 
 
 def featured(request):
-    pass
+    if request.method == 'GET':
+        form = CommentForm()
+        exhibit = Exhibit.objects.filter(featured=True)
+        return render(request=request, template_name='featured.html', context={ 'exhibit': exhibit, 'form':form })
+    if request.method == 'POST':    
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.cleaned_data['comment']        
+        return render(request=request, template_name='featured.html')
 
 
 def upcoming(request):
