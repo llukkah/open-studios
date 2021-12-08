@@ -5,21 +5,21 @@ class ExhibitForm(forms.Form):
     artist_name = forms.CharField(max_length=255, required = True)
     email = forms.EmailField(max_length=254)
     website = forms.URLField(max_length=200, required = False)
-    bio = forms.CharField(widget=forms.Textarea, required = True)
+    bio = forms.Textarea()
     
     exhibit_name = forms.CharField(max_length=255, required = True)
     choices = []
     for tag in Tag.objects.all():
         choices.append((tag.id, tag.name))
-    tags = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=choices, required=True)
-    description = forms.CharField(widget=forms.Textarea, required=True)
+    tags = forms.MultipleChoiceField()
+    description = forms.Textarea()
     
     art = []
     for image in Image.objects.all():
         art.append((image.id, image.name, image.url))
-    images = forms.MultipleChoiceField(widget = forms.CheckboxSelectMultiple, choices = art, required=True)
+    images = forms.MultipleChoiceField()
 class CommentForm(forms.Form):
-    comment = forms.CharField(widget = forms.Textarea, max_length = 255, required = False)
+    comment = forms.Textarea()
 
 class ImageForm(forms.Form):
     name = forms.CharField(max_length=255)
