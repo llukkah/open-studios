@@ -20,7 +20,7 @@
     {% endfor %}
     <br>
 
-<h2>Artist Name</h2>
+<h2>{{ exhibit.artist_name }}</h2>
     <p>{{ exhibit.bio }}</p>
     <h4>Share your comments</h4>
     <form action="{% url 'featured' %}" method="POST">
