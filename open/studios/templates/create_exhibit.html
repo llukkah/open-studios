@@ -19,8 +19,8 @@
     <h1>Create Exhibit</h1>
     <form action="{% url 'create_exhibit' %}" method="POST">
         {% csrf_token %} {{ eform }} 
-        {% block image %}
-        {% endblock image %}
+        <!-- {% block image %}
+        {% endblock image %} -->
         <input type="submit" name="create" value="Create" />
     </form>
 {% endblock %}

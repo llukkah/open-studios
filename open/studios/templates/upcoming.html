@@ -22,8 +22,8 @@
         {% endif %}
     {% endfor %}
     <br>
-    <h3>{{ exhibit.exhibit_name }} - </h3>
     <div>
+        {{ exhibit.exhibit_name }} -
         {% for tag in exhibit.tags.all %}
             {{ tag.name }}
         {% endfor %}
