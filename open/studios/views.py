@@ -8,27 +8,35 @@ import datetime
 # Create your views here.
 def main(request):
     featured = ''
-    exhibits = images = carousel = []
+    exhibits = images = temp = []
     exhibits = Exhibit.objects.all().order_by('-exhibit_id')
     for exhibit in exhibits:
         if exhibit.is_featured():
             featured = exhibit
     tags = []
+    for tag in Tag.objects.all():
+            tags.append(tag.tag_id)
+    
     if len(exhibits) > 1:
         exhibits['upcoming'] = Rotation.upcoming()
     
-    images = Image.objects.all().order_by('-exhibit')
-    for image in images:
-        print(image)
-        if image.exhibit == featured.exhibit_name:
-            carousel.append(image)
-    print(carousel)
+    # temp = featured.images()
+    # print(temp)
+    # for image in temp:
+    #     print(image)
+    #     images.append(image)
+    # print(images)
     
-    return render(request, 'main.html', context = {'featured' : featured, 'images' : carousel, 'exhibits' : exhibits})
+    return render(request, 'main.html', context = {
+        'featured' : featured, 
+        'images' : images, 
+        'exhibits' : exhibits
+        })
 
 
 def about(request):
     return render(request, 'about.html')
+
 
 def create_image(request):
     if request.method == 'GET':
@@ -92,7 +100,7 @@ def create_exhibit(request):
             tags.append(tag.tag_id)
         art = []
         for image in Image.objects.all():
-            art.append(image.id)
+            art.append(image.image_id)
         print(art)
         return render(request, 'create_exhibit.html', context = {'form' : form})
     
@@ -133,7 +141,7 @@ def edit_exhibit(request, exhibit_id):
             tags.append(tag.tag_id)
         art = []
         for image in exhibit.images.objects.all():
-            art.append(image.id)
+            art.append(image.image_id)
         print(art)
         form = ExhibitForm(initial = {'artist_name' : exhibit.artist_name, 'email' : exhibit.email, 'bio' : exhibit.bio, 'website' : exhibit.website, 'description' : exhibit.description, 'images' : art, 'tags' : tags})
         return render(request, 'edit_exhibit.html', context = {'form' : form})

@@ -12,13 +12,13 @@ class ExhibitForm(forms.Form):
     description = forms.CharField(widget=forms.Textarea, required=True)
     choices = []
     for tag in Tag.objects.all():
-        choices.append((tag.id, tag.name))
+        choices.append((tag.tag_id, tag.name))
     tags = forms.MultipleChoiceField()
     description = forms.CharField(widget=forms.Textarea, required=True)
     
     art = []
     for image in Image.objects.all():
-        art.append((image.id, image.name, image.url))
+        art.append((image.image_id, image.name, image.url))
     images = forms.MultipleChoiceField()
 
 class CommentForm(forms.Form):

@@ -21,6 +21,16 @@
     margin: 0;
     color: blue;
 }
+.nav-org{
+    display: inline-block;
+    color: blue;
+    padding-top: .3125rem;
+    padding-bottom: .3125rem;
+    margin-right: 1rem;
+    font-size: 2rem;
+    line-height: inherit;
+    white-space: nowrap;
+}
 .subnav{    
     float: left;
     overflow: hidden;
@@ -37,6 +47,7 @@
 }
 .nav a:hover, .subnavbtn:hover {
     background-color: #111;
+    color: #0077ff;
 }
 .subnav-content{
     display: none;
@@ -58,14 +69,16 @@
 .nav:hover, .subnav:hover .subnav-content{
     display: block;
 }
+.nav-org:focus,.nav-org:hover{
+    color: #0077ff;
+}
 .hdr{
     background-image: url("https://libeskind.com/wp-content/uploads/IWM3-2280x1805.jpg");
-    min-height: 100%;
-    min-width: 100%;
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
-    background-size: auto;
+    min-height: 100%;
+    min-width: 100%;
 }
 .hdr p{
     color: black;
