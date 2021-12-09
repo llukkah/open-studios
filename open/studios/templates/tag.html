@@ -1,0 +1,8 @@
+{% extends 'create_exhibit.html' %}
+{% block tag %}
+    <h1>Create Tag</h1>
+    <form action="{% url 'create_tag' %}" method="POST">
+        {% csrf_token %} {{ form }}
+        <input type="submit" name="create" value="Create" />
+    </form>
+{% endblock %}header
