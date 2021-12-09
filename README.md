@@ -55,7 +55,7 @@
   
 --- 
   
-## <div align="center"><h2> Post MVP </h2></div>
+## <div align="center"> Post MVP </div>
   
 >Implementation of Accounts and Authentication
 >
