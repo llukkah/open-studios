@@ -1,6 +1,7 @@
 from django import forms
 from .models import *
 
+
 class ExhibitForm(forms.Form):
     artist_name = forms.CharField(max_length=255, required = True)
     email = forms.EmailField(max_length=254)
@@ -8,6 +9,7 @@ class ExhibitForm(forms.Form):
     bio = forms.CharField(widget=forms.Textarea, required=True)
     
     exhibit_name = forms.CharField(max_length=255, required = True)
+    description = forms.CharField(widget=forms.Textarea, required=True)
     choices = []
     for tag in Tag.objects.all():
         choices.append((tag.id, tag.name))
@@ -26,6 +28,9 @@ class ImageForm(forms.Form):
     name = forms.CharField(max_length=255)
     url = forms.URLField(label = "Image URL", max_length = 200)
     # upload = forms.ClearableFileInput()
+
+class TagForm(forms.Form):
+    name = forms.CharField(max_length = 255)
 
 # ***** BLOG FORM *****
 # class EditorForm(forms.Form):

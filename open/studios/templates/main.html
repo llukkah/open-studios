@@ -1,7 +1,8 @@
 {% extends 'header.html' %}
-
+{% load static %}
+{% block extrastyle %}
+{% endblock %}
 {% block content %}
-<body class="main">
 <section class="carousel" aria-label="Gallery">
     <div class="wrapper">
         <div class="sliding-background">
@@ -21,5 +22,5 @@
         <p>{{ featured.description }}</p>
     </div>
 </section>
-</body>
+</div>
 {% endblock %}

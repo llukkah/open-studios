@@ -11,21 +11,15 @@
     }
     textarea {
         display: block;
-    }
-    #tag{
-        position: absolute;
-        margin-left: 150px;
-    }
+    } 
 </style>
 {% endblock %}
 {% block content %}
     <h1>Create Exhibit</h1>
-    <form action="{% url 'create_exhibit' %}" method="POST">
-        {% csrf_token %} {{ form }} 
-        {% block image %}
-        {% endblock image %}
-        {% block tag %}
-        {% endblock %}
-        <input type="submit" name="create" value="Create" />
+    <form action="{% url 'edit_exhibit' exhibit.id %}" method="POST">
+        {% csrf_token %} {{ form }}
+        {% include 'image.html' %}
+        <input type="submit" name="save" value="Save" />
+        <input type="submit" name="delete" value="Delete" />
     </form>
 {% endblock %}

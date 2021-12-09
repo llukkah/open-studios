@@ -1,12 +1,12 @@
-{% extends create_exhibit %}
+{% extends 'create_exhibit.html' %}
+{% block extrastyle %}
 <style>
-    input[type="text"]
-    input[type="url"]
+    input[type="text"],
+    input[type="url"],
     /* input[type="file"] */
 </style>
-{% block image %}
-    <form action="{% url 'create_exhibit' %}" method="POST">
+{% endblock %}
+    <form action="{% url 'add_image' %}" method="POST">
         {% csrf_token %} {{ iform }}
         <input type="submit" name="add" value="Add" />
     </form>
-{% endblock image %}
