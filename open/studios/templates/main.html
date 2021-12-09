@@ -3,24 +3,12 @@
 {% block extrastyle %}
 {% endblock %}
 {% block content %}
-<section class="carousel" aria-label="Gallery">
-    <div class="wrapper">
-        <div class="sliding-background">
-            <ol class="carousel_viewport">
-                {% for image in carousel %}
-                <li id="carousel_slide1" tabindex="0" class="carousel_slide">
-                    <div class="carousel_snapper">
-                        <a href="{{ image.url }}" class="carousel_prev">Go to last slide</a>
-                        <label>{{ image.name }}</label>
-                        <img src="url({{ image.url }});"/>
-                        <a href="{{ image.url }}" class="carousel_next">Go to next slide</a>
-                    </div>
-                </li>
-                {% endfor %}
-            </ol>
-        </div>
+    <div>
+        <h1>Open Studios</h1>
+        {% for image in images %}
+            <label>{{ image.name }}</label>
+            <img src="url({{ image.url }});"/>
+        {% endfor %}
         <p>{{ featured.description }}</p>
     </div>
-</section>
-</div>
 {% endblock %}
