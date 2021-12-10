@@ -1,36 +1,63 @@
 {% extends 'header.html' %}
 {% block extrastyle %}
-    <style>
-        #border {
-            border-radius: 25px;
-            border: 3px solid black;
-            padding: 10px;
-            box-shadow: 3px 3px 20px 3px #888888;
-        }
-    </style>
-{% endblock %}
+<style>
+    .row {
+        display: flex;
+    }
+    .column {
+        flex: 33.33%;
+        padding: 5px;
+    }
+    a.card:link {
+        margin-left: 2%;
+        margin-right: 3%;
+        margin-bottom: 10px;
+        width: 95%;
+        border-radius: 25px;
+        border: 3px solid black;
+        padding: 10px;
+        box-shadow: 1px 1px 10px 1px gray;
+        text-decoration: none;
+        background-color: white;
+        color: black;
+        display: inline-block;            
+    }
+    a.card:hover {
+        background-color: blue;
+        color: lightskyblue;
+        transform: scale(1.01, 1.01);
+        box-shadow: 13px 13px 30px 13px 535353;
+    }
+</style>
+{% endblock extrastyle %}
+
 {% block content %}
-    <h2><u>Exhibits</u></h2>
+    <br><br>
+    <h2 style="margin-left: 3%; font-size: 40px;"><u>Exhibits</u></h2>
     {% for exhibit in exhibits %}
-    <a href="{% url 'edit_exhibit' exhibit.id %}">
-        <div id="border">
-            <p>{{ exhibit.description }}</p>
-            <br>
-            {% for image in images %}
-                {% if image.id < 4 %}
-                    <h6>image.name</h6>
-                    <br>
-                    <img src="url({{ image.url }})" style="size: 20%; display: inline-block"; />
-                {% endif %}
-            {% endfor %}
-            <br>
+    <div style="display: flex;">
+        <a class="card" href="{% url 'edit_exhibit' exhibit.exhibit_id %}">
             <div>
-                {{ exhibit.exhibit_name }} -
-                {% for tag in exhibit.tags.all %}
-                    {{ tag.name }}
-                {% endfor %}
+                <p>{{ exhibit.description }}</p>
+                <div class="row">
+                    {% for image in images %}
+                        {% if image.id < 4 %}
+                            <div class="column">
+                                <h6>image.name</h6>
+                                <img src="url({{ image.url }})" alt="image missing"/>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <br>
+                <div style="padding: 10px">
+                    {{ exhibit.exhibit_name }} -
+                    {% for tag in exhibit.tags.all %}
+                        <span style="color:black; background-color: lightblue; margin-left: 4px; border-radius: 25px;"><label style="padding: 8px;"> {{ tag.name }} </label></span>            
+                    {% endfor %}
+                </div>
             </div>
-        </div>
-    </a>
+        </a>
+    </div>
     {% endfor %}
 {% endblock %}
