@@ -1,10 +1,11 @@
 /* Navigation for header.html */
 .nav{
-    /* position: fixed;
-    width: auto; */
+    /* position: fixed; */
+    border-radius: 5px;
+    width: fit-content;
     height: auto;
     overflow: hidden;
-    background-color: #333;
+    background-color: #444;
 }
 .nav a{
     float: left;
@@ -40,34 +41,40 @@
     border: none;
     outline: none;
     color: blue;
-    padding: 14px 16px;
+    padding: 14px 0px;
     background-color: inherit;
     font-family: inherit;
     margin: 0;
 }
 .nav a:hover, .subnav:hover .subnavbtn{
     background-color: #111;
-    color: lightblue;
+    border-radius: 5px;
+    color: #0077ff;
 }
 .subnav-content{
     display: none;
-    position: relative;
-    left: 0px;
+    position: absolute;
+    top: 67px !important;
+    left: 60px;
+    padding: 5px 5px !important;
     width: auto;
     z-index: 1;
 }
 .subnav-content a{
     float: left;
+    margin: 0px;
     color: blue;
 }
 .subnav-content a:focus, .subnav-content a:hover{
     background-color: #111;
+    border-radius: 5px;
     color: blue;
 }
 .subnav:hover .subnav-content{
     display: block;
+    border-radius: 5px;
     background-color: #444;
-    color: lightblue;
+    color: #0077ff;
     z-index: 1;
 }
 .nav-org:focus,.nav-org:hover{
@@ -81,9 +88,14 @@
     padding: 0.5em 0.5em 0.5em;
 }
 .hdr p{
-    color: blue;
+    color: gray;
     font-size: 22px;
     font-weight: bold;
+    font-family:Arial, Helvetica, sans-serif;
+}
+.hdr a, .hdr label, .hdr form{
+    color: gray;
+    font-size: 22px;
     font-family:Arial, Helvetica, sans-serif;
 }
 .hdr h1{

@@ -22,29 +22,38 @@
         color: black;
         display: inline-block;            
     }
-    a.card:hover {
+    a.card:hover{
         background-color: blue;
         color: lightskyblue;
         transform: scale(1.01, 1.01);
         box-shadow: 13px 13px 30px 13px 535353;
+    }
+    .card:hover p{
+        color: lightskyblue;
+    }
+    .column img{
+        height: 35rem;
+    }
+    h1{
+        color: blue;
     }
 </style>
 {% endblock extrastyle %}
 
 {% block content %}
     <div style="padding-top: 3.5%;">
-        <h2 style="margin-left: 3%; font-size: 40px;"><u>Exhibits</u></h2>
+        <h1 style="text-align: center; font-size: 40px; margin-bottom: 15px;">Upcoming <br>Exhibits</h1>
         {% for exhibit in exhibits %}
         <div style="display: flex;">
             <a class="card" href="{% url 'edit_exhibit' exhibit.exhibit_id %}">
-                <div>
+                <div style="margin-left: 5rem;">
                     <p>{{ exhibit.description }}</p>
                     <div class="row">
                         {% for image in images %}
                             {% if image.id < 4 %}
                                 <div class="column">
                                     <h6>image.name</h6>
-                                    <img src="url({{ image.url }})" alt="image missing"/>
+                                    <img src="{{ image.url }}" alt="image missing"/>
                                 </div>
                             {% endif %}
                         {% endfor %}
