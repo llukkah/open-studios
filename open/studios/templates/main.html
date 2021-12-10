@@ -1,14 +1,35 @@
 {% extends 'header.html' %}
 {% load static %}
 {% block extrastyle %}
+    <style>
+        .row{
+            display: flex;
+        }
+        .col{
+            flex: 33.333%;
+            padding: 5px;
+        }
+    </style>
 {% endblock %}
 {% block content %}
-    <div>
+    <div style="padding-top: 3.5%;">
         <h1>Open Studios</h1>
-        {% for image in images %}
-            <label>{{ image.name }}</label>
-            <img src="url({{ image.url }});"/>
-        {% endfor %}
-        <p>{{ featured.description }}</p>
+        <div class="row"></div>
+            {% for image in featured.images.all %}
+                <div class="col">
+                    <br>
+                    <img src="{{ image.url }}" maxheight="300px"/>
+                </div>
+                <label>{{ image.name }}</label>
+            {% endfor %}
+            <div class="tags">
+                {% for tag in featured.tags.all %}
+                <span style="color: black; background-color: lightblue; margin-left: 4px">
+                    {{ tag.name }}
+                </span>
+                {% endfor %}
+            </div>
+            <p>{{ featured.description }}</p>
+        <div class="row"></div>
     </div>
 {% endblock %}

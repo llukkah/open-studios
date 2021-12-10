@@ -20,17 +20,15 @@ def main(request):
     if len(exhibits) > 1:
         exhibits['upcoming'] = Rotation.upcoming()
     
-    # temp = featured.images()
-    # print(temp)
-    # for image in temp:
-    #     print(image)
-    #     images.append(image)
-    # print(images)
+    for image in Image.objects.all():
+        images.append({
+            'id' : image.image_id, 
+            'url' : image.url,
+            'name' : image.name})
     
     return render(request, 'main.html', context = {
         'featured' : featured, 
-        'images' : images, 
-        'exhibits' : exhibits
+        'images' : images
         })
 
 
@@ -47,14 +45,17 @@ def create_image(request):
         if form.is_valid():
             name = form.cleaned_data['name']
             url = form.cleaned_data['url']
-            Image.objects.update_or_create(name = name,url = url)
+            Image.objects.update_or_create(name = name, url = url)
             return HttpResponseRedirect(reverse('add_image'))
 
 def edit_image(request, exhibit_id):
     if request.method == 'GET':
         image = Image.objects.get(exhibit_id)
-        form = ImageForm(initial = {'name' : image.name, 'url' : image.url, 'exhibit' : image.exhibit})
-        return render(request, 'image.html', context = {'iform' : form})
+        form = ImageForm(initial = {
+            'name' : image.name, 
+            'url' : image.url, 
+            'exhibit' : image.exhibit})
+        return render(request, 'edit_image.html', context = {'iform' : form})
     if request.method == 'POST':
         form = ImageForm(request.POST)
         if form.is_valid():
@@ -102,7 +103,7 @@ def create_exhibit(request):
         for image in Image.objects.all():
             art.append(image.image_id)
         print(art)
-        return render(request, 'create_exhibit.html', context = {'form' : form})
+        return render(request, 'create_exhibit.html', context = {'form' : form, 'tags' : tags, 'images' : art})
     
     if request.method == 'POST':
         form = ExhibitForm(request.POST)
@@ -118,13 +119,13 @@ def create_exhibit(request):
             timestamp = datetime.datetime.now()
 
             Exhibit.objects.create(
-            artist_name = artist_name,
-            email = email, 
-            bio = bio,
-            website = website,
-            exhibit_name = exhibit_name,
-            description = description,
-            timestamp = timestamp)
+                artist_name = artist_name,
+                email = email, 
+                bio = bio,
+                website = website,
+                exhibit_name = exhibit_name,
+                description = description,
+                timestamp = timestamp)
 
             exhibit = Exhibit.objects.all().order_by('-exhibit_id')
 
@@ -143,7 +144,14 @@ def edit_exhibit(request, exhibit_id):
         for image in exhibit.images.objects.all():
             art.append(image.image_id)
         print(art)
-        form = ExhibitForm(initial = {'artist_name' : exhibit.artist_name, 'email' : exhibit.email, 'bio' : exhibit.bio, 'website' : exhibit.website, 'description' : exhibit.description, 'images' : art, 'tags' : tags})
+        form = ExhibitForm(initial = {
+            'artist_name' : exhibit.artist_name, 
+            'email' : exhibit.email, 
+            'bio' : exhibit.bio, 
+            'website' : exhibit.website, 
+            'description' : exhibit.description, 
+            'images' : art, 
+            'tags' : tags})
         return render(request, 'edit_exhibit.html', context = {'form' : form})
     
     if request.method == 'POST':
@@ -179,7 +187,9 @@ def featured(request):
     if request.method == 'GET':
         form = CommentForm()
         exhibit = Exhibit.objects.filter(featured=True)
-        return render(request=request, template_name='featured.html', context={ 'exhibit': exhibit, 'form':form })
+        return render(request=request, template_name = 'featured.html', context={ 
+                            'exhibit': exhibit, 
+                            'form':form })
     if request.method == 'POST':    
         form = CommentForm(request.POST)
         if form.is_valid():
@@ -189,8 +199,10 @@ def featured(request):
 
 def upcoming(request):
     exhibits = Exhibit.objects.exclude( revealed=True)
-    art = [{'url' : i.url, 'name' : i.name, 'id' : i.id} for i in Image.objects.all().order_by('-exhibit')]
-    return render(request = request, template_name = 'upcoming.html', context = {'exhibits' : exhibits, 'images' : art})
+    art = [{'url' : i.url, 'name' : i.name, 'id' : i.image_id} for i in Image.objects.all().order_by('-exhibit')]
+    return render(request = request, template_name = 'upcoming.html', context = {
+        'exhibits' : exhibits, 
+        'images' : art})
 
 
 def register(request):

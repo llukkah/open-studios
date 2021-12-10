@@ -12,7 +12,7 @@
 {% block content %}
     <h2><u>Exhibits</u></h2>
     {% for exhibit in exhibits %}
-    <a href="{% url 'edit_exhibit' exhibit.id %}">
+    <a href="{% url 'edit_exhibit' exhibit.exhibit_id %}">
         <div id="border">
             <p>{{ exhibit.description }}</p>
             <br>
