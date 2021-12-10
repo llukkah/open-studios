@@ -25,6 +25,7 @@ class Image(models.Model):
 class Comment(models.Model):
     comment_id = models.AutoField(primary_key = True)
     comment = models.TextField()
+    author = models.CharField(max_length = 255, default="")
     
     class Meta:
         verbose_name_plural = 'Comments'
@@ -43,8 +44,9 @@ class Exhibit(models.Model):
     
     # Linked classes
     tags = models.ManyToManyField(Tag)
-    images = models.ForeignKey(Image, default = 1, related_name = "exhibit",  on_delete = models.SET_DEFAULT)
-    comment = models.ForeignKey(Comment, default = 1, on_delete = models.SET_DEFAULT)
+    images = models.ForeignKey(Image, default = int, related_name = "exhibit",  on_delete = models.SET_DEFAULT)
+    # images = models.IntegerField(default = int, null = True)
+    comments = models.ForeignKey(Comment, default = 1, on_delete = models.SET_DEFAULT)
     
     # potentially will be moved to User model
     artist_name = models.CharField(max_length = 255)

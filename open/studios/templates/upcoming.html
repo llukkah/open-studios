@@ -22,42 +22,52 @@
         color: black;
         display: inline-block;            
     }
-    a.card:hover {
+    a.card:hover{
         background-color: blue;
         color: lightskyblue;
         transform: scale(1.01, 1.01);
         box-shadow: 13px 13px 30px 13px 535353;
     }
+    .card:hover p{
+        color: lightskyblue;
+    }
+    .column img{
+        height: 35rem;
+    }
+    h1{
+        color: blue;
+    }
 </style>
 {% endblock extrastyle %}
 
 {% block content %}
-    <br><br>
-    <h2 style="margin-left: 3%; font-size: 40px;"><u>Exhibits</u></h2>
-    {% for exhibit in exhibits %}
-    <div style="display: flex;">
-        <a class="card" href="{% url 'edit_exhibit' exhibit.exhibit_id %}">
-            <div>
-                <p>{{ exhibit.description }}</p>
-                <div class="row">
-                    {% for image in images %}
-                        {% if image.id < 4 %}
-                            <div class="column">
-                                <h6>image.name</h6>
-                                <img src="url({{ image.url }})" alt="image missing"/>
-                            </div>
-                        {% endif %}
-                    {% endfor %}
+    <div style="padding-top: 3.5%;">
+        <h1 style="text-align: center; font-size: 40px; margin-bottom: 15px;">Upcoming <br>Exhibits</h1>
+        {% for exhibit in exhibits %}
+        <div style="display: flex;">
+            <a class="card" href="{% url 'edit_exhibit' exhibit.exhibit_id %}">
+                <div style="margin-left: 5rem;">
+                    <p>{{ exhibit.description }}</p>
+                    <div class="row">
+                        {% for image in images %}
+                            {% if image.id < 4 %}
+                                <div class="column">
+                                    <h6>image.name</h6>
+                                    <img src="{{ image.url }}" alt="image missing"/>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <br>
+                    <div style="padding: 10px">
+                        {{ exhibit.exhibit_name }} -
+                        {% for tag in exhibit.tags.all %}
+                            <span style="color:black; background-color: lightblue; margin-left: 4px; border-radius: 25px;"><label style="padding: 8px;"> {{ tag.name }} </label></span>            
+                        {% endfor %}
+                    </div>
                 </div>
-                <br>
-                <div style="padding: 10px">
-                    {{ exhibit.exhibit_name }} -
-                    {% for tag in exhibit.tags.all %}
-                        <span style="color:black; background-color: lightblue; margin-left: 4px; border-radius: 25px;"><label style="padding: 8px;"> {{ tag.name }} </label></span>            
-                    {% endfor %}
-                </div>
-            </div>
-        </a>
+            </a>
+        </div>
+        {% endfor %}
     </div>
-    {% endfor %}
 {% endblock %}
