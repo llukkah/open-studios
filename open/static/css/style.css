@@ -1,7 +1,7 @@
 /* Navigation for header.html */
 .nav{
-    position: fixed;
-    width: auto;
+    /* position: fixed;
+    width: auto; */
     overflow: hidden;
     background-color: #333;
 }
@@ -14,14 +14,13 @@
     color: blue;
 }
 .nav h1{
-    padding-left: 45%;
-    padding-top: 5px;
-    padding-top: 5px;
+    display: inline-block;
+    padding-inline-start: 30%;
     font-weight: bolder;
-    margin: 0;
+    font-size: xx-large;
     color: blue;
 }
-.nav-org{
+/* .nav-org{
     display: inline-block;
     color: blue;
     padding-top: .3125rem;
@@ -30,12 +29,12 @@
     font-size: 2rem;
     line-height: inherit;
     white-space: nowrap;
-}
+} */
 .subnav{    
     float: left;
     overflow: hidden;
 }
-.subnavbtn{
+.subnav .subnavbtn{
     font-size: 16px;
     border: none;
     outline: none;
@@ -45,35 +44,38 @@
     font-family: inherit;
     margin: 0;
 }
-.nav a:hover, .subnavbtn:hover {
+.nav a:hover, .subnav:hover .subnavbtn{
     background-color: #111;
-    color: #0077ff;
+    color: white;
 }
 .subnav-content{
     display: none;
     position: absolute;
     left: 0px;
-    padding: 30px;
+    background-color: #111;
     width: auto;
     z-index: 1;
 }
 .subnav-content a{
     float: left;
-    color: inherit;
+    color: blue;
     text-decoration: none;
 }
 .subnav-content a:hover{
     background-color: #444;
-    color: inherit;
+    color: white;
 }
-.nav:hover, .subnav:hover .subnav-content{
+/* .nav:hover, .subnav:hover .subnav-content{
     display: block;
-}
-.nav-org:focus,.nav-org:hover{
+} */
+.subnav:hover .subnav-content {
+    display: block;
+  }
+/* .nav-org:focus,.nav-org:hover{
     color: #0077ff;
-}
+} */
 .hdr{
-    background-image: url("https://libeskind.com/wp-content/uploads/IWM3-2280x1805.jpg");
+    /* background-image: url("https://libeskind.com/wp-content/uploads/IWM3-2280x1805.jpg"); */
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
