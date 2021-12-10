@@ -88,7 +88,7 @@ class Rotation(models.Model):
         exhibits = []
         for e in Exhibit.objects.all().order_by('timestamp'):
             if not e.revealed and not e.is_featured():
-                exhibits.append({'name' : e.exhibit_name, 'created' : e.timestamp, 'id' : e.id})
+                exhibits.append({'name' : e.exhibit_name, 'created' : e.timestamp, 'id' : e.exhibit_id})
         return exhibits[0]
 
 

@@ -9,8 +9,22 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     {% block extrastyle %}
     {% endblock extrastyle %}
-    <div class="container-fluid bcontent"></div>
-        <div class="nav">
+    <nav class="nav">
+        <a href="studios">Home</a>
+        <div class="subnav">
+            <button class="subnavbtn">Exhibits<i class="fa fa-caret-down"></i></button>
+            <div class="subnav-content">
+                <a href="create">Create</a>
+                <a href="featured">Featured</a>
+                <a href="upcoming">Upcoming</a>
+            </div>
+
+        </div>
+        <a href="about">About</a>
+        <h1>Open Studios</h1>
+    </nav>
+
+        <!-- <div class="nav">
             <a class="nav-org" href="studios">Open Studios</a>
             <a href="create">Create</a>
             <a href="featured">Featured</a>
@@ -24,8 +38,7 @@
                 </div>
             </div>
             <a href="about">About</a>
-        </div>
-    </div>
+        </div> -->
 </head>
 <body class="hdr">
     
