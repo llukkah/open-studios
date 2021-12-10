@@ -8,25 +8,25 @@
     background-color: #444;
 }
 .nav a{
+    color: blue !important;
     float: left;
     text-align: center;
     font-size: 16px;
-    padding: 14px 16px;
+    padding: 10px 12px;
     text-decoration: none;
-    color: blue;
 }
 .nav h1{
     display: inline-block;
     padding-inline-start: 30%;
     font-weight: bolder;
     font-size: xx-large;
-    color: blue;
+    color: blue !important;
 }
 .nav-org{
     display: inline-block;
-    color: blue;
-    padding-top: .3125rem;
-    padding-bottom: .3125rem;
+    color: blue !important;
+    padding-top: 8px
+    padding-bottom: 8px;
     margin-right: 1rem;
     font-size: 2rem;
     line-height: inherit;
@@ -37,11 +37,11 @@
     overflow: hidden;
 }
 .subnavbtn{
-    font-size: 16px;
+    font-size: 20px !important;
     border: none;
     outline: none;
-    color: blue;
-    padding: 14px 0px;
+    color: blue !important;
+    padding: 10px 0px;
     background-color: inherit;
     font-family: inherit;
     margin: 0;
@@ -54,9 +54,11 @@
 .subnav-content{
     display: none;
     position: absolute;
-    top: 67px !important;
+    border-style: solid;
+    border-color: #111 !important;
+    border-radius: 15px;
+    top: 62px !important;
     left: 60px;
-    padding: 5px 5px !important;
     width: auto;
     z-index: 1;
 }
