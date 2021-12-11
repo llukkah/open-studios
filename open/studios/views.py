@@ -97,22 +97,42 @@ def edit_tag(request, tag_id):
 def create_exhibit(request):
     if request.method == 'GET':
         form = ExhibitForm()
+        image_formset = ImageFormSet(None)
+        tag_formset = TagFormSet
         
         tags = []
         for tag in Tag.objects.all():
             tags.append(tag.tag_id)
             
-        art = []
-        for image in Image.objects.all():
-            art.append({
-            'id' : image.image_id, 
-            'url' : image.url,
-            'name' : image.name})
+        # art = []
+        # for image in Image.objects.all():
+        #     art.append({
+        #     'id' : image.image_id, 
+        #     'url' : image.url,
+        #     'name' : image.name})
         
-        return render(request, 'create_exhibit.html', context = {'form' : form, 'tags' : tags, 'images' : art})
+        return render(request, 'create_exhibit.html', context = {
+            'form' : form, 
+            'image_formset' : image_formset, 
+            'tag_formset' : tag_formset, 
+            'tags' : tags})
     
     if request.method == 'POST':
         form = ExhibitForm(request.POST)
+        image_formset = ImageFormSet(request.POST)
+        tag_formset = TagFormSet(request.POST)
+        tags = images = []
+        # pics = request.tag_formset.getlist('images')
+        if image_formset.is_valid():
+            for form in image_formset:
+                pic = form.cleaned_data()
+                pic.save()
+        
+        if tag_formset.is_valid():
+            for form in tag_formset:
+                tag = form.clean_data['name']
+                tag.save()
+        
         if form.is_valid():
             artist_name = form.cleaned_data['artist_name']
             email = form.cleaned_data['email']
@@ -210,7 +230,7 @@ def featured(request):
 
 def upcoming(request):
     exhibits = Exhibit.objects.exclude( revealed = True)
-    art = [{'url' : i.url, 'name' : i.name, 'id' : i.image_id} for i in Image.objects.all().order_by('-exhibit')]
+    art = [{'url' : i.url, 'name' : i.name, 'id' : i.image_id} for i in Image.objects.all().order_by('-gallery')]
         
     return render(request = request, template_name = 'upcoming.html', context = {
         'exhibits' : exhibits, 
