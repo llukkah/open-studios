@@ -13,6 +13,7 @@ class Image(models.Model):
     image_id = models.AutoField(primary_key = True)
     name = models.CharField(max_length = 255)
     url = models.URLField(max_length = 200)
+    featured = models.BooleanField(default = False)
     # upload = models.ImageField(upload_to = "upload/", blank = True, max_length=255)
     # description = models.CharField()
     
@@ -44,9 +45,8 @@ class Exhibit(models.Model):
     
     # Linked classes
     tags = models.ManyToManyField(Tag)
-    images = models.ForeignKey(Image, default = int, related_name = "exhibit",  on_delete = models.SET_DEFAULT)
-    # images = models.IntegerField(default = int, null = True)
-    comments = models.ForeignKey(Comment, default = 1, on_delete = models.SET_DEFAULT)
+    images = models.ForeignKey(Image, default = int, related_name = "gallery",  on_delete = models.SET_DEFAULT)
+    comments = models.ForeignKey(Comment, default = 1, related_name = "response", on_delete = models.SET_DEFAULT)
     
     # potentially will be moved to User model
     artist_name = models.CharField(max_length = 255)
