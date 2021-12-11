@@ -21,11 +21,18 @@
 {% block content %}
     <h1>Create Exhibit</h1>
     <form action="{% url 'create_exhibit' %}" method="POST">
-        {% csrf_token %} {{ form }} 
-        {% block image %}
+        {% csrf_token %} 
+        {{ form }}
+        {{ formset.management_form }}
+        {{ image_form }}
+        {{ tag_form}}
+        
+        
+        <!-- {% block image %}
         {% endblock image %}
         {% block tag %}
-        {% endblock %}
+        {% endblock %} -->
+        
         <button type="submit" href="{% url 'images.html' }"/>
         <input type="submit" name="create" value="Create" />
     </form>
