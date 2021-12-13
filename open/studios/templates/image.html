@@ -1,12 +1,11 @@
-{% extends 'create_exhibit.html' %}
-{% block extrastyle %}
-<style>
-    input[type="text"],
-    input[type="url"],
-    /* input[type="file"] */
-</style>
+{% extends 'header.html' %}
+{% block content %}
+<h1 style="font-size: 40px; text-align: center;">{{ image.name | title }}</h1>
+
+<img id="{{ image.name }}" src="{{ image.url }}" alt="Image Missing" width="auto" height="auto">
+<!-- The Modal -->
+<div id="{{ image.name }}" class="zoom">
+    <img class="zoom-content" id="{{ image.id }}">
+<div id="description"></div>
+</div>
 {% endblock %}
-    <form action="{% url 'add_image' %}" method="POST">
-        {% csrf_token %} {{ iform }}
-        <input type="submit" name="add" value="Add" />
-    </form>

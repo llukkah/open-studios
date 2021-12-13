@@ -22,6 +22,9 @@ class Image(models.Model):
     
     def __str__(self):
         return self.name
+    
+    def is_featured(self):
+        return self.featured
 
 class Comment(models.Model):
     comment_id = models.AutoField(primary_key = True)
@@ -45,8 +48,8 @@ class Exhibit(models.Model):
     
     # Linked classes
     tags = models.ManyToManyField(Tag)
-    images = models.ForeignKey(Image, default = int, related_name = "gallery",  on_delete = models.SET_DEFAULT)
-    comments = models.ForeignKey(Comment, default = 1, related_name = "response", on_delete = models.SET_DEFAULT)
+    images = models.ForeignKey(Image, default = int, on_delete = models.SET_DEFAULT)
+    comments = models.ForeignKey(Comment, default = "", null = True, on_delete = models.SET_DEFAULT)
     
     # potentially will be moved to User model
     artist_name = models.CharField(max_length = 255)
