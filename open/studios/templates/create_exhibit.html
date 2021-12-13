@@ -20,7 +20,7 @@
 {% endblock %}
 {% block content %}
     <h1>Create Exhibit</h1>
-    <form action="{% url 'create_exhibit' %}" method="POST">
+    <form action="{% url 'create' %}" method="POST">
         {% csrf_token %} 
         {{ form }}
         {{ formset.management_form }}

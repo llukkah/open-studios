@@ -50,12 +50,10 @@
                     <p>{{ exhibit.description }}</p>
                     <div class="row">
                         {% for image in images %}
-                            {% if image.id < 4 %}
-                                <div class="column">
-                                    <h6>image.name</h6>
-                                    <img src="{{ image.url }}" alt="image missing"/>
-                                </div>
-                            {% endif %}
+                            <div class="column">
+                                <h6>image.name</h6>
+                                <img src="{{ image.url }}" alt="image missing"/>
+                            </div>
                         {% endfor %}
                     </div>
                     <br>

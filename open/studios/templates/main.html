@@ -31,7 +31,8 @@
 {% block content %}
     <div style="padding-top: 3.5%;">
         <h1>Open Studios</h1>
-        <div class="col"></div>
+        <a href="{% url 'featured' %}">
+        <div class="col">
             <div class="row">
             {% for image in images %}
                 <section>
@@ -41,7 +42,7 @@
                         <label>{{ image.name }}</label>
                     </center>
                 </section>
-            {% endfor %}
+                {% endfor %}
             </div>
             <div class="tags">
                 {% for tag in featured.tags.all %}
@@ -52,5 +53,6 @@
             </div>
             <p>{{ featured.description }}</p>
         </div>
+        </a>
     </div>
 {% endblock %}

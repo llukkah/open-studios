@@ -1,5 +1,6 @@
 from django import forms
 from django.forms.formsets import formset_factory
+from django.forms.widgets import HiddenInput
 from .models import *
 
 
@@ -10,18 +11,20 @@ class ExhibitForm(forms.Form):
     bio = forms.CharField(widget = forms.Textarea, required = True)
     
     exhibit_name = forms.CharField(max_length = 255, required = True)
-    description = forms.CharField(widget = forms.Textarea, required=True)
+    description = forms.CharField(max_length = 500, widget = forms.Textarea, required=True)
+    featured = forms.BooleanField().hidden_widget
+    featured_date = forms.DateField().hidden_widget
     
     choices = []
     for tag in Tag.objects.all():
         choices.append((tag.tag_id, tag.name))
     tags = forms.MultipleChoiceField()
-    description = forms.CharField(widget = forms.Textarea, required=True)
+    description = forms.CharField(max_length = 500, widget = forms.Textarea, required=True)
 
 
 class CommentForm(forms.Form):
-    comment = forms.CharField(widget = forms.Textarea)
-    author = forms.CharField()
+    comment = forms.CharField(max_length = 500, widget = forms.Textarea, required = False)
+    author = forms.CharField(max_length = 255, required = False)
     
     class Meta:
         parent_model = Comment
@@ -34,7 +37,7 @@ CommentFormSet = formset_factory(CommentForm, extra = 1)
 class ImageForm(forms.Form):
     name = forms.CharField(max_length = 255)
     url = forms.URLField(label = "Image URL", max_length = 200)
-    
+    featured = forms.BooleanField(widget = forms.CheckboxInput, required = False)
     class Meta:
         parent_model = Image
         model = Exhibit
