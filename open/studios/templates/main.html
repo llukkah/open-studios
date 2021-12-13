@@ -7,6 +7,7 @@
             margin-left: 50px;
             margin-right: auto;
             flex-wrap: wrap;
+            text-decoration: none;
         }
         .col{
             flex: 33.333%;
@@ -14,13 +15,49 @@
             display: block;
 
         }
-        section{
-            padding: 10px;
+        a.card:link {
+        margin-left: 2%;
+        margin-right: 3%;
+        margin-bottom: 10px;
+        width: 95%;
+        border-radius: 25px;
+        border: 3px solid black;
+        padding: 10px;
+        box-shadow: 1px 1px 10px 1px gray;
+        text-decoration: none;
+        background-color: rgb(80, 80, 80);
+        color: black;
+        display: inline-block;            
         }
-        img{
+        a.card:hover{
+            background-color: blue;
+            color: lightskyblue;
+            transform: scale(1.01, 1.01);
+            box-shadow: 13px 13px 30px 13px 535353;
+        }
+        .card:hover p, .card:hover label{
+            color: black;
+        }
+        .col img{
             display: block;
             height: 35rem;
-            padding: 8px;
+            padding: 4px;
+        }
+        .tags{
+            padding: 4px;
+        }
+        .tags span{
+            color:black; 
+            background-color: 
+            lightblue; 
+            margin-left: 4px; 
+            border-radius: 25px;
+        }
+        h1{
+            color: blue;
+        }
+        section{
+            padding: 10px;
         }
         label{
             margin: 0.5rem 0.5rem;
@@ -31,28 +68,29 @@
 {% block content %}
     <div style="padding-top: 3.5%;">
         <h1>Open Studios</h1>
-        <a href="{% url 'featured' %}">
-        <div class="col">
-            <div class="row">
-            {% for image in images %}
-                <section>
-                    <center>
-                        <br>
-                        <img src="{{ image.url }}"/>
-                        <label>{{ image.name }}</label>
-                    </center>
-                </section>
-                {% endfor %}
-            </div>
-            <div class="tags">
-                {% for tag in featured.tags.all %}
-                <span style="color: black; background-color: lightblue; margin-left: 4px">
-                    {{ tag.name }}
-                </span>
-                {% endfor %}
-            </div>
-            <p>{{ featured.description }}</p>
+        <br><br>
+        <h2>{{ featured.name }}</h2>
+        <hr>
+        <div style="display: flex;">
+            <a class="card" href="{% url 'featured' %}">
+                <div style="margin-left: 5rem;">
+                    <div class="row">
+                        {% for image in images %}
+                            <div class="col">
+                                <img src="{{ image.url }}" alt="image missing"/>
+                                <label>{{ image.name }}</label>
+                            </div>
+                            <p>{{ image.description }}</p>
+                        {% endfor %}
+                    </div>
+                    <br>
+                    <div class="tags" style="padding: 10px">
+                        {% for tag in featured.tags.all %}
+                            <span><label style="padding: 8px;"> {{ tag.name }} </label></span>            
+                        {% endfor %}
+                    </div>
+                </div>
+            </a>
         </div>
-        </a>
     </div>
 {% endblock %}
