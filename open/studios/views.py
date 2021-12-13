@@ -21,8 +21,8 @@ def main(request):
     
     if len(exhibits) > 1:
         exhibits['upcoming'] = Rotation.upcoming()
-    
-    for image in Image.objects.all():
+    print(featured.images)
+    for image in [featured.images]:
         if image.is_featured():
             images.append({
                 'id' : image.image_id, 
