@@ -10,17 +10,17 @@
     {% block extrastyle %}
     {% endblock extrastyle %}
     <nav class="nav">
-        <a class="nav-org" href="studios">Open Studios</a>
+        <a class="nav-org" href="{% url 'home' %}">Open Studios</a>
         <div class="subnav">
             <button class="subnavbtn">Exhibits<i class="fa fa-caret-down"></i></button>
             <div class="subnav-content">
-                <a href="create">Create</a>
-                <a href="featured">Featured</a>
-                <a href="upcoming">Upcoming</a>
+                <a href="{% url 'create' %}">Create</a>
+                <a href="{% url 'featured' %}">Featured</a>
+                <a href="{% url 'upcoming' %}">Upcoming</a>
             </div>
 
         </div>
-        <a href="about">About</a>
+        <a href="{% url 'about' %}">About</a>
     </nav>
 
         <!-- <div class="nav">

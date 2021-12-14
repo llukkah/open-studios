@@ -15,8 +15,10 @@
 
     <p>{{ exhibit.description }}</p>
     <br>
-    {% for image in exhibit.images.all %}
-        <img src="{{ image.url }}" height="200" />    
+    {% for image in images %}
+        <a href="{% url 'image' image.name %}">
+            <img src="{{ image.url }}" height="200" />
+        </a>    
         <br>
         <h6>image.name</h6>
     {% endfor %}

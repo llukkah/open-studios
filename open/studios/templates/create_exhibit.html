@@ -5,7 +5,7 @@
     input[type='text'],
     input[type='email'],    
     input[type='url'],
-    input[type='checkbox']
+    input[type='checkbox'],
     textarea {
         display: block;
     }
@@ -20,12 +20,13 @@
 {% endblock %}
 {% block content %}
     <h1>Create Exhibit</h1>
-    <form action="{% url 'create_exhibit' %}" method="POST">
+    <form action="{% url 'create' %}" method="POST">
         {% csrf_token %} 
         {{ form }}
-        {{ formset.management_form }}
-        {{ image_form }}
-        {{ tag_form}}
+        {{ image_formset.management_form }}
+        {{ image_formset }}
+        {{ tag_formset.management_form }}
+        {{ tag_formset}}X
         
         
         <!-- {% block image %}

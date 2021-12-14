@@ -3,16 +3,17 @@ from . import views
 
 urlpatterns = [
     path('', views.main, name = 'home'),
-    path('studios', views.main, name = 'home'),
+    # path('studios', views.main, name = 'home'),
     path('about', views.about, name = "about"),
     
-    path('create', views.create_exhibit, name = 'create_exhibit'),
+    path('create', views.create_exhibit, name = 'create'),
     path('create/tag/', views.create_tag, name = 'tag'),
     path('create/tag/<int:tag_id>', views.edit_tag, name = 'edit_tag'),
     path('create/image/', views.create_image, name = 'create_image'),
     path('create/image/<int:image_id>', views.edit_image, name = 'edit_image'),
     
     path('featured', views.featured, name = "featured"),
+    path('image/<str:name>/', views.show_image, name = 'image'),
     
     path('upcoming', views.upcoming, name = "upcoming"),
     path('upcoming/edit/<int:exhibit_id>', views.edit_exhibit, name = 'edit_exhibit'),

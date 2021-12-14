@@ -8,12 +8,12 @@ import datetime
 # Create your views here.
 def main(request):
     featured = ''
-    exhibits = images = temp = []
+    exhibits = images = []
     exhibits = Exhibit.objects.all().order_by('-exhibit_id')
     for exhibit in exhibits:
         if exhibit.is_featured():
             featured = exhibit
-    
+    print(featured)
     tags = []
     for tag in Tag.objects.all():
             tags.append(tag.tag_id)
@@ -21,11 +21,12 @@ def main(request):
     if len(exhibits) > 1:
         exhibits['upcoming'] = Rotation.upcoming()
     
-    for image in Image.objects.all():
-        images.append({
-            'id' : image.image_id, 
-            'url' : image.url,
-            'name' : image.name})
+    for image in featured.pics.all().order_by('-image_id'):
+        if image.is_featured():
+            images.append({
+                'id' : image.image_id, 
+                'url' : image.url,
+                'name' : image.name})
     
     return render(request, 'main.html', context = {
         'featured' : featured, 
@@ -40,7 +41,7 @@ def about(request):
 def create_image(request):
     if request.method == 'GET':
         form = ImageForm()
-        return render(request, 'image.html', context = {'iform' : form})
+        return render(request, 'image.html', context = {'form' : form})
     if request.method == 'POST':
         form = ImageForm(request.POST)
         if form.is_valid():
@@ -97,8 +98,8 @@ def edit_tag(request, tag_id):
 def create_exhibit(request):
     if request.method == 'GET':
         form = ExhibitForm()
-        image_formset = ImageFormSet(None)
-        tag_formset = TagFormSet
+        image_formset = ImageFormSet()
+        tag_formset = TagFormSet()
         
         tags = []
         for tag in Tag.objects.all():
@@ -125,8 +126,10 @@ def create_exhibit(request):
         # pics = request.tag_formset.getlist('images')
         if image_formset.is_valid():
             for form in image_formset:
-                pic = form.cleaned_data()
-                pic.save()
+                itm = {'name' : form.cleaned_data['name'],
+                        'url' : form.cleaned_data['url'], 
+                        'featured' : form.cleaned_data['featured']}
+                images.append(Image.ojects.create(name = itm.name, url = itm.url, featured = itm.featured)) 
         
         if tag_formset.is_valid():
             for form in tag_formset:
@@ -170,12 +173,15 @@ def edit_exhibit(request, exhibit_id):
             
         art = []
         for image in exhibit.images.objects.all():
-            art.append(image.image_id)
+            if image.featured:
+                print(image)
+                art.append(image.image_id)
+                
         
         form = ExhibitForm(initial = {
             'artist_name' : exhibit.artist_name, 
             'email' : exhibit.email, 
-            'bio' : exhibit.bio, 
+            'bio' : exhibit.bio,  
             'website' : exhibit.website, 
             'description' : exhibit.description, 
             'images' : art, 
@@ -214,27 +220,58 @@ def edit_exhibit(request, exhibit_id):
 
 def featured(request):
     if request.method == 'GET':
-        form = CommentForm()
-        exhibit = Exhibit.objects.filter(featured=True)
+        formset = CommentFormSet()
+        exhibit = Exhibit.objects.filter(featured = True)
         
-        return render(request = request, template_name = 'featured.html', context={ 
-                            'exhibit': exhibit, 
-                            'form':form })
+        images = [{'url' : i.url, 'name' : i.name, 'id' : i.image_id} for i in exhibit.pics.all().order_by('-image_id')]
+        
+        comments = [{'author' : c.author, 'comment' : c.comment} for c in exhibit.responses.all().order_by('created')]
+        
+        return render(
+            request = request, 
+            template_name = 'featured.html', 
+            context = { 
+                    'exhibit': exhibit,
+                    'images' : images, 
+                    'form':formset,
+                    'comments' : comments})
     
     if request.method == 'POST':    
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.cleaned_data['comment']        
-        return render(request=request, template_name='featured.html')
+        formset = CommentFormSet(request.POST)
+        if formset.is_valid():
+            comment = formset.cleaned_data
+            comment.save()        
+        return render(request = request, template_name = 'featured.html')
 
 
 def upcoming(request):
-    exhibits = Exhibit.objects.exclude( revealed = True)
-    art = [{'url' : i.url, 'name' : i.name, 'id' : i.image_id} for i in Image.objects.all().order_by('-gallery')]
+    exhibits = Exhibit.objects.exclude(revealed = True)
+    art = comments = []
+    for exhibit in exhibits:
+        for i in exhibit.pics.all().order_by('-image_id'):
+            if i.featured:
+                art.append({
+                    exhibit.name : {
+                        'url' : i.url, 
+                        'name' : i.name, 
+                        'id' : i.image_id}})
+        for c in exhibit.responses.all().order_by('-created'):
+            comments.append({'author' : c.author, 'comment' : c.comment})
         
     return render(request = request, template_name = 'upcoming.html', context = {
-        'exhibits' : exhibits, 
-        'images' : art})
+                            'exhibits' : exhibits, 
+                            'images' : art,
+                            'comments' : comments})
+
+
+def show_image(request, name):
+    if request.method == 'GET':
+        image = Image()
+        for pic in Image.objects.all().order_by('image_id'):
+            if pic.name == name:
+                image = pic
+        
+        return render(request, 'image.html', context = {'image' : image})
 
 
 def register(request):

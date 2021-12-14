@@ -6,52 +6,30 @@ class Tag(models.Model):
     tag_id = models.AutoField(primary_key = True)
     name = models.CharField(max_length = 255)
     
-    def __str__(self):
-        return self.name
-
-class Image(models.Model):
-    image_id = models.AutoField(primary_key = True)
-    name = models.CharField(max_length = 255)
-    url = models.URLField(max_length = 200)
-    featured = models.BooleanField(default = False)
-    # upload = models.ImageField(upload_to = "upload/", blank = True, max_length=255)
-    # description = models.CharField()
-    
     class Meta:
-        verbose_name_plural = 'Images'
+        verbose_name_plural = 'Tags'
     
     def __str__(self):
         return self.name
 
-class Comment(models.Model):
-    comment_id = models.AutoField(primary_key = True)
-    comment = models.TextField()
-    author = models.CharField(max_length = 255, default="")
-    
-    class Meta:
-        verbose_name_plural = 'Comments'
-    
-    def __str__(self):
-        return self.comment
 
 class Exhibit(models.Model):
     exhibit_id = models.AutoField(primary_key = True)
     exhibit_name = models.CharField(max_length = 255)
     description = models.TextField()
     timestamp = models.DateField(auto_now = True, auto_now_add = False)
-    featured_date = models.DateField(auto_now = False, null = True)
-    featured = models.BooleanField(default = False)
-    revealed = models.BooleanField(default = False)
-    
+    featured_date = models.DateField(auto_now = False, blank = True, null = True)
+    featured = models.BooleanField(default = False, blank = True)
+    revealed = models.BooleanField(default = False, blank = True)
     # Linked classes
-    tags = models.ManyToManyField(Tag)
-    images = models.ForeignKey(Image, default = int, related_name = "gallery",  on_delete = models.SET_DEFAULT)
-    comments = models.ForeignKey(Comment, default = 1, related_name = "response", on_delete = models.SET_DEFAULT)
+    tags = models.ManyToManyField(Tag, blank = True)
+    # images = models.ForeignKey(Image, related_name = 'pictures', on_delete = models.CASCADE)
+    # comments = models.ForeignKey(Comment, related_name = 'reviews', blank = True, null = True, on_delete = models.CASCADE)
     
     # potentially will be moved to User model
     artist_name = models.CharField(max_length = 255)
     email = models.EmailField(max_length = 254)
-    website = models.URLField(max_length = 200)
+    website = models.URLField(max_length = 200, blank = True, null = True)
     bio = models.TextField()
     
     class Meta:
@@ -70,6 +48,42 @@ class Exhibit(models.Model):
     def remove_featured(self):
         self.featured = False
         self.revealed = True
+    
+    def get_images(self):
+        return self.exhibit_name.pics.all()
+
+
+class Image(models.Model):
+    image_id = models.AutoField(primary_key = True)
+    name = models.CharField(max_length = 255)
+    url = models.URLField(max_length = 200)
+    featured = models.BooleanField(default = False)
+    exhibit_name = models.ForeignKey(Exhibit, related_name = 'pics', default = int, on_delete = models.DO_NOTHING)
+    # upload = models.ImageField(upload_to = "upload/", blank = True, max_length=255)
+    # description = models.CharField()
+    
+    class Meta:
+        verbose_name_plural = 'Images'
+    
+    def __str__(self):
+        return self.name
+    
+    def is_featured(self):
+        return self.featured
+
+
+class Comment(models.Model):
+    comment_id = models.AutoField(primary_key = True)
+    comment = models.TextField(blank = True, null = True)
+    created = models.DateTimeField(auto_now = True)
+    author = models.CharField(max_length = 255, blank = True, null = True)
+    exhibit = models.ForeignKey(Exhibit, related_name="responses", blank = True, null = True, on_delete = models.DO_NOTHING)
+    
+    class Meta:
+        verbose_name_plural = 'Comments'
+    
+    def __str__(self):
+        return self.comment
 
 
 class Rotation(models.Model):
