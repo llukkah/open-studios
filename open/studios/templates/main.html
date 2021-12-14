@@ -75,7 +75,7 @@
             <a class="card" href="{% url 'featured' %}">
                 <div style="margin-left: 5rem;">
                     <div class="row">
-                        {% for image in images %}
+                        {% for image in featured.pics.all %}
                             <div class="col">
                                 <img src="{{ image.url }}" alt="image missing"/>
                                 <label>{{ image.name }}</label>
