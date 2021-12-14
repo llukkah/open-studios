@@ -14,20 +14,19 @@ def main(request):
         if exhibit.is_featured():
             featured = exhibit
     print(featured)
-    
     tags = []
     for tag in Tag.objects.all():
             tags.append(tag.tag_id)
     
     if len(exhibits) > 1:
         exhibits['upcoming'] = Rotation.upcoming()
-    print(featured.images)
-    for image in [featured.images]:
-        if image.is_featured():
-            images.append({
-                'id' : image.image_id, 
-                'url' : image.url,
-                'name' : image.name})
+    
+    # for image in featured.get_images():
+    #     if image.is_featured():
+    #         images.append({
+    #             'id' : image.image_id, 
+    #             'url' : image.url,
+    #             'name' : image.name})
     
     return render(request, 'main.html', context = {
         'featured' : featured, 
@@ -99,8 +98,8 @@ def edit_tag(request, tag_id):
 def create_exhibit(request):
     if request.method == 'GET':
         form = ExhibitForm()
-        image_formset = ImageFormSet(None)
-        tag_formset = TagFormSet
+        image_formset = ImageFormSet()
+        tag_formset = TagFormSet()
         
         tags = []
         for tag in Tag.objects.all():
@@ -127,8 +126,10 @@ def create_exhibit(request):
         # pics = request.tag_formset.getlist('images')
         if image_formset.is_valid():
             for form in image_formset:
-                pic = form.cleaned_data()
-                pic.save()
+                itm = {'name' : form.cleaned_data['name'],
+                        'url' : form.cleaned_data['url'], 
+                        'featured' : form.cleaned_data['featured']}
+                images.append(Image.ojects.create(name = itm.name, url = itm.url, featured = itm.featured)) 
         
         if tag_formset.is_valid():
             for form in tag_formset:

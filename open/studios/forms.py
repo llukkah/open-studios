@@ -1,7 +1,22 @@
 from django import forms
+from django.forms import inlineformset_factory
 from django.forms.formsets import formset_factory
 from django.forms.widgets import HiddenInput
 from .models import *
+
+
+class ImageForm(forms.Form):
+    name = forms.CharField(max_length = 255)
+    url = forms.URLField(label = "Image URL", max_length = 200)
+    featured = forms.BooleanField(widget = forms.CheckboxInput, required = False)
+    class Meta:
+        parent_model = Exhibit
+        model = Image
+        fk_name = 'images'
+        fields = ('name', 'url')
+
+ImageFormSet = formset_factory(ImageForm, extra = 20, max_num = 10)
+    # upload = forms.ClearableFileInput()
 
 
 class ExhibitForm(forms.Form):
@@ -18,8 +33,18 @@ class ExhibitForm(forms.Form):
     choices = []
     for tag in Tag.objects.all():
         choices.append((tag.tag_id, tag.name))
-    tags = forms.MultipleChoiceField()
+    tags = forms.MultipleChoiceField(required = False)
+    
     description = forms.CharField(max_length = 500, widget = forms.Textarea, required=True)
+    
+    class Meta:
+        parent_model = Exhibit
+        model = Image
+        form = ImageForm()
+        fk_name = 'images'
+        fields = ('name', 'url')
+        min_num = 1
+        max_num = 20
 
 
 class CommentForm(forms.Form):
@@ -34,20 +59,6 @@ class CommentForm(forms.Form):
 
 CommentFormSet = formset_factory(CommentForm, extra = 1)
 
-class ImageForm(forms.Form):
-    name = forms.CharField(max_length = 255)
-    url = forms.URLField(label = "Image URL", max_length = 200)
-    featured = forms.BooleanField(widget = forms.CheckboxInput, required = False)
-    class Meta:
-        parent_model = Image
-        model = Exhibit
-        fk_name = 'images'
-        fields = ('name', 'url')
-        min_num = 1
-        max_num = 20
-
-ImageFormSet = formset_factory(ImageForm, extra = 10)
-    # upload = forms.ClearableFileInput()
 
 class TagForm(forms.Form):
     name = forms.CharField(max_length = 255)
@@ -60,4 +71,3 @@ class TagForm(forms.Form):
         min_num = 1
 
 TagFormSet = formset_factory(TagForm, extra = 1)
-
