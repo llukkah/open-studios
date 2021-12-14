@@ -6,9 +6,11 @@ class Tag(models.Model):
     tag_id = models.AutoField(primary_key = True)
     name = models.CharField(max_length = 255)
     
+    class Meta:
+        verbose_name_plural = 'Tags'
+    
     def __str__(self):
         return self.name
-
 
 
 class Exhibit(models.Model):
@@ -48,7 +50,7 @@ class Exhibit(models.Model):
         self.revealed = True
     
     def get_images(self):
-        return self.pics.all()
+        return self.exhibit_name.pics.all()
 
 
 class Image(models.Model):
@@ -56,7 +58,7 @@ class Image(models.Model):
     name = models.CharField(max_length = 255)
     url = models.URLField(max_length = 200)
     featured = models.BooleanField(default = False)
-    exhibit = models.ForeignKey(Exhibit, related_name = 'pics', default = int, on_delete = models.DO_NOTHING)
+    exhibit_name = models.ForeignKey(Exhibit, related_name = 'pics', default = int, on_delete = models.DO_NOTHING)
     # upload = models.ImageField(upload_to = "upload/", blank = True, max_length=255)
     # description = models.CharField()
     
@@ -73,8 +75,9 @@ class Image(models.Model):
 class Comment(models.Model):
     comment_id = models.AutoField(primary_key = True)
     comment = models.TextField(blank = True, null = True)
+    created = models.DateTimeField(auto_now = True)
     author = models.CharField(max_length = 255, blank = True, null = True)
-    exhibit = models.ForeignKey(Exhibit, blank = True, null = True, on_delete = models.DO_NOTHING)
+    exhibit = models.ForeignKey(Exhibit, related_name="responses", blank = True, null = True, on_delete = models.DO_NOTHING)
     
     class Meta:
         verbose_name_plural = 'Comments'

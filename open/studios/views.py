@@ -21,12 +21,12 @@ def main(request):
     if len(exhibits) > 1:
         exhibits['upcoming'] = Rotation.upcoming()
     
-    # for image in featured.get_images():
-    #     if image.is_featured():
-    #         images.append({
-    #             'id' : image.image_id, 
-    #             'url' : image.url,
-    #             'name' : image.name})
+    for image in featured.pics.all().order_by('-image_id'):
+        if image.is_featured():
+            images.append({
+                'id' : image.image_id, 
+                'url' : image.url,
+                'name' : image.name})
     
     return render(request, 'main.html', context = {
         'featured' : featured, 
@@ -41,7 +41,7 @@ def about(request):
 def create_image(request):
     if request.method == 'GET':
         form = ImageForm()
-        return render(request, 'image.html', context = {'iform' : form})
+        return render(request, 'image.html', context = {'form' : form})
     if request.method == 'POST':
         form = ImageForm(request.POST)
         if form.is_valid():
@@ -223,7 +223,9 @@ def featured(request):
         formset = CommentFormSet()
         exhibit = Exhibit.objects.filter(featured = True)
         
-        images = [{'url' : i.url, 'name' : i.name, 'id' : i.image_id} for i in Image.objects.all().order_by('-exhibit')]
+        images = [{'url' : i.url, 'name' : i.name, 'id' : i.image_id} for i in exhibit.pics.all().order_by('-image_id')]
+        
+        comments = [{'author' : c.author, 'comment' : c.comment} for c in exhibit.responses.all().order_by('created')]
         
         return render(
             request = request, 
@@ -231,7 +233,8 @@ def featured(request):
             context = { 
                     'exhibit': exhibit,
                     'images' : images, 
-                    'form':formset })
+                    'form':formset,
+                    'comments' : comments})
     
     if request.method == 'POST':    
         formset = CommentFormSet(request.POST)
@@ -243,11 +246,22 @@ def featured(request):
 
 def upcoming(request):
     exhibits = Exhibit.objects.exclude(revealed = True)
-    art = [{'url' : i.url, 'name' : i.name, 'id' : i.image_id} for i in Image.objects.all().order_by('-name') if i.featured]
+    art = comments = []
+    for exhibit in exhibits:
+        for i in exhibit.pics.all().order_by('-image_id'):
+            if i.featured:
+                art.append({
+                    exhibit.name : {
+                        'url' : i.url, 
+                        'name' : i.name, 
+                        'id' : i.image_id}})
+        for c in exhibit.responses.all().order_by('-created'):
+            comments.append({'author' : c.author, 'comment' : c.comment})
         
     return render(request = request, template_name = 'upcoming.html', context = {
-        'exhibits' : exhibits, 
-        'images' : art})
+                            'exhibits' : exhibits, 
+                            'images' : art,
+                            'comments' : comments})
 
 
 def show_image(request, name):
@@ -256,7 +270,7 @@ def show_image(request, name):
         for pic in Image.objects.all().order_by('image_id'):
             if pic.name == name:
                 image = pic
-        print(image)
+        
         return render(request, 'image.html', context = {'image' : image})
 
 
