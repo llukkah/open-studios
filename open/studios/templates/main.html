@@ -11,7 +11,7 @@
         }
         .col{
             flex: 33.333%;
-            padding: 20px;
+            padding: 10px;
             display: block;
 
         }
@@ -22,7 +22,7 @@
         width: 95%;
         border-radius: 25px;
         border: 3px solid black;
-        padding: 10px;
+        padding: 5px;
         box-shadow: 1px 1px 10px 1px gray;
         text-decoration: none;
         background-color: rgb(80, 80, 80);
@@ -40,7 +40,7 @@
         }
         .col img{
             display: block;
-            height: 35rem;
+            height: 30rem;
             padding: 4px;
         }
         .tags{
@@ -56,9 +56,6 @@
         h1{
             color: blue;
         }
-        section{
-            padding: 10px;
-        }
         label{
             margin: 0.5rem 0.5rem;
         }
@@ -68,9 +65,9 @@
 {% block content %}
     <div style="padding-top: 3.5%;">
         <h1>Open Studios</h1>
+        <hr>
         <br><br>
         <h2>{{ featured.name }}</h2>
-        <hr>
         <div style="display: flex;">
             <a class="card" href="{% url 'featured' %}">
                 <div style="margin-left: 5rem;">
