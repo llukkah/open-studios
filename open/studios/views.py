@@ -28,7 +28,8 @@ def main(request):
 
 
 def about(request):
-    return render(request, 'about.html')
+    images=['/media/llukkah.jpeg', '/media/chris.jpeg', '/media/lee.jpeg', '/media/jason.jpeg']
+    return render(request, 'about.html', {'images':images})
 
 
 def create_image(request):
