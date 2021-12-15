@@ -13,13 +13,6 @@ def main(request):
     for exhibit in exhibits:
         if exhibit.is_featured():
             featured = exhibit
-    print(featured)
-    tags = []
-    for tag in Tag.objects.all():
-            tags.append(tag.tag_id)
-    
-    if len(exhibits) > 1:
-        exhibits['upcoming'] = Rotation.upcoming()
     
     for image in featured.pics.all().order_by('-image_id'):
         if image.is_featured():
