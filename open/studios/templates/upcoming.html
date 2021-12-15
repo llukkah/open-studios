@@ -51,7 +51,7 @@
                     <div class="row">
                         {% for image in images %}
                             <div class="column">
-                                <h6>image.name </h6>
+                                <h6>{{ image.name }}</h6>
                                 <img src="{{ image.url }}" alt="image missing"/>
                             </div>
                         {% endfor %}
