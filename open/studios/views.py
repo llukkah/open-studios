@@ -7,24 +7,24 @@ import datetime
 
 # Create your views here.
 def main(request):
-    featured = ''
-    exhibits = images = []
-    exhibits = Exhibit.objects.all().order_by('-exhibit_id')
-    for exhibit in exhibits:
+    featured = next_exhibit = ''
+    images = []
+    for exhibit in Exhibit.objects.all().order_by('timestamp'):
         if exhibit.is_featured():
             featured = exhibit
+        if len(Exhibit.objects.all()) > 1:
+            if not exhibit.revealed and not exhibit.is_featured():
+                next_exhibit = exhibit
     
     for image in featured.pics.all().order_by('-image_id'):
         if image.is_featured():
-            images.append({
-                'id' : image.image_id, 
-                'url' : image.url,
-                'name' : image.name})
+            images.append({'id' : image.image_id, 
+                            'url' : image.url,
+                            'name' : image.name})
     
-    return render(request, 'main.html', context = {
-        'featured' : featured, 
-        'images' : images
-        })
+    return render(request, 'main.html', context = {'featured' : featured,
+                                                    'next' : next_exhibit,
+                                                    'images' : images})
 
 
 def about(request):

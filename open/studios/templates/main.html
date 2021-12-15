@@ -10,7 +10,7 @@
             text-decoration: none;
         }
         .col{
-            flex: 33.333%;
+            flex: auto;
             padding: 10px;
             display: block;
 
@@ -35,7 +35,7 @@
             transform: scale(1.01, 1.01);
             box-shadow: 13px 13px 30px 13px 535353;
         }
-        .card:hover p, .card:hover label{
+        .card:hover p, .card:hover label, .card:hover h2{
             color: black;
         }
         .col img{
@@ -43,21 +43,28 @@
             height: 30rem;
             padding: 4px;
         }
+        .featured{
+            
+        }
         .tags{
             padding: 4px;
         }
-        .tags span{
+        .tags span label{
             color:black; 
             background-color: 
-            lightblue; 
+            lightblue;
+            padding: 1px 3px;
             margin-left: 4px; 
-            border-radius: 25px;
+            border-radius: 10px;
         }
         h1{
             color: blue;
         }
+        h2{
+            text-align: center;
+        }
         label{
-            margin: 0.5rem 0.5rem;
+            margin: 0.1rem 0.1rem;
         }
     </style>
 {% endblock %}
@@ -67,9 +74,10 @@
         <h1>Open Studios</h1>
         <hr>
         <br><br>
-        <h2>{{ featured.name }}</h2>
+        
         <div style="display: flex;">
-            <a class="card" href="{% url 'featured' %}">
+            <a href="{% url 'featured' %}">
+                <h2>{{ featured.exhibit_name }}</h2>
                 <div style="margin-left: 5rem;">
                     <div class="row">
                         {% for image in images %}
@@ -83,11 +91,33 @@
                     <br>
                     <div class="tags" style="padding: 10px">
                         {% for tag in featured.tags.all %}
-                            <span><label style="padding: 8px;"> {{ tag.name }} </label></span>            
+                            <span><label> {{ tag.name }} </label></span>            
                         {% endfor %}
                     </div>
                 </div>
             </a>
         </div>
+        <a href="{% url 'featured' %}">
+        <h2>{{ next.exhibit_name }}</h2>
+            <div style="margin-left: 5rem;">
+                <div class="row">
+                    {% for img in next.pics.all %}
+                        {% if img.featured %}
+                            <div class="col">
+                                <img src="{{ img.url }}" alt="image missing"/>
+                                <label>{{ img.name }}</label>
+                            </div>
+                            <p>{{ img.description }}</p>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <br>
+                <div class="tags" style="padding: 10px">
+                    {% for tag in next.tags.all %}
+                        <span><label> {{ tag.name }} </label></span>            
+                    {% endfor %}
+                </div>
+            </div>
+        </a>
     </div>
 {% endblock %}
