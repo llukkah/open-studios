@@ -249,8 +249,23 @@ def featured(request):
 
 
 def upcoming(request):
-    exhibits = Exhibit.objects.exclude(revealed = True).order_by('timestamp')
+    exhibits = Exhibit.objects.exclude(featured=True).exclude(revealed = True)
     
+    art = []
+    for exhibit in exhibits:
+        count = 0
+        for i in exhibit.pics.all():
+            if count < 3:
+                art.append({
+                        'url' : i.url, 
+                        'name' : i.name, 
+                        'id' : i.image_id,
+                        'collection' : exhibit.exhibit_id})
+            count += 1
+    return render(request = request, template_name = 'upcoming.html', context = {
+                        'exhibits' : exhibits, 
+                        'images' : art })
+''' ****** possible additions for comments on each image ******
     art = comments = []
     for exhibit in exhibits:
         for i in exhibit.pics.all().order_by('-image_id'):
@@ -259,12 +274,11 @@ def upcoming(request):
                         'url' : i.url, 
                         'name' : i.name, 
                         'id' : i.image_id})
-    
     return render(request = request, template_name = 'upcoming.html', context = {
                             'exhibits' : exhibits, 
                             'images' : art,
                             'comments' : comments})
-
+'''
 
 def show_image(request, name):
     if request.method == 'GET':
