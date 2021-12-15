@@ -2,47 +2,72 @@
 {% block extrastyle %}
 <style>
     .row {
-        display: flex;
+        display:flex;
     }
     .column {
-        flex: 33.33%;
-        padding: 5px;
+        padding: 1px;
     }
     a.card:link {
         margin-left: 2%;
         margin-right: 3%;
-        margin-bottom: 10px;
+        margin-bottom: 20px;
         width: 95%;
         border-radius: 25px;
         border: 3px solid black;
         padding: 10px;
-        box-shadow: 1px 1px 10px 1px gray;
+        box-shadow: 1px 1px 10px 1px #808080;
         text-decoration: none;
-        background-color: white;
-        color: black;
-        display: inline-block;            
+        background-color: #ffffff;
+        color: #000000 !important;
+        display: inline-block;
+
     }
     a.card:hover{
-        background-color: blue;
-        color: lightskyblue;
+        background-color: #0000ff;
+        color: #87cefa !important;
         transform: scale(1.01, 1.01);
         box-shadow: 13px 13px 30px 13px 535353;
     }
-    .card:hover p{
-        color: lightskyblue;
+    .card:hover p, .card:hover .title{
+        color: #87cefa !important;
     }
     .column img{
         height: 25rem;
+
+    }
+    .title{
+        margin: 0;
+        position: absolute;
+    }
+    .tags{
+        color:rgb(0, 0, 0); 
+        padding: 4px;
+        background-color: #add8e6; 
+        margin-left: 4px; 
+        border-radius: 10px;
     }
     h1{
-        color: blue;
+        color: #0000ff;
+    }
+    p{
+        color:#000000 !important;
+    }
+    img{
+        max-width: 85%;
+        height: auto;
+        object-fit: scale-down;
+        margin-top: 0px;
+        padding-top: 0px;
+    }
+    label{
+        color: rgb(0, 0, 0) !important;
     }
 </style>
 {% endblock extrastyle %}
 
 {% block content %}
     <div style="padding-top: 3.5%;">
-        <h1 style="text-align: center; font-size: 40px; margin-bottom: 15px;">Upcoming <br>Exhibits</h1>
+        <h1 style="text-align: center; font-size: 40px; margin-bottom: 15px;">Upcoming Exhibits</h1>
         {% for exhibit in exhibits %}
         <div style="display: flex;">
             <a class="card" href="{% url 'edit_exhibit' exhibit.exhibit_id %}">
@@ -50,17 +75,19 @@
                     <p>{{ exhibit.description }}</p>
                     <div class="row">
                         {% for image in images %}
+                            {% if image.collection == exhibit.exhibit_id %}
                             <div class="column">
-                                <h6>image.name</h6>
-                                <img src="{{ image.url }}" alt="image missing"/>
+                                    <label class="title">{{ image.name }}</label>
+                                    <img src="{{ image.url }}" alt="image missing"/>
                             </div>
+                            {% endif %}
                         {% endfor %}
                     </div>
                     <br>
                     <div style="padding: 10px">
                         {{ exhibit.exhibit_name }} -
                         {% for tag in exhibit.tags.all %}
-                            <span style="color:black; background-color: lightblue; margin-left: 4px; border-radius: 25px;"><label style="padding: 8px;"> {{ tag.name }} </label></span>            
+                            <span class="tags"><label> {{ tag.name }} </label></span>            
                         {% endfor %}
                     </div>
                 </div>

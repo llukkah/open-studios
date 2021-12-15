@@ -1,8 +1,29 @@
 {% extends 'header.html' %}
+{% block extrastyle %}
+<style>
+    img{
+        display: block;
+        margin: 10px auto 20px;
+        height: 600px; 
+        width: auto; 
+        overflow: auto;
+        background-color: rgb(0, 0, 0); 
+        background-color: rgba(0,0,0,0.9);
+    }
+    img:hover{
+        display: block;
+        margin: 10px auto 20px;
+        height: 100rem; 
+        width: auto; 
+        overflow: auto;
+        box-shadow: 13px 13px 30px 13px 535353;
+    }
+</style>
+{% endblock %}
 {% block content %}
 <h1 style="font-size: 40px; text-align: center;">{{ image.name | title }}</h1>
 <div>
-    <img style="height: 200%; width: auto; overflow: auto;background-color: rgb(0, 0, 0); background-color: rgba(0,0,0,0.9);" src="{{ image.url }}" />
+    <img src="{{ image.url }}" />
 </div>
 
 {% endblock %}
