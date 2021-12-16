@@ -22,7 +22,7 @@ class Exhibit(models.Model):
     featured = models.BooleanField(default = False, blank = True)
     revealed = models.BooleanField(default = False, blank = True)
     # Linked classes
-    tags = models.ManyToManyField(Tag, blank = True)
+    tags = models.ManyToManyField(Tag, blank = False)
     # images = models.ForeignKey(Image, related_name = 'pictures', on_delete = models.CASCADE)
     # comments = models.ForeignKey(Comment, related_name = 'reviews', blank = True, null = True, on_delete = models.CASCADE)
     

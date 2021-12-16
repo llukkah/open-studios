@@ -1,0 +1,48 @@
+{% extends 'header.html' %}
+{% block extrastyle %}
+<style>
+    /* input[type='text'],
+    input[type='text'],
+    input[type='email'],    
+    input[type='url'],
+    input[type='checkbox'],
+    textarea {
+        display: block;
+    }
+    textarea {
+        display: block;
+    } */
+    #tag{
+        position: absolute;
+        margin-left: 150px;
+    }
+</style>
+{% endblock %}
+{% block content %}
+    <h1>Create Exhibit</h1>
+    <form action="url({{ action }})" method="POST">
+        {% csrf_token %} 
+        {{ form }}
+        <section>
+            <span>
+                {{form.artist_name.name}} {{form.artist_name.as_widget}}
+            </span>
+            <span>
+                {{form.email.name}} {{form.email.as_widget}}
+            </span>
+        </section>
+        <div>
+        {{ image_formset.management_form }}
+        {{ image_formset }}
+        {{ tag_formset.management_form }}
+        {{ tag_formset}}
+        </div>
+        
+        <button type="submit" href="{% url 'images.html' }"/>
+        {% if action == 'create' %}
+            <input type="submit" name="create" value="Create" />
+        {% else %}
+            <input type="submit" name="save" value="Save" /><input type="submit" name="delete" value="Delete" />
+        {% endif %}
+    </form>
+{% endblock %}

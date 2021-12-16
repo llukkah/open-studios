@@ -70,7 +70,7 @@
         <h1 style="text-align: center; font-size: 40px; margin-bottom: 15px;">Upcoming Exhibits</h1>
         {% for exhibit in exhibits %}
         <div style="display: flex;">
-            <a class="card" href="{% url 'edit_exhibit' exhibit.exhibit_id %}">
+            <a class="card" href="{% url 'edit' exhibit.exhibit_id %}">
                 <div style="margin-left: 5rem;">
                     <p>{{ exhibit.description }}</p>
                     <div class="row">
