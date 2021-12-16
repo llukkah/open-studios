@@ -14,9 +14,9 @@ urlpatterns = [
     
     path('featured', views.featured, name = "featured"),
     path('image/<str:name>/', views.show_image, name = 'image'),
-    
     path('upcoming', views.upcoming, name = "upcoming"),
-    path('upcoming/edit/<int:exhibit_id>', views.edit_exhibit, name = 'edit_exhibit'),
+    
+    path('upcoming/edit/<int:exhibit_id>', views.edit_exhibit, name = 'edit'),
     path('upcoming/edit/<int:exhibit_id>/tag/', views.create_tag, name = 'create_tag'),
     path('upcoming/edit/<int:exhibit_id>/tag/<int:tag_id>', views.edit_tag, name = 'edit_tag'),
     path('upcoming/edit/<int:exhibit_id>/image/', views.create_image, name = 'create_image'),

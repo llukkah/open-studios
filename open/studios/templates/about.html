@@ -12,55 +12,17 @@ Through the Open Studios app, artists will be able to view available exhibits to
 
 </p>
 <center>
-<div>
-
-<img style="user-select: none; margin: auto; background-color: rgb(230, 230, 230); transition: background-color 300ms ease 0s; --darkreader-inline-bgcolor:#26292b;" src={{images.0}}>
-<br>
-<a href='https://www.github.com/llukkah' style="text-align:center;">Llukkah Github</a>
-<br>
-<a href='https://www.linkedin.com/in/llukkahrey?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BPVPIS6RuS1mFA2Oz%2BiCvTA%3D%3D'>Lukkah Linkedin</a>
-
-</div>
-
-
-<div>
-
-<img style="user-select: none; margin: auto; background-color: rgb(230, 230, 230); transition: background-color 300ms ease 0s; --darkreader-inline-bgcolor:#26292b;" src={{images.1}}>
-<br>
-<a href='https://github.com/Kwyjib0' style="text-align:center;">Christopher GitHub</a>
-<br>
-<a href='https://www.linkedin.com/in/christopher-linton1?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3B90XwWnipSSGg%2Bj1Y%2BC%2BfEw%3D%3D'>Chris Linkedin</a>
-
-
-
-</div>
-
-
-<div>
-
-
-<img width="200" title="Lee Harvey" src={{images.2}} height="200" alt="Lee Harvey" id="ember45" class="pv-top-card-profile-picture__image pv-top-card-profile-picture__image--show ember-view">
-<br>
-<a href='https://github.com/VirtDev337' style="text-align:center;">Lee GitHub</a>
-<br>
-<a href='https://www.linkedin.com/in/lee-harvey-jr?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BIvwSNWutSqaVtbFzP0%2BtHg%3D%3D'>Lee Linkedin</a>
-
-
-</div>
-
-
-
-<div>
-
-
-<img width="200" src={{images.3}} height="200" alt="Jason Rolle" id="ember48" class="ember-view profile-photo-edit__preview">
-<br>
-<a href='https://github.com/JasonRolle1990' style="text-align:center;">Jason GitHub</a>
-<br>
-<a href='https://www.linkedin.com/in/jasonrolle1990?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3Bculc7Op7S3esL9F80ZfMhw%3D%3D'>Jason Linkedin</a>
-
-</div>
-
+    {% for profile in profiles %}
+        <div style="display: inline-flex;">
+            <div style="display: block; padding: 5rem;">
+                <img width="200" style="margin-top: 10px; margin-bottom: 0px;" src="{{profile.image}}">
+                <br>
+                <a href="{{ profile.git }}" style="padding-bottom: 10px; padding-top: 0px;">{{profile.name}} Github</a>
+                <br>
+                <a href="{{ profile.linkedin }}" style="margin-bottm: 10px;">{{profile.name}} LinkedIn</a>
+            </div>
+        </div>
+    {% endfor %}
 </center>
 
 
