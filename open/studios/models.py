@@ -21,10 +21,9 @@ class Exhibit(models.Model):
     featured_date = models.DateField(auto_now = False, blank = True, null = True)
     featured = models.BooleanField(default = False, blank = True)
     revealed = models.BooleanField(default = False, blank = True)
-    # Linked classes
+    
+    # Linked class
     tags = models.ManyToManyField(Tag, blank = False)
-    # images = models.ForeignKey(Image, related_name = 'pictures', on_delete = models.CASCADE)
-    # comments = models.ForeignKey(Comment, related_name = 'reviews', blank = True, null = True, on_delete = models.CASCADE)
     
     # potentially will be moved to User model
     artist_name = models.CharField(max_length = 255)
@@ -38,9 +37,6 @@ class Exhibit(models.Model):
     def __str__(self):
         return self.exhibit_name
     
-    def is_featured(self):
-        return self.featured
-    
     def add_featured(self):
         self.featured = True
         self.featured_date = datetime.datetime.now()
@@ -48,9 +44,6 @@ class Exhibit(models.Model):
     def remove_featured(self):
         self.featured = False
         self.revealed = True
-    
-    def get_images(self):
-        return self.exhibit_name.pics.all()
 
 
 class Image(models.Model):
@@ -58,7 +51,11 @@ class Image(models.Model):
     name = models.CharField(max_length = 255)
     url = models.URLField(max_length = 200)
     featured = models.BooleanField(default = False)
-    exhibit_name = models.ForeignKey(Exhibit, related_name = 'pics', default = int, on_delete = models.DO_NOTHING)
+    
+    # Linked class
+    exhibit_name = models.ForeignKey(Exhibit, related_name = 'pics', default = int, blank = True, null = True, on_delete = models.DO_NOTHING)
+    
+    # File Upload
     # upload = models.ImageField(upload_to = "upload/", blank = True, max_length=255)
     # description = models.CharField()
     
@@ -67,9 +64,6 @@ class Image(models.Model):
     
     def __str__(self):
         return self.name
-    
-    def is_featured(self):
-        return self.featured
 
 
 class Comment(models.Model):
@@ -77,6 +71,8 @@ class Comment(models.Model):
     comment = models.TextField(blank = True, null = True)
     created = models.DateTimeField(auto_now = True)
     author = models.CharField(max_length = 255, blank = True, null = True)
+    
+    # Linked class
     exhibit = models.ForeignKey(Exhibit, related_name="responses", blank = True, null = True, on_delete = models.DO_NOTHING)
     
     class Meta:
@@ -88,22 +84,16 @@ class Comment(models.Model):
 
 class Rotation(models.Model):
     rotation_id = models.AutoField(primary_key = True)
-    current = models.ForeignKey(Exhibit, related_name='exhibit', default = 1, on_delete = models.CASCADE)
-    # upcoming = models.OneToOneField(Exhibit, on_delete = models.CASCADE, related_name = 'timestamp',)
     delay = models.TimeField(auto_now = False, auto_now_add = False)
+    
+    # Linked class
+    current = models.ForeignKey(Exhibit, related_name='exhibit', default = 1, on_delete = models.CASCADE)
     
     class Meta:
         verbose_name_plural = 'Rotations'
     
     def __str__(self):
         return self.current.exhibit_name
-    
-    def upcoming():
-        exhibits = []
-        for e in Exhibit.objects.all().order_by('timestamp'):
-            if not e.revealed and not e.is_featured():
-                exhibits.append({'name' : e.exhibit_name, 'created' : e.timestamp, 'id' : e.exhibit_id})
-        return exhibits[0]
 
 
 #*****Potential Post MVP*****
