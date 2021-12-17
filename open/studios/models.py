@@ -53,7 +53,7 @@ class Image(models.Model):
     featured = models.BooleanField(default = False)
     
     # Linked class
-    exhibit_name = models.ForeignKey(Exhibit, related_name = 'pics', default = int, blank = True, null = True, on_delete = models.DO_NOTHING)
+    exhibit_name = models.ForeignKey(Exhibit, related_name = 'pics', null = True, on_delete = models.DO_NOTHING)
     
     # File Upload
     # upload = models.ImageField(upload_to = "upload/", blank = True, max_length=255)
