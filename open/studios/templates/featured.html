@@ -8,34 +8,51 @@
             box-shadow: 3px 3px 20px 3px #888888;
         }
     </style>
-{% endblock %}
+{% endblock extrastyle %}
 
 {% block content %}
-<h2><u>{{ exhibit.exhibit_name }}</u></h2>
+<h2>{{ exhibit.exhibit_name }}</h2>
 
     <p>{{ exhibit.description }}</p>
     <br>
-    {% for image in images %}
-        <a href="{% url 'image' image.name %}">
-            <img src="{{ image.url }}" height="200" />
-        </a>    
-        <br>
-        <h6>image.name</h6>
-    {% endfor %}
+    <div style="display: flex;">
+        {% for image in images %}
+            <div style="display: flex;  padding: 5rem;">
+                <a href="{% url 'image' image.name %}">
+                    <img src="{{ image.url }}" height="200" />
+                </a>    
+                <br>
+                <h6 style="color: white;">{{ image.name }}</h6>
+            </div>
+        {% endfor %}
+    </div>
     <br>
 
-<h2>{{ exhibit.artist_name }}</h2>
-    <p>{{ exhibit.bio }}</p>
-    <h4>Share your comments</h4>
-    <form action="{% url 'featured' %}" method="POST">
-        {% csrf_token %} {{ form }}
-        <input type="submit" value="Submit" />
-    </form>
 
-<h3><u>Comments:</u></h3>
-    {% for comment in exhibit.comment.all %}
-        <ol>
-            <li>comment</li>
-        </ol>
-    {% endfor %}
+<h3 style="color: white;">{{ exhibit.artist_name }}</h3>
+    <p>{{ exhibit.bio }}</p>
+<div style="display: flex;">
+    <h4 style="color: white;">Share your comments</h4>
+    <form action="{% url 'featured' %}" method="POST">
+        {% csrf_token %}
+        <div style="display: block;">
+            <label>{{ form.comment.name|title }}</label><br>
+            <span>{{ form.comment.as_widget }}</span><br>
+            <label>{{ form.author.name|title }}</label><br>
+            <span>{{ form.author.as_widget }}</span>
+            <input type="submit" value="Submit" />
+        </div>
+    </form>
+    <div style="display: block">
+        <div style="display: inline-flex;">
+            {% for comment in comments %}
+                <div style="display: block; word-wrap: normal;">
+                    <ul>
+                        <li style="color: white; text-decoration: none;">{{ comment.comment }}<br>{{ comment.author }}</li>
+                    </ul>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
 {% endblock %}

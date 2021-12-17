@@ -1,7 +1,9 @@
+from django.http import response
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.conf import settings
+from django.forms import formset_factory
 from .models import *
 from .forms import *
 import datetime
@@ -265,8 +267,8 @@ def edit_exhibit(request, exhibit_id):
 
 def featured(request):
     if request.method == 'GET':
-        formset = CommentFormSet()
-        featured = Exhibit()
+        form = CommentForm()
+        # featured = Exhibit()
         for exhibit in Exhibit.objects.all().order_by('exhibit_id'):
             if exhibit.is_featured():
                 featured = exhibit
@@ -278,23 +280,30 @@ def featured(request):
                 'url' : image.url,
                 'name' : image.name})
         
-        comments = [{'author' : c.author, 'comment' : c.comment} for c in featured.responses.all().order_by('created')]
-        
-        return render(
-            request = request, 
-            template_name = 'featured.html', 
-            context = { 
+        comments = []
+        if len(featured.responses.all()) > 0:
+            for c in featured.responses.all().order_by('created'):
+                comments.append({'author' : c.author, 'comment' : c.comment})
+
+        return render(request = request, template_name = 'featured.html', context = { 
                     'exhibit': featured,
                     'images' : images, 
-                    'form':formset,
+                    'form': form,
                     'comments' : comments})
     
     if request.method == 'POST':    
-        formset = CommentFormSet(request.POST)
-        if formset.is_valid():
-            comment = formset.cleaned_data
-            comment.save()        
-        return render(request = request, template_name = 'featured.html')
+        form = CommentForm(data=request.POST)
+        featured = Exhibit()
+        for exhibit in Exhibit.objects.all().order_by('exhibit_id'):
+            if exhibit.is_featured():
+                featured = exhibit
+       
+        if form.is_valid():
+            comment = form.cleaned_data['comment']
+            author = form.cleaned_data['author']
+            created = datetime.datetime.now()
+            Comment.objects.create(comment=comment, created=created, author=author, exhibit=featured)
+            return HttpResponseRedirect(reverse('featured'))
 
 
 def upcoming(request):
