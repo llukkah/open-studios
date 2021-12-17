@@ -19,30 +19,57 @@
 </style>
 {% endblock %}
 {% block content %}
-    <h1>Create Exhibit</h1>
+    <h1>{{ action|title }} Exhibit</h1>
     <form action="url({{ action }})" method="POST">
         {% csrf_token %} 
-        {{ form }}
-        <section>
-            <span>
-                {{form.artist_name.name}} {{form.artist_name.as_widget}}
-            </span>
-            <span>
-                {{form.email.name}} {{form.email.as_widget}}
-            </span>
-        </section>
-        <div>
-        {{ image_formset.management_form }}
-        {{ image_formset }}
-        {{ tag_formset.management_form }}
-        {{ tag_formset}}
-        </div>
         
-        <button type="submit" href="{% url 'images.html' }"/>
+        <div style="display: flex; width: fit-content;">
+            <div style="display: inline-block; width: auto; padding-left: 4px; padding-right: 8px;">
+                <label for="form.artist_name.as_widget" style="padding-left: 4px; padding-right: 8px;">Artist Name:</label>{{ form.artist_name.as_widget }}
+            </div>
+            <div style="display: inline-block; width: auto; padding-left: 4px; padding-right: 8px;">
+                <label for="form.email.as_widget" style="padding-left: 4px; padding-right: 8px;">{{ form.email.name|title }}:</label>{{ form.email.as_widget }}
+            </div>
+        </div>
+            <br>
+            <div style="display: inline-block">
+                <label for="form.email.as_widget" style="padding-left: 4px; padding-right: 8px;">{{ form.website.name|title }}:</label>
+                {{ form.website.as_widget }}
+            </div>
+        
+        {{ form }}
+        {% if images != None %}
+            {% for image in images %}
+                <div>
+                    <img src="{{ image.url }}"/>
+                    <label>{{ image.name }}</label>{{ image.featured }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        <form action="addImage" method="Get">
+            <input type="button"  value="Add Image" />
+            <!-- onclick="window.location.href='';" -->
+        </form>
+        <form>
+            <input type="button" onclick="window.location.href='create/tag/';" value="Add Tag" />
+        </form>
+        
         {% if action == 'create' %}
             <input type="submit" name="create" value="Create" />
         {% else %}
             <input type="submit" name="save" value="Save" /><input type="submit" name="delete" value="Delete" />
         {% endif %}
     </form>
+    
 {% endblock %}
+
+<!-- <div class="image-formset">
+    {{ image_formset.management_form }}
+    {{ image_formset }}
+    <button type="submit" href="{% url 'create_image' }"/>
+</div>
+<div class="tag-formset">
+    {{ tag_formset.management_form }}
+    {{ tag_formset}}
+    <button type="submit" href="{% url 'create_tag' }"/>
+</div> -->

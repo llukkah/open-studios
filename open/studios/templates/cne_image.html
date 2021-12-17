@@ -1,0 +1,27 @@
+{% extends 'exhibit.html' %}
+{% block extrastyle %}
+<style>
+    input[type="text"],
+    input[type="url"],
+    /* input[type="file"] */
+</style>
+{% endblock %}
+{% block content %}
+    {% if action == 'create' %}
+        <form action="{% url 'addImage' %}" method="POST">
+    {% else %}   
+        <form action="{% url 'editImage' %}" method="POST">
+    {% endif %}
+
+    {% csrf_token %} 
+    <div style="diplay: inline-block;">{{ form }}</div>
+
+    {% if action == 'create' %}
+            <input type="submit" name="create" value="Create" />
+        </form>
+    {% else %}
+            <input type="submit" name="save" value="Save" />
+            <input type="submit" name="delete" value="Delete" />
+        </form>
+    {% endif %}
+{% endblock %}
