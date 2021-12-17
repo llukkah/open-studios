@@ -153,28 +153,34 @@ def create_image(request):
     if request.method == 'POST':
         formset = ImageFormSet(request.POST)
         if formset.is_valid():
-            name = formset.cleaned_data['name']
-            url = formset.cleaned_data['url']
-            featured = formset.cleaned_data['featured']
-            
-            Image.objects.update_or_create(
-                                        name = name, 
-                                        url = url, 
-                                        featured = featured
-            )
+            cnt = 0
+            for form in formset:
+                print(form)
+                name = form.cleaned_data['form-' + str(cnt) + '-name']
+                url = form.cleaned_data['form-' + str(cnt) + '-url']
+                featured = form.cleaned_data['form-' + str(cnt) + '-featured']
+                
+                Image.objects.update_or_create(
+                                            name = name, 
+                                            url = url, 
+                                            featured = featured
+                )
+                cnt += 1
             return HttpResponseRedirect(reverse('create'))
         else:
             return render(request, 'cne_image.html', context = {'form' : formset, 'action' : action})
 
 
 def edit_image(request, exhibit_id):
+    action = 'edit'
     if request.method == 'GET':
         image = Image.objects.get(exhibit_id)
         form = ImageForm(initial = {
             'name' : image.name, 
             'url' : image.url, 
             'exhibit' : image.exhibit})
-        return render(request, 'edit_image.html', context = {'iform' : form})
+        
+        return render(request, 'edit_image.html', context = {'iform' : form, 'action' : action})
     if request.method == 'POST':
         form = ImageForm(request.POST)
         if form.is_valid():
@@ -182,24 +188,29 @@ def edit_image(request, exhibit_id):
             url = form.cleaned_data['url']
             Image.objects.update_or_create(name = name, url = url)
             return HttpResponseRedirect(reverse('create'))
+        else:
+            return render(request, 'cne_image.html', context = {'form' : form, 'action' : action})
 
 def create_tag(request):
+    action = 'create'
     if request.method == 'GET':
         form = TagForm()
-        return render(request, 'tag.html', context = {'form' : form})
+        return render(request, 'tag.html', context = {'form' : form, 'action' : action})
     if request.method == 'POST':
         form = TagForm(request.POST)
         if form.is_valid():
             name = form.cleaned_data['name']
             Tag.objects.create(name = name)
             return HttpResponseRedirect(reverse('create'))
+        else:
+            return render(request, 'tag.html', context = {'form' : form, 'action' : action})
 
 def edit_tag(request, tag_id):
-    print(request.get_full_url())
+    action = 'edit'
     if request.method == 'GET':
         tag = Tag.objects.get(pk = tag_id)
         form = TagFormSet(initial = {'name' : tag.name})
-        return render(request, 'edit_tag.html', context = {'form' : form})
+        return render(request, 'edit_tag.html', context = {'form' : form, 'action' : action, 'tag' : tag})
     if request.method == 'POST':
         form = TagForm(request.POST)
         if form.is_valid():
@@ -210,7 +221,9 @@ def edit_tag(request, tag_id):
                 tags.save()
             elif 'delete' in request.POST:
                 Tag.objects.filter(pk = tag_id).delete()
-        return HttpResponseRedirect(reverse('create'))
+            return HttpResponseRedirect(reverse('create'))
+        else:
+            return render(request, 'tag.html', context = {'form' : form, 'action' : action})
 
 def create_exhibit(request):
     action = 'create'
@@ -284,7 +297,9 @@ def create_exhibit(request):
 
             exhibit[0].tags.set(tags)
             exhibit[0].images.set(images)
-        return HttpResponseRedirect(reverse('home'))
+            return HttpResponseRedirect(reverse('upcoming'))
+        else:
+            return render(request, 'exhibit.html', context = {'form' : form, 'tags' : tags, 'images' : images} )
 
 
 def edit_exhibit(request, exhibit_id):
@@ -308,6 +323,7 @@ def edit_exhibit(request, exhibit_id):
             'email' : exhibit.email, 
             'bio' : exhibit.bio,  
             'website' : exhibit.website, 
+            'exhibit_name' : exhibit.exhibit_name,
             'description' : exhibit.description, 
             'images' : art, 
             'tags' : tags})
@@ -316,68 +332,43 @@ def edit_exhibit(request, exhibit_id):
     
     if request.method == 'POST':
         form = ExhibitForm(request.POST)
+        exhibit = Exhibit.objects.filter(pk = exhibit_id)
         
+        tags = []
+        for tag in exhibit.tags.all():
+            tags.append(tag.tag_id)
+            
+        art = []
+        for image in exhibit.pics.all().order_by('image_id'):
+            if image.featured:
+                art.append(image.image_id)
         if form.is_valid():
-            artist_name = form.cleaned_data['artist_name']
-            email = form.cleaned_data['email']
-            bio = form.cleaned_data['bio']
-            website = form.cleaned_data['website']
-            exhibit_name = form.cleaned_data['exhibit_name']
-            description = form.cleaned_data['description']
-            tags = form.cleaned_data['tags']
-            images = form.cleaned_data['images']
-            timestamp = datetime.datetime.now()
-            
-            Exhibit.objects.create(
-                artist_name = artist_name,
-                email = email, bio = bio,
-                website = website,
-                exhibit_name = exhibit_name,
-                description = description,
-                timestamp = timestamp)
-            
-            exhibit = Exhibit.objects.all().order_by('-exhibit_id')
-            
-            exhibit[0].tags.set(tags)
-            exhibit[0].images.set(images)
-        
-        return HttpResponseRedirect(reverse('upcoming'))
-
-# def edit(request, post_id):
-#     if request.method == 'GET':
-#         # get Post object by its post_id
-#         post = Post.objects.get(pk = post_id)
-#         # get a list of tag_id from ManyRelatedManager object
-#         tags = []
-#         for tag in post.tags.all():
-#             tags.append(tag.tag_id)
-#         # pre-populate form with values of the post
-#         form = EditorForm(initial = { 'title': post.title, 'body': post.body, 'tags': tags, 'img_link': post.img_link })
-#         return render(request = request, template_name = 'edit.html', context = { 'form': form, 'id': post_id })
-#     if request.method == 'POST':    
-#         # capture POST data as EditorForm instance
-#         form = EditorForm(request.POST)
-#         # validate form
-#         if form.is_valid():
-#             # if form was submitted by clicking Save
-#             if 'save' in request.POST:
-#                 # get cleaned data from form
-#                 title = form.cleaned_data['title']
-#                 img_link = form.cleaned_data['img_link']
-#                 body = form.cleaned_data['body']
-#                 tags = form.cleaned_data['tags']
-#                 # filter QuerySet object by post_id
-#                 posts = Post.objects.filter(pk = post_id)
-#                 # update QuerySet object with cleaned title, body, img_link
-#                 posts.update(title = title, body = body, img_link = img_link)
-#                 # set cleaned tags to ManyRelatedManager object
-#                 posts[0].tags.set(tags)
-#             # if form was submitted by clicking Delete
-#             elif 'delete' in request.POST:
-#                 # filter QuerySet object by post_id and delete it
-#                 Post.objects.filter(pk = post_id).delete()
-#         # redirect to 'blog/'
-#         return HttpResponseRedirect(reverse('blog'))
+            if 'save' in request.POST:
+                artist_name = form.cleaned_data['artist_name']
+                email = form.cleaned_data['email']
+                bio = form.cleaned_data['bio']
+                website = form.cleaned_data['website']
+                exhibit_name = form.cleaned_data['exhibit_name']
+                description = form.cleaned_data['description']
+                tags = form.cleaned_data['tags']
+                images = form.cleaned_data['images']
+                timestamp = datetime.datetime.now()
+                
+                exhibit.update(
+                    artist_name = artist_name,
+                    email = email, bio = bio,
+                    website = website,
+                    exhibit_name = exhibit_name,
+                    description = description,
+                    timestamp = timestamp)
+                                
+                exhibit[0].tags.set(tags)
+                exhibit[0].images.set(images)
+            elif 'delete' in request.POST:
+                exhibit.delete()
+            return HttpResponseRedirect(reverse('upcoming'))
+        else:
+            return render(request, 'exhibit.html', context = {'form' : form} )
 
 
 # ---------------------------------------------------------------------------------------------------
