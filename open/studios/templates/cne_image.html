@@ -1,9 +1,6 @@
-{% extends 'exhibit.html' %}
+{% extends 'header.html' %}
 {% block extrastyle %}
 <style>
-    input[type="text"],
-    input[type="url"],
-    /* input[type="file"] */
 </style>
 {% endblock %}
 {% block content %}
@@ -14,7 +11,7 @@
     {% endif %}
 
     {% csrf_token %} 
-    <div style="diplay: inline-block;">{{ form }}</div>
+    <div style="diplay: inline-block;">{{ form.as_p }}</div>
 
     {% if action == 'create' %}
             <input type="submit" name="create" value="Create" />

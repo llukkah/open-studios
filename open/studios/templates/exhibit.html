@@ -38,21 +38,29 @@
             </div>
         
         {{ form }}
-        {% if images != None %}
+
+        {% if action == "edit" %}
             {% for image in images %}
                 <div>
                     <img src="{{ image.url }}"/>
-                    <label>{{ image.name }}</label>{{ image.featured }}
+                    <label>{{ image.name }}</label><button class="btn checkbox" value="{{ image.featured }}"/>
                 </div>
             {% endfor %}
         {% endif %}
-        <form action="addImage" method="Get">
-            <input type="button"  value="Add Image" />
-            <!-- onclick="window.location.href='';" -->
-        </form>
-        <form>
-            <input type="button" onclick="window.location.href='create/tag/';" value="Add Tag" />
-        </form>
+
+        {% if images != null %}
+            {% for image in images %}
+                <div>
+                    {% if image.featured %}
+                        <lavel><i>Featured Image</i></lavel>
+                    {% endif %}
+                    <img src="{{ image.url }}"/>
+                    <label>{{ image.name }}</label>
+                </div>
+            {% endfor %}
+        {% endif %}
+        <a href="{% url 'addImage' %}"><input type="button"  value="Add Image" /></a>
+        <a href="{% url 'addTag' %}"><input type="button"  value="Add Tag" /></a>
         
         {% if action == 'create' %}
             <input type="submit" name="create" value="Create" />
