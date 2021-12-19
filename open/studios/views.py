@@ -151,21 +151,30 @@ def create_image(request):
         return render(request, 'cne_image.html', context = {'form' : formset, 'action' : action})
     
     if request.method == 'POST':
+        items = cleaned = []
+        tmp = {}
         formset = ImageFormSet(request.POST)
         if formset.is_valid():
-            cnt = 0
             for form in formset:
-                print(form)
-                name = form.cleaned_data['form-' + str(cnt) + '-name']
-                url = form.cleaned_data['form-' + str(cnt) + '-url']
-                featured = form.cleaned_data['form-' + str(cnt) + '-featured']
+                cleaned.append(form.cleaned_data)
                 
-                Image.objects.update_or_create(
-                                            name = name, 
-                                            url = url, 
-                                            featured = featured
-                )
-                cnt += 1
+            for itm in cleaned:
+                for key in itm:
+                    if 'featured' in key:
+                        tmp[key] = bool(itm[key])
+                    else:
+                        tmp[key] = itm[key]
+                
+                items.append(tmp)
+            print()
+            print(items)
+            print()
+            for item in items:
+                print(item)
+                if item['name'] == '':
+                    items.remove(item)
+                Image.objects.create(name = item['name'], url = item['url'], featured = item['featured'])
+            
             return HttpResponseRedirect(reverse('create'))
         else:
             return render(request, 'cne_image.html', context = {'form' : formset, 'action' : action})

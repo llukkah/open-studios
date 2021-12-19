@@ -22,27 +22,36 @@
     <h1>{{ action|title }} Exhibit</h1>
     <form action="url({{ action }})" method="POST">
         {% csrf_token %} 
-        
-        <div style="display: flex; width: fit-content;">
-            <div style="display: inline-block; width: auto; padding-left: 4px; padding-right: 8px;">
-                <label for="form.artist_name.as_widget" style="padding-left: 4px; padding-right: 8px;">Artist Name:</label>{{ form.artist_name.as_widget }}
-            </div>
-            <div style="display: inline-block; width: auto; padding-left: 4px; padding-right: 8px;">
-                <label for="form.email.as_widget" style="padding-left: 4px; padding-right: 8px;">{{ form.email.name|title }}:</label>{{ form.email.as_widget }}
-            </div>
+        <div class="column" style="size: 100%">
+            
+                <p>
+                    <div style="display: block; width: auto; padding-left: 4px; padding-right: 4px;">
+                        <label style="position: relative; padding-left: 4px; padding-right: 5px;">
+                            Artist Name:
+                        </label>
+                        <span>
+                            {{ form.artist_name.as_widget }}
+                        </span>
+                    </div>
+                </p>
+                <p>
+                    <div style="display: inline-block; width: auto; padding-left: 4px; padding-right: 4px;">
+                        <label for="form.email.as_widget" style="padding-left: 4px; padding-right: 5px;">{{ form.email.name|title }}:</label>{{ form.email.as_widget }}
+                    </div>
+                </p>
         </div>
-            <br>
-            <div style="display: inline-block">
-                <label for="form.email.as_widget" style="padding-left: 4px; padding-right: 8px;">{{ form.website.name|title }}:</label>
-                {{ form.website.as_widget }}
-            </div>
+        <br>
+        <div style="display: inline-block">
+            <label for="form.email.as_widget" style="padding-left: 4px; padding-right: 8px;">{{ form.website.name|title }}:</label>
+            {{ form.website.as_widget }}
+        </div>
         
         {{ form }}
 
         {% if action == "edit" %}
             {% for image in images %}
                 <div>
-                    <img src="{{ image.url }}"/>
+                    <img src="{{ image.url }}" style="width: 30px"/>
                     <label>{{ image.name }}</label><button class="btn checkbox" value="{{ image.featured }}"/>
                 </div>
             {% endfor %}
@@ -50,11 +59,11 @@
 
         {% if images != null %}
             {% for image in images %}
-                <div>
+                <div style="margin-top: 10px; margin-bottom: 12px;">
                     {% if image.featured %}
-                        <lavel><i>Featured Image</i></lavel>
+                        <lavel><i>Featured Image</i></lavel><br>
                     {% endif %}
-                    <img src="{{ image.url }}"/>
+                    <img src="{{ image.url }}" style="width: 150px"/><br>
                     <label>{{ image.name }}</label>
                 </div>
             {% endfor %}
