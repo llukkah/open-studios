@@ -114,27 +114,30 @@ def upcoming(request):
 
 def about(request):
     profiles = [{
-        'name' : 'Llukkah', 
-            'image' : 'llukkah.jpeg', 
+        'name' : 'Llukkah Delos Reyes', 
+            'image' : '/static/media/images/llukkah.jpg', 
             'git' : 'https://www.github.com/llukkah',
             'linkedin' : 'https://www.linkedin.com/in/llukkahrey?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BPVPIS6RuS1mFA2Oz%2BiCvTA%3D%3D'
         }, 
-        {'name' : 'Christopher',
-            'image' : 'chris.jpeg', 
+        {'name' : 'Chris Linton',
+            'image' : '/static/media/images/chris.jpg', 
             'git' : 'https://github.com/Kwyjib0',
             'linkedin' : 'https://www.linkedin.com/in/christopher-linton1?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3B90XwWnipSSGg%2Bj1Y%2BC%2BfEw%3D%3D'
         }, 
-        {'name' : 'Lee',
-            'image' : 'lee.jpeg', 
+        {'name' : 'Lee Harvey',
+            'image' : '/static/media/images/lee.jpg', 
             'git' : 'https://github.com/VirtDev337', 
             'linkedin' : 'https://www.linkedin.com/in/lee-harvey-jr?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BIvwSNWutSqaVtbFzP0%2BtHg%3D%3D'
         }, 
-        {'name' : 'Jason',
-            'image' : 'jason.jpeg',
+        {'name' : 'Jason Rolle',
+            'image' : '/static/media/images/jason.jpg',
             'git' : 'https://github.com/JasonRolle1990',
             'linkedin' : 'https://www.linkedin.com/in/jasonrolle1990?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3Bculc7Op7S3esL9F80ZfMhw%3D%3D'
         }]
-    return render(request, 'about.html', {'profiles' : profiles})
+
+    links = [{'name': 'Facebook', 'icon': '/static/media/images/facebook.png', 'site': 'https://www.facebook.com'}, {'name': 'Instagram', 'icon': '/static/media/images/instagram.png', 'site': 'https://www.instagram.com/'}, {'name': 'Twitter', 'icon': '/static/media/images/twitter.png', 'site': 'https://twitter.com/'}
+    ]
+    return render(request, 'about.html', {'profiles' : profiles, 'links': links})
 
 
 
