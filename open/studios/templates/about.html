@@ -1,25 +1,39 @@
 {% extends 'header.html' %}
 
 {% load static %}
+
+{% block extrastyle %}
+    <style>
+        p {
+            margin-left: 20px; 
+            margin-right: 20px
+        }
+        h2 {
+            color: blue; 
+            margin-left: 15px;
+        }
+    </style>
+{% endblock extrastyle %}
 {% block content %}
 
-<h1 style="text-align: center;">About</h1>
+<h1 style="text-align: center;">About Open Studios</h1>
 <br>
 <p>
 
-    The concept of Open Studios came from a yearly event in New York where artists of all kinds opened their per sonal studios for all to enjoy, experience and witness. With this sense of community, comradery and support there was  no need to navigate politics and contracts of a gallery or museum for an artist to be showcased. Inspirit of this move ment, Open Studios has gone digital ! Llukkah, Lee Harvey, Christopher Linton and Jason Rolle is taking this opportu nity to give artists found in all corners and crevices of the world a platform to have a voice and their vision a chance to  be seen. This is the ideal platform for the artist that you haven't heard of... yet. 
-Through the Open Studios app, artists will be able to view available exhibits to attend, create, edit and delete  exhibits of their own. 
+    The concept of Open Studios came from a yearly event in New York where artists of all kinds opened their personal studios for all to enjoy, experience and witness. With this sense of community, comradery and support there was  no need to navigate politics and contracts of a gallery or museum for an artist to be showcased. In the spirit of this movement, Open Studios has gone digital! Llukkah Delos Reyes, Lee Harvey, Chris Linton, and Jason Rolle are taking this opportunity to give artists a platform to have a voice and share their vision with the world. This is the ideal platform for the artist that you haven't heard of... yet. Through the Open Studios app, artists will be able to view and attend other exhibits, and create, edit, and delete exhibits of their own. 
 
 </p>
 <center>
     {% for profile in profiles %}
         <div style="display: inline-flex;">
             <div style="display: block; padding: 5rem;">
-                <img width="200" style="margin-top: 10px; margin-bottom: 0px;" src="{{profile.image}}">
+                <img width="200" style="margin-top: 10px; border-radius: 50%;" src="{{ profile.image }}">
                 <br>
-                <a href="{{ profile.git }}" style="padding-bottom: 10px; padding-top: 0px;">{{profile.name}} Github</a>
+                <label style="font-size:xx-large;">{{ profile.name }}</label>
                 <br>
-                <a href="{{ profile.linkedin }}" style="margin-bottm: 10px;">{{profile.name}} LinkedIn</a>
+                <a href="{{ profile.git }}" style="padding-bottom: 10px; padding-top: 0px;">Github</a>
+                <br>
+                <a href="{{ profile.linkedin }}" style="margin-bottom: 10px;">LinkedIn</a>
             </div>
         </div>
     {% endfor %}
@@ -35,7 +49,17 @@ Justice Through Code, a semester-long coding and interpersonal skills intensive 
 Throughout the semester, students learn the fundamentals of Python and other computer science basics. They also receive career coaching, public speaking training, and learn negotiation skills and how to write a resume. Once students complete the program, Justice Through Code, which held its first cohort last year with just over 30 students, puts them in touch with its partners for paid internships and jobs.
 Justice Through Code works with a handful of tech partners to support its program and its students. Amazon Web Services, for example, provides laptops to students who need them while technologists from Google, Slack and Coursera speak to students on their experiences in tech.
 People who have spent time in jail or prison often face barriers to accessing stable jobs, housing and financial services. These types of barriers are a key driver of recidivism for the more than 600,000 people who are released from prison each year. Between 2005 and 2014, an estimated 68% of people released in 2005 were arrested again within three years. Within nine years, 83% of those released in 2005 were rearrested, according to the U.S. Department of Justice’s Bureau of Justice Statistics.
-
 </p>
+
+<br>
+<h2>Follow Us:</h2>
+{% for link in links %}
+    <div style="display: inline-flex;">
+        <div style="display: block; padding: 1rem;">
+            <a href="{{ link.site }}"><img width="80" style="border-radius: 15%;" src="{{ link.icon }}"></a>            
+        </div>
+    </div>
+{% endfor %}
+<h2>Email Us: open.studios@mail.com</h2>
 
 {% endblock %}
