@@ -16,7 +16,7 @@ class ImageForm(forms.Form):
             'url', 
             'featured')
 
-ImageFormSet = formset_factory(ImageForm, extra = 20, max_num = 20)
+ImageFormSet = formset_factory(ImageForm, extra = 10, max_num = 20)
     # upload = forms.ClearableFileInput()
 
 

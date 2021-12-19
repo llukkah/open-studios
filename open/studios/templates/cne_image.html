@@ -11,8 +11,14 @@
     {% endif %}
 
     {% csrf_token %} 
-    <div style="diplay: inline-block;">{{ form.as_p }}</div>
+    {{ form.management_form }}
 
+    {% for f in form %}
+        <div style="diplay: block;">
+            <p><label style="padding-left: 8px; padding-right: 4px;">{{ f.name.name|title }}:</label><span>{{ f.name.as_widget }}</span></p>
+            <p><label style="padding-left: 4px; padding-right: 8px;">{{ f.url.name|title }}:</label><span>{{ f.url.as_widget }}</span></p><label style="display: flex; float: left; margin-left: 20rem; padding-left: 4px; padding-right: 8px;">{{ f.featured.name|title }}:</label>{{ f.featured.as_widget }}
+        </div>
+    {% endfor %}
     {% if action == 'create' %}
             <input type="submit" name="create" value="Create" />
         </form>
