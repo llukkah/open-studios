@@ -20,7 +20,7 @@ def main(request):
     images = []
 
     featured = get_featured()
-    next_exhibit = next()
+    next_exhibit = coming_exhibit()
 
     today = datetime.date.today()
     time_featured = today - featured.featured_date
@@ -31,7 +31,11 @@ def main(request):
         next_exhibit.add_featured()
         next_exhibit.save()
         featured = next_exhibit
-        next_exhibit = next()
+        if coming_exhibit() != None:
+            next_exhibit = coming_exhibit()
+        else:
+            reset()
+
 
     for image in featured.pics.all().order_by('-image_id'):
         if image.featured:
@@ -401,16 +405,18 @@ def get_featured():
             featured = exhibit
     return featured
 
-def next():
+def coming_exhibit():
     # exhibits = []
     if len(Exhibit.objects.all()) > 1:
         for exhibit in Exhibit.objects.all().order_by('-timestamp'):
             if not exhibit.revealed and not exhibit.featured:
-                next_exhibit = exhibit
+                next_exhibit = exhibit            
         return next_exhibit
+
     else:
         next_exhibit = None
         return next_exhibit
+
             # exhibits.append({
             #     'name' : e.exhibit_name, 
             #     'created' : e.timestamp, 
@@ -420,30 +426,19 @@ def next():
             #     'revealed' : e.revealed})
     # return exhibits[0]
 
-
-
-
-''' ****** possible additions for comments on each image ******
-    art = comments = []
-    for exhibit in exhibits:
-        for i in exhibit.pics.all().order_by('-image_id'):
-            if i.featured:
-                art.append({
-                        'url' : i.url, 
-                        'name' : i.name, 
-                        'id' : i.image_id})
-    return render(request = request, template_name = 'upcoming.html', context = {
-                            'exhibits' : exhibits, 
-                            'images' : art,
-                            'comments' : comments})
-'''
-
-
+def reset():
+    cnt = 0
+    for exhibit in Exhibit.objects.all().order_by('exhibit_id'):
+        if cnt == 0:
+            exhibit.add_featured()
+        else:
+            exhibit.remove_featured()
+            exhibit.revealed = False
+        cnt += 1
 
 
 def register(request):
     pass
-
 
 def login(request):
     pass
