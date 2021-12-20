@@ -20,9 +20,12 @@
 {% endblock %}
 {% block content %}
     <h1>{{ action|title }} Exhibit</h1>
-    <form action="url({{ action }})" method="POST">
-        {% csrf_token %} 
-        <div class="column" style="size: 100%">
+    {% if action == 'create' %}
+        <form action="{% url 'create' %}" method="POST">
+    {% else %}   
+        <form action="{% url 'edit' %}" method="POST">
+    {% endif %} 
+        <!-- <div class="column" style="size: 100%">
             
                 <p>
                     <div style="display: block; width: auto; padding-left: 4px; padding-right: 4px;">
@@ -44,7 +47,7 @@
         <div style="display: inline-block">
             <label for="form.email.as_widget" style="padding-left: 4px; padding-right: 8px;">{{ form.website.name|title }}:</label>
             {{ form.website.as_widget }}
-        </div>
+        </div> -->
         
         {{ form }}
 

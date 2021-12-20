@@ -43,6 +43,7 @@ class Exhibit(models.Model):
     
     def remove_featured(self):
         self.featured = False
+        self.featured_date = None
         self.revealed = True
 
 
