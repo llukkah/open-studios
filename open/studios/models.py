@@ -69,7 +69,7 @@ class Image(models.Model):
 class Comment(models.Model):
     comment_id = models.AutoField(primary_key = True)
     comment = models.TextField(blank = True, null = True)
-    # created = models.DateTimeField(auto_now = True)
+    created = models.DateTimeField(auto_now_add = True)
     author = models.CharField(max_length = 255, blank = True, null = True)
     
     # Linked class
