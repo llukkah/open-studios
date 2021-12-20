@@ -404,7 +404,7 @@ def get_featured():
 def next():
     # exhibits = []
     if len(Exhibit.objects.all()) > 1:
-        for exhibit in Exhibit.objects.all().order_by('timestamp'):
+        for exhibit in Exhibit.objects.all().order_by('-timestamp'):
             if not exhibit.revealed and not exhibit.featured:
                 next_exhibit = exhibit
         return next_exhibit
