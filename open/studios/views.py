@@ -1,3 +1,4 @@
+from django.db.models.fields import NullBooleanField
 from django.http import response
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
@@ -17,13 +18,21 @@ import datetime
 def main(request):
     featured = next_exhibit = ''
     images = []
-    for exhibit in Exhibit.objects.all().order_by('timestamp'):
-        if exhibit.featured:
-            featured = exhibit
-        if len(Exhibit.objects.all()) > 1:
-            if not exhibit.revealed and not exhibit.featured:
-                next_exhibit = exhibit
+
+    featured = get_featured()
+    next_exhibit = next()
+
+    today = datetime.date.today()
+    time_featured = today - featured.featured_date
     
+    if (time_featured.days > 1):
+        featured.remove_featured()
+        featured.save()
+        next_exhibit.add_featured()
+        next_exhibit.save()
+        featured = next_exhibit
+        next_exhibit = next()
+
     for image in featured.pics.all().order_by('-image_id'):
         if image.featured:
             images.append({
@@ -87,7 +96,7 @@ def featured(request):
         if form.is_valid():
             comment = form.cleaned_data['comment']
             author = form.cleaned_data['author']
-            created = datetime.datetime.now()
+            created = datetime.date.today()
             Comment.objects.create(
                                 comment = comment, 
                                 created = created, 
@@ -294,7 +303,7 @@ def create_exhibit(request):
             description = form.cleaned_data['description']
             tags = form.cleaned_data['tags']
             images = form.cleaned_data['images']
-            timestamp = datetime.datetime.now()
+            # timestamp = datetime.date.today()
 
             Exhibit.objects.create(
                 artist_name = artist_name,
@@ -302,8 +311,8 @@ def create_exhibit(request):
                 bio = bio,
                 website = website,
                 exhibit_name = exhibit_name,
-                description = description,
-                timestamp = timestamp)
+                description = description)
+                # timestamp = datetime.date.today()
 
             exhibit = Exhibit.objects.all().order_by('-exhibit_id')
 
@@ -364,16 +373,15 @@ def edit_exhibit(request, exhibit_id):
                 description = form.cleaned_data['description']
                 tags = form.cleaned_data['tags']
                 images = form.cleaned_data['images']
-                timestamp = datetime.datetime.now()
+                # timestamp = datetime.date.today()
                 
                 exhibit.update(
                     artist_name = artist_name,
                     email = email, bio = bio,
                     website = website,
                     exhibit_name = exhibit_name,
-                    description = description,
-                    timestamp = timestamp)
-                                
+                    description = description)
+                    # removed timestamp = timestamp  
                 exhibit[0].tags.set(tags)
                 exhibit[0].images.set(images)
             elif 'delete' in request.POST:
@@ -387,19 +395,30 @@ def edit_exhibit(request, exhibit_id):
 # ------------------------------------------------- Logic -------------------------------------------
 # ---------------------------------------------------------------------------------------------------
 
+def get_featured():
+    for exhibit in Exhibit.objects.all().order_by('timestamp'):
+        if exhibit.featured:
+            featured = exhibit
+    return featured
 
-def next_exhibit():
-    exhibits = []
-    for e in Exhibit.objects.all().order_by('timestamp'):
-        if not e.revealed and not e.featured:
-            exhibits.append({
-                'name' : e.exhibit_name, 
-                'created' : e.timestamp, 
-                'id' : e.exhibit_id,
-                'featured' : e.featured,
-                'featured_date' : e.featured_date,
-                'revealed' : e.revealed})
-    return exhibits[0]
+def next():
+    # exhibits = []
+    if len(Exhibit.objects.all()) > 1:
+        for exhibit in Exhibit.objects.all().order_by('timestamp'):
+            if not exhibit.revealed and not exhibit.featured:
+                next_exhibit = exhibit
+        return next_exhibit
+    else:
+        next_exhibit = None
+        return next_exhibit
+            # exhibits.append({
+            #     'name' : e.exhibit_name, 
+            #     'created' : e.timestamp, 
+            #     'id' : e.exhibit_id,
+            #     'featured' : e.featured,
+            #     'featured_date' : e.featured_date,
+            #     'revealed' : e.revealed})
+    # return exhibits[0]
 
 
 

@@ -17,7 +17,7 @@ class Exhibit(models.Model):
     exhibit_id = models.AutoField(primary_key = True)
     exhibit_name = models.CharField(max_length = 255)
     description = models.TextField()
-    timestamp = models.DateField(auto_now = True, auto_now_add = False)
+    timestamp = models.DateField(auto_now = False, auto_now_add = True)
     featured_date = models.DateField(auto_now = False, blank = True, null = True)
     featured = models.BooleanField(default = False, blank = True)
     revealed = models.BooleanField(default = False, blank = True)
@@ -39,7 +39,7 @@ class Exhibit(models.Model):
     
     def add_featured(self):
         self.featured = True
-        self.featured_date = datetime.datetime.now()
+        self.featured_date = datetime.date.today()
     
     def remove_featured(self):
         self.featured = False
@@ -69,7 +69,7 @@ class Image(models.Model):
 class Comment(models.Model):
     comment_id = models.AutoField(primary_key = True)
     comment = models.TextField(blank = True, null = True)
-    created = models.DateTimeField(auto_now = True)
+    # created = models.DateTimeField(auto_now = True)
     author = models.CharField(max_length = 255, blank = True, null = True)
     
     # Linked class
@@ -82,18 +82,18 @@ class Comment(models.Model):
         return self.comment
 
 
-class Rotation(models.Model):
-    rotation_id = models.AutoField(primary_key = True)
-    delay = models.TimeField(auto_now = False, auto_now_add = False)
+# class Rotation(models.Model):
+#     rotation_id = models.AutoField(primary_key = True)
+#     delay = models.TimeField(auto_now = False, auto_now_add = False)
     
-    # Linked class
-    current = models.ForeignKey(Exhibit, related_name='exhibit', default = 1, on_delete = models.CASCADE)
+#     # Linked class
+#     current = models.ForeignKey(Exhibit, related_name='exhibit', default = 1, on_delete = models.CASCADE)
     
-    class Meta:
-        verbose_name_plural = 'Rotations'
+#     class Meta:
+#         verbose_name_plural = 'Rotations'
     
-    def __str__(self):
-        return self.current.exhibit_name
+#     def __str__(self):
+#         return self.current.exhibit_name
 
 
 #*****Potential Post MVP*****
