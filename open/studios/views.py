@@ -18,10 +18,10 @@ import datetime
 def main(request):
     featured = next_exhibit = ''
     images = []
-
+    
     featured = get_featured()
     next_exhibit = coming_exhibit()
-
+    
     today = datetime.date.today()
     time_featured = today - featured.featured_date
     
@@ -35,8 +35,7 @@ def main(request):
             next_exhibit = coming_exhibit()
         else:
             reset()
-
-
+    
     for image in featured.pics.all().order_by('-image_id'):
         if image.featured:
             images.append({
@@ -55,6 +54,7 @@ def main(request):
 def show_image(request, name):
     if request.method == 'GET':
         image = Image()
+        
         for pic in Image.objects.all().order_by('image_id'):
             if pic.name == name:
                 image = pic
@@ -65,6 +65,7 @@ def show_image(request, name):
 def featured(request):
     if request.method == 'GET':
         form = CommentForm()
+        
         # featured = Exhibit()
         for exhibit in Exhibit.objects.all().order_by('exhibit_id'):
             if exhibit.featured:
@@ -83,7 +84,7 @@ def featured(request):
                 comments.append({
                     'author' : c.author, 
                     'comment' : c.comment})
-
+        
         return render(request = request, template_name = 'featured.html', context = { 
                     'exhibit': featured,
                     'images' : images, 
@@ -163,33 +164,37 @@ def about(request):
 def create_image(request):
     action = 'create'
     if request.method == 'GET':
-        formset = ImageFormSet()
+        formset = ImageForm()
         return render(request, 'cne_image.html', context = {'form' : formset, 'action' : action})
     
     if request.method == 'POST':
-        items = cleaned = []
-        tmp = {}
-        formset = ImageFormSet(request.POST)
+        # items = []
+        # cleaned = []
+        # tmp = {}
+        formset = ImageForm(request.POST)
         if formset.is_valid():
-            for form in formset:
-                cleaned.append(form.cleaned_data)
+            # for form in formset:
+            #     cleaned.append(form.cleaned_data)
                 
-            for itm in cleaned:
-                for key in itm:
-                    if 'featured' in key:
-                        tmp[key] = bool(itm[key])
-                    else:
-                        tmp[key] = itm[key]
-                
-                items.append(tmp)
-            print()
-            print(items)
-            print()
-            for item in items:
-                print(item)
-                if item['name'] == '':
-                    items.remove(item)
-                Image.objects.create(name = item['name'], url = item['url'], featured = item['featured'])
+            # for itm in cleaned:
+            #     for key in itm:
+            #         if 'featured' in key:
+            #             tmp[key] = bool(itm[key])
+            #         else:
+            #             tmp[key] = itm[key]
+            #     items.append(tmp)
+            # print()
+            # print(items)
+            # print()
+            # for item in items:
+            #     print(item)
+            #     if item['name'] == '':
+            #         items.remove(item)
+            #     Image.objects.create(name = item['name'], url = item['url'], featured = item['featured'])
+            name = formset.cleaned_data['name']
+            url = formset.cleaned_data['url']
+            featured = formset.cleaned_data['featured']
+            Image.objects.create(name = name, url = url, featured = featured)
             
             return HttpResponseRedirect(reverse('create'))
         else:
@@ -203,7 +208,7 @@ def edit_image(request, exhibit_id):
         form = ImageForm(initial = {
             'name' : image.name, 
             'url' : image.url, 
-            'exhibit' : image.exhibit})
+            'featured' : image.featured})
         
         return render(request, 'edit_image.html', context = {'iform' : form, 'action' : action})
     if request.method == 'POST':
@@ -211,7 +216,8 @@ def edit_image(request, exhibit_id):
         if form.is_valid():
             name = form.cleaned_data['name']
             url = form.cleaned_data['url']
-            Image.objects.update_or_create(name = name, url = url)
+            featured = form.cleaned_data['featured']
+            Image.objects.update_or_create(name = name, url = url, featured = featured)
             return HttpResponseRedirect(reverse('create'))
         else:
             return render(request, 'cne_image.html', context = {'form' : form, 'action' : action})
@@ -425,6 +431,7 @@ def coming_exhibit():
             #     'featured_date' : e.featured_date,
             #     'revealed' : e.revealed})
     # return exhibits[0]
+
 
 def reset():
     cnt = 0

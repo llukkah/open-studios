@@ -7,6 +7,14 @@
             padding: 10px;
             box-shadow: 3px 3px 20px 3px #888888;
         }
+        .box {
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+        }
+        .comment-box {
+        display: grid;
+        grid-template-columns: repeat(auto-fill,minmax(160px, 1fr));
     </style>
 {% endblock extrastyle %}
 
@@ -15,24 +23,25 @@
 
     <p>{{ exhibit.description }}</p>
     <br>
-    <div style="display: flex;">
+    <div class="box">
         {% for image in images %}
-            <div style="display: flex;  padding: 5rem;">
+            <div style="display: block;  padding: 5rem;">
                 <a href="{% url 'image' image.name %}">
-                    <img src="{{ image.url }}" height="200" />
+                    <img src="{{ image.url }}" height="300" />
                 </a>    
                 <br>
-                <h6 style="color: white;">{{ image.name }}</h6>
+                <h6 style="color: white; font-size: larger; margin-top: 8px;">{{ image.name }}</h6>
             </div>
         {% endfor %}
     </div>
     <br>
 
 
-<h3 style="color: white;">{{ exhibit.artist_name }}</h3>
+<h3 style="color: white; font-size: 20px">{{ exhibit.artist_name }}</h3>
     <p>{{ exhibit.bio }}</p>
-<div style="display: flex;">
-    <h4 style="color: white;">Share your comments</h4>
+    <hr>
+    <h2 style="color: white;">Share Your Comments:</h2>
+<div class="box">
     <form action="{% url 'featured' %}" method="POST">
         {% csrf_token %}
         <div style="display: block;">
@@ -43,12 +52,13 @@
             <input type="submit" value="Submit" />
         </div>
     </form>
-    <div style="display: block">
+    <hr style="margin-left: 80px; margin-right: 20px;">
+    <div class="comment-box">
         <div style="display: inline-flex;">
             {% for comment in comments %}
                 <div style="display: block; word-wrap: normal;">
                     <ul>
-                        <li style="color: white; text-decoration: none;">{{ comment.comment }}<br>{{ comment.author }}</li>
+                        <li style="color: white; text-decoration: none; font-size: large;">{{ comment.comment }}<br>{{ comment.author }}</li>
                     </ul>
                 </div>
             {% endfor %}
