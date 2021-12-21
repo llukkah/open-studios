@@ -16,6 +16,19 @@
         position: absolute;
         margin-left: 150px;
     }
+    .featured{
+        color:rgb(0, 0, 0); 
+        padding: 4px;
+        background-color: #add8e6; 
+        margin: 20px;
+        border-radius: 10px;
+        font-size: .8rem;
+    }
+    .box {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+    }
 </style>
 {% endblock %}
 {% block content %}
@@ -23,7 +36,7 @@
     {% if action == 'create' %}
         <form action="{% url 'create' %}" method="POST">
     {% else %}   
-        <form action="{% url 'edit' %}" method="POST">
+        <form action="{% url 'edit' exhibit.exhibit_id %}" method="POST">
     {% endif %} 
         <!-- <div class="column" style="size: 100%">
             
@@ -48,29 +61,33 @@
             <label for="form.email.as_widget" style="padding-left: 4px; padding-right: 8px;">{{ form.website.name|title }}:</label>
             {{ form.website.as_widget }}
         </div> -->
-        
+        {% csrf_token %} 
         {{ form }}
+        <div class="box">
+            {% if action == "edit" %}
+                {% for image in exhibit.pics.all %}
+                    <div style="display: block;  padding: 5rem;">
+                        {% if image.featured %}
+                            <span class="featured"><i>Featured Image</i></span>
+                        {% endif %}
+                        <br><img id="img" src="{{ image.url }}" style="height: 100px"/><br>
+                        <label for="img">{{ image.name }}</label>
+                    </div>
+                {% endfor %}
+            {% endif %}
 
-        {% if action == "edit" %}
-            {% for image in images %}
-                <div>
-                    <img src="{{ image.url }}" style="width: 30px"/>
-                    <label>{{ image.name }}</label><button class="btn checkbox" value="{{ image.featured }}"/>
-                </div>
-            {% endfor %}
-        {% endif %}
-
-        {% if images != null %}
-            {% for image in images %}
-                <div style="margin-top: 10px; margin-bottom: 12px;">
-                    {% if image.featured %}
-                        <lavel><i>Featured Image</i></lavel><br>
-                    {% endif %}
-                    <img src="{{ image.url }}" style="width: 150px"/><br>
-                    <label>{{ image.name }}</label>
-                </div>
-            {% endfor %}
-        {% endif %}
+            {% if images != null %}
+                {% for image in images %}
+                    <div style="display: block; margin-top: 10px; margin-bottom: 12px;">
+                        {% if image.featured %}
+                            <span class="featured"><i>Featured Image</i></span><br>
+                        {% endif %}
+                        <img src="{{ image.url }}" style="width: 150px"/><br>
+                        <label>{{ image.name }}</label>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
         <a href="{% url 'addImage' %}"><input type="button"  value="Add Image" /></a>
         <a href="{% url 'addTag' %}"><input type="button"  value="Add Tag" /></a>
         

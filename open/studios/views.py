@@ -112,7 +112,10 @@ def featured(request):
 
 def upcoming(request):
     if request.method == 'GET':
-        exhibits = Exhibit.objects.exclude(featured=True).exclude(revealed = True)
+        exhibits = Exhibit.objects.exclude(featured = True).exclude(revealed = True)
+        print()
+        print(request.path)
+        print()
         art = []
         for exhibit in exhibits:
             for i in exhibit.pics.all():
@@ -303,6 +306,9 @@ def create_exhibit(request):
         #         tag.save()
         #         tags.append(tag)
         #     form.update(tags)
+        images = []
+        for image in Image.objects.filter(exhibit_name = None).order_by('image_id'):
+            images.append(image)
         
         if form.is_valid():
             artist_name = form.cleaned_data['artist_name']
@@ -312,9 +318,7 @@ def create_exhibit(request):
             exhibit_name = form.cleaned_data['exhibit_name']
             description = form.cleaned_data['description']
             tags = form.cleaned_data['tags']
-            images = form.cleaned_data['images']
-            # timestamp = datetime.date.today()
-
+            
             Exhibit.objects.create(
                 artist_name = artist_name,
                 email = email, 
@@ -322,12 +326,14 @@ def create_exhibit(request):
                 website = website,
                 exhibit_name = exhibit_name,
                 description = description)
-                # timestamp = datetime.date.today()
-
+            
             exhibit = Exhibit.objects.all().order_by('-exhibit_id')
-
+            
             exhibit[0].tags.set(tags)
-            exhibit[0].images.set(images)
+            
+            for image in images:
+                exhibit[0].pics.add(image)
+            
             return HttpResponseRedirect(reverse('upcoming'))
         else:
             return render(request, 'exhibit.html', context = {'form' : form, 'tags' : tags, 'images' : images} )
@@ -347,7 +353,10 @@ def edit_exhibit(request, exhibit_id):
         for image in exhibit.pics.all().order_by('image_id'):
             if image.featured:
                 art.append(image.image_id)
-                
+        
+        images = []
+        for image in Image.objects.filter(exhibit_name = None).order_by('image_id'):
+            images.append(image)
         
         form = ExhibitForm(initial = {
             'artist_name' : exhibit.artist_name, 
@@ -359,20 +368,25 @@ def edit_exhibit(request, exhibit_id):
             'images' : art, 
             'tags' : tags})
         
-        return render(request, 'exhibit.html', context = {'form' : form, 'action' : action})
+        return render(request, 'exhibit.html', context = {'form' : form, 'exhibit' : exhibit, 'action' : action, 'images' : art})
     
     if request.method == 'POST':
         form = ExhibitForm(request.POST)
-        exhibit = Exhibit.objects.filter(pk = exhibit_id)
+        exhibit = Exhibit.objects.get(pk = exhibit_id)
         
         tags = []
         for tag in exhibit.tags.all():
             tags.append(tag.tag_id)
-            
+        
         art = []
         for image in exhibit.pics.all().order_by('image_id'):
             if image.featured:
                 art.append(image.image_id)
+        
+        images = []
+        for image in Image.objects.filter(exhibit_name = None).order_by('image_id'):
+            images.append(image)
+        
         if form.is_valid():
             if 'save' in request.POST:
                 artist_name = form.cleaned_data['artist_name']
@@ -382,23 +396,29 @@ def edit_exhibit(request, exhibit_id):
                 exhibit_name = form.cleaned_data['exhibit_name']
                 description = form.cleaned_data['description']
                 tags = form.cleaned_data['tags']
-                images = form.cleaned_data['images']
-                # timestamp = datetime.date.today()
                 
-                exhibit.update(
+                Exhibit.objects.update(
                     artist_name = artist_name,
                     email = email, bio = bio,
                     website = website,
                     exhibit_name = exhibit_name,
                     description = description)
-                    # removed timestamp = timestamp  
-                exhibit[0].tags.set(tags)
-                exhibit[0].images.set(images)
+                    
+                exhibit.tags.set(tags)
+                
+                for image in images:
+                    if image not in art:
+                        exhibit.pics.add(image)
+                
             elif 'delete' in request.POST:
+                for image in exhibit.pics.all():
+                    image.delete()
+                for cmnt in exhibit.responses.all():
+                    cmnt.delete()
                 exhibit.delete()
             return HttpResponseRedirect(reverse('upcoming'))
         else:
-            return render(request, 'exhibit.html', context = {'form' : form} )
+            return render(request, 'exhibit.html', context = {'form' : form, 'exhibit' : exhibit, 'images' : art} )
 
 
 # ---------------------------------------------------------------------------------------------------
