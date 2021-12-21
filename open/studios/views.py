@@ -164,18 +164,17 @@ def about(request):
 # ---------------------------------------------------------------------------------------------------
 
 
-def create_image(request):
-    action = 'create'
+def c_image(request, action, page):
     if request.method == 'GET':
-        formset = ImageForm()
-        return render(request, 'cne_image.html', context = {'form' : formset, 'action' : action})
+        form = ImageForm()
+        return render(request, 'cne_image.html', context = {'form' : form, 'action' : action})
     
     if request.method == 'POST':
         # items = []
         # cleaned = []
         # tmp = {}
-        formset = ImageForm(request.POST)
-        if formset.is_valid():
+        form = ImageForm(request.POST)
+        if form.is_valid():
             # for form in formset:
             #     cleaned.append(form.cleaned_data)
                 
@@ -194,26 +193,26 @@ def create_image(request):
             #     if item['name'] == '':
             #         items.remove(item)
             #     Image.objects.create(name = item['name'], url = item['url'], featured = item['featured'])
-            name = formset.cleaned_data['name']
-            url = formset.cleaned_data['url']
-            featured = formset.cleaned_data['featured']
+            name = form.cleaned_data['name']
+            url = form.cleaned_data['url']
+            featured = form.cleaned_data['featured']
+            
             Image.objects.create(name = name, url = url, featured = featured)
             
-            return HttpResponseRedirect(reverse('create'))
+            return HttpResponseRedirect(reverse(page))
         else:
-            return render(request, 'cne_image.html', context = {'form' : formset, 'action' : action})
+            return render(request, 'cne_image.html', context = {'form' : form, 'action' : action})
 
 
-def edit_image(request, exhibit_id):
-    action = 'edit'
+def e_image(request, image_id, action, page):
     if request.method == 'GET':
-        image = Image.objects.get(exhibit_id)
+        image = Image.objects.get(image_id)
         form = ImageForm(initial = {
             'name' : image.name, 
             'url' : image.url, 
             'featured' : image.featured})
         
-        return render(request, 'edit_image.html', context = {'iform' : form, 'action' : action})
+        return render(request, 'edit_image.html', context = {'form' : form, 'action' : action})
     if request.method == 'POST':
         form = ImageForm(request.POST)
         if form.is_valid():
@@ -221,12 +220,34 @@ def edit_image(request, exhibit_id):
             url = form.cleaned_data['url']
             featured = form.cleaned_data['featured']
             Image.objects.update_or_create(name = name, url = url, featured = featured)
-            return HttpResponseRedirect(reverse('create'))
+            return HttpResponseRedirect(reverse(page))
         else:
             return render(request, 'cne_image.html', context = {'form' : form, 'action' : action})
 
-def create_tag(request):
+
+def create_image(request):
     action = 'create'
+    page = 'create' if 'upcoming' not in request.path else request.path
+    c_image(request, action, page)
+
+
+def edit_image(request, image_id):
+    action = 'edit'
+    page = 'create' if 'upcoming' not in request.path else request.path
+    e_image(request, image_id, action, page)
+
+
+# def u_create_image(request):
+#     action = 'create'
+#     page = request.path
+#     c_image(request, action, page)
+
+# def u_edit_image(request, image_id):
+#     action = 'edit'
+#     page = request.path
+#     e_image(request, image_id, action, page)
+
+def c_tag(request, action, page):
     if request.method == 'GET':
         form = TagForm()
         return render(request, 'tag.html', context = {'form' : form, 'action' : action})
@@ -235,12 +256,11 @@ def create_tag(request):
         if form.is_valid():
             name = form.cleaned_data['name']
             Tag.objects.create(name = name)
-            return HttpResponseRedirect(reverse('create'))
+            return HttpResponseRedirect(reverse(page))
         else:
             return render(request, 'tag.html', context = {'form' : form, 'action' : action})
 
-def edit_tag(request, tag_id):
-    action = 'edit'
+def e_tag(request, tag_id, action, page):
     if request.method == 'GET':
         tag = Tag.objects.get(pk = tag_id)
         form = TagFormSet(initial = {'name' : tag.name})
@@ -255,9 +275,34 @@ def edit_tag(request, tag_id):
                 tags.save()
             elif 'delete' in request.POST:
                 Tag.objects.filter(pk = tag_id).delete()
-            return HttpResponseRedirect(reverse('create'))
+            return HttpResponseRedirect(reverse(page))
         else:
             return render(request, 'tag.html', context = {'form' : form, 'action' : action})
+
+
+def create_tag(request):
+    action = 'create'
+    page = 'create' if 'upcoming' not in request.path else request.path
+    c_tag(request, action, page)
+
+
+def edit_tag(request, tag_id):
+    action = 'edit'
+    page = 'create' if 'upcoming' not in request.path else request.path
+    e_tag(request, tag_id, action, page)
+
+
+# def u_create_tag(request):
+#     action = 'create'
+#     page = request.path
+#     c_tag(request, action, page)
+
+
+# def u_edit_tag(request, tag_id):
+#     action = 'edit'
+#     page = request.path
+#     e_tag(request, tag_id, action, page)
+
 
 def create_exhibit(request):
     action = 'create'
@@ -277,6 +322,7 @@ def create_exhibit(request):
             'form' : form, 
             'action' : action,
             'tags' : tags,
+            'uri' : request.path,
             # 'image_formset' : image_formset, 
             # 'tag_formset' : tag_formset
             } 
@@ -341,6 +387,9 @@ def create_exhibit(request):
 
 def edit_exhibit(request, exhibit_id):
     action = 'edit'
+    print()
+    print(request.path)
+    print()
     if request.method == 'GET':
         
         exhibit = Exhibit.objects.get(pk = exhibit_id)

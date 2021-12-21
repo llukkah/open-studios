@@ -66,6 +66,7 @@
         <div class="box">
             {% if action == "edit" %}
                 {% for image in exhibit.pics.all %}
+                <a href="{% url 'editImage' image.image_id %}">
                     <div style="display: block;  padding: 5rem;">
                         {% if image.featured %}
                             <span class="featured"><i>Featured Image</i></span>
@@ -73,11 +74,17 @@
                         <br><img id="img" src="{{ image.url }}" style="height: 100px"/><br>
                         <label for="img">{{ image.name }}</label>
                     </div>
+                </a>
                 {% endfor %}
             {% endif %}
 
             {% if images != null %}
                 {% for image in images %}
+                {% if action == "edit" %}
+                <a href="{% url 'editImage' image.image_id %}">
+                {% else %}
+                <a href="{% url 'creatEImage' image.image_id %}">
+                {% endif %}
                     <div style="display: block; margin-top: 10px; margin-bottom: 12px;">
                         {% if image.featured %}
                             <span class="featured"><i>Featured Image</i></span><br>
@@ -85,11 +92,18 @@
                         <img src="{{ image.url }}" style="width: 150px"/><br>
                         <label>{{ image.name }}</label>
                     </div>
+                </a>
                 {% endfor %}
             {% endif %}
         </div>
+        {% if action == 'edit' %}
         <a href="{% url 'addImage' %}"><input type="button"  value="Add Image" /></a>
         <a href="{% url 'addTag' %}"><input type="button"  value="Add Tag" /></a>
+        {% else %}
+        <a href="{% url 'createImage' %}"><input type="button"  value="Add Image" /></a>
+        <a href="{% url 'createTag' %}"><input type="button"  value="Add Tag" /></a>
+        {% endif %}
+        
         
         {% if action == 'create' %}
             <input type="submit" name="create" value="Create" />
