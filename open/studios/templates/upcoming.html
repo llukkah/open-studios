@@ -5,17 +5,17 @@
         display:flex;
     }
     .column {
-        padding: 1px;
+        padding: .063rem;
     }
     a.card:link {
         margin-left: 2%;
         margin-right: 3%;
-        margin-bottom: 20px;
+        margin-bottom: 1.25rem;
         width: 95%;
-        border-radius: 25px;
-        border: 3px solid black;
-        padding: 10px;
-        box-shadow: 1px 1px 10px 1px #808080;
+        border-radius: 1.563rem;
+        border: .188rem solid #000000;
+        padding: .625rem;
+        box-shadow: .063rem .063rem  .625rem .063rem  #808080;
         text-decoration: none;
         background-color: #ffffff;
         color: #000000 !important;
@@ -26,7 +26,7 @@
         background-color: #0000ff;
         color: #87cefa !important;
         transform: scale(1.01, 1.01);
-        box-shadow: 13px 13px 30px 13px 535353;
+        box-shadow: .813rem .813rem 1.875rem .813rem #535353;
     }
     .card:hover p, .card:hover .title{
         color: #87cefa !important;
@@ -41,10 +41,10 @@
     }
     .tags{
         color:rgb(0, 0, 0); 
-        padding: 4px;
+        padding: .25rem;
         background-color: #add8e6; 
-        margin-left: 4px; 
-        border-radius: 10px;
+        margin-left: .25rem; 
+        border-radius: .625rem;
     }
     h1{
         color: #0000ff;
@@ -56,8 +56,8 @@
         max-width: 85%;
         height: auto;
         object-fit: scale-down;
-        margin-top: 0px;
-        padding-top: 0px;
+        margin-top: 0rem;
+        padding-top: 0rem;
     }
     label{
         color: rgb(0, 0, 0) !important;
@@ -67,7 +67,7 @@
 
 {% block content %}
     <div style="padding-top: 3.5%;">
-        <h1 style="text-align: center; font-size: 40px; margin-bottom: 15px;">Upcoming Exhibits</h1>
+        <h1 style="text-align: center; font-size: 2.5rem; margin-bottom: .938rem;">Upcoming Exhibits</h1>
         {% for exhibit in exhibits %}
         <div style="display: flex;">
             <a class="card" href="{% url 'edit'  exhibit.exhibit_id %}">
@@ -84,7 +84,7 @@
                         {% endfor %}
                     </div>
                     <br>
-                    <div style="padding: 10px">
+                    <div style="padding: .625rem">
                         {{ exhibit.exhibit_name }} -
                         {% for tag in exhibit.tags.all %}
                             <span class="tags"><label> {{ tag.name }} </label></span>            

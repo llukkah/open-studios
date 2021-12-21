@@ -2,10 +2,10 @@
 {% block extrastyle %}
     <style>
         #border {
-            border-radius: 25px;
-            border: 3px solid black;
-            padding: 10px;
-            box-shadow: 3px 3px 20px 3px #888888;
+            border-radius: 1.563rem;
+            border: .188rem solid #000000;
+            padding: .625rem;
+            box-shadow: .188rem .188rem 1.25rem .188rem #888888;
         }
         .box {
             display: flex;
@@ -14,13 +14,12 @@
         }
         .comment-box {
         display: grid;
-        grid-template-columns: repeat(auto-fill,minmax(160px, 1fr));
+        grid-template-columns: repeat(auto-fill,minmax(10rem, 1fr));
     </style>
 {% endblock extrastyle %}
 
 {% block content %}
 <h2>{{ exhibit.exhibit_name }}</h2>
-
     <p>{{ exhibit.description }}</p>
     <br>
     <div class="box">
@@ -30,17 +29,17 @@
                     <img src="{{ image.url }}" height="300" />
                 </a>    
                 <br>
-                <h6 style="color: white; font-size: larger; margin-top: 8px;">{{ image.name }}</h6>
+                <h6 style="color: #ffffff; font-size: .875rem; margin-top: .5rem;">{{ image.name }}</h6>
             </div>
         {% endfor %}
     </div>
     <br>
 
 
-<h3 style="color: white; font-size: 20px">{{ exhibit.artist_name }}</h3>
+<h3 style="color: #ffffff; font-size: 1.25rem">{{ exhibit.artist_name }}</h3>
     <p>{{ exhibit.bio }}</p>
     <hr>
-    <h2 style="color: white;">Share Your Comments:</h2>
+    <h2 style="color: #ffffff;">Share Your Comments:</h2>
 <div class="box">
     <form action="{% url 'featured' %}" method="POST">
         {% csrf_token %}
@@ -52,13 +51,13 @@
             <input type="submit" value="Submit" />
         </div>
     </form>
-    <hr style="margin-left: 80px; margin-right: 20px;">
+    <hr style="margin-left: 5rem; margin-right: 1.25rem;">
     <div class="comment-box">
         <div style="display: inline-flex;">
             {% for comment in comments %}
                 <div style="display: block; word-wrap: normal;">
                     <ul>
-                        <li style="color: white; text-decoration: none; font-size: large;">{{ comment.comment }}<br>{{ comment.author }}</li>
+                        <li style="color: #ffffff; text-decoration: none; font-size: 1.25rem;">{{ comment.comment }}<br>{{ comment.author }}</li>
                     </ul>
                 </div>
             {% endfor %}
