@@ -14,14 +14,14 @@
     } */
     #tag{
         position: absolute;
-        margin-left: 150px;
+        margin-left: 9.375rem;
     }
     .featured{
         color:rgb(0, 0, 0); 
-        padding: 4px;
+        padding: .25rem;
         background-color: #add8e6; 
-        margin: 20px;
-        border-radius: 10px;
+        margin: 1.25rem;
+        border-radius: .625rem;
         font-size: .8rem;
     }
     .box {
@@ -70,7 +70,7 @@
                         {% if image.featured %}
                             <span class="featured"><i>Featured Image</i></span>
                         {% endif %}
-                        <br><img id="img" src="{{ image.url }}" style="height: 100px"/><br>
+                        <br><img id="img" src="{{ image.url }}" style="height: 6.25rem"/><br>
                         <label for="img">{{ image.name }}</label>
                     </div>
                 {% endfor %}
@@ -78,11 +78,11 @@
 
             {% if images != null %}
                 {% for image in images %}
-                    <div style="display: block; margin-top: 10px; margin-bottom: 12px;">
+                    <div style="display: block; margin-top: .625rem; margin-bottom: .75rem;">
                         {% if image.featured %}
                             <span class="featured"><i>Featured Image</i></span><br>
                         {% endif %}
-                        <img src="{{ image.url }}" style="width: 150px"/><br>
+                        <img src="{{ image.url }}" style="width: 9.375rem"/><br>
                         <label>{{ image.name }}</label>
                     </div>
                 {% endfor %}
