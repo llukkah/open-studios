@@ -7,7 +7,7 @@
     {% if action == 'create' %}
         <form action="{% url 'addImage' %}" method="POST">
     {% else %}   
-        <form action="{% url 'editImage' %}" method="POST">
+        <!-- <form action="{% url 'editImage' image.image_id %}" method="POST"> -->
     {% endif %}
 
     {% csrf_token %} 

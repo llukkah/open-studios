@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, re_path
 from . import views
 
 urlpatterns = [
@@ -12,24 +12,16 @@ urlpatterns = [
     # Create exhibit
     path('create', views.create_exhibit, name = 'create'),
     
-    # Tag actions on create page
-    path('create/tag/', views.create_tag, name = 'addTag'),
-    path('create/tag/<int:tag_id>', views.edit_tag, name = 'editTag'),
-    
-    # Image actions on create page
-    path('create/image/', views.create_image, name = 'addImage'),
-    path('create/image/<int:image_id>', views.edit_image, name = 'editImage'),
-    
     # Edit exhibit
     path('upcoming/edit/<int:exhibit_id>', views.edit_exhibit, name = 'edit'),
     
     # Tag actions on edit page
-    path('upcoming/edit/<int:exhibit_id>/tag/', views.create_tag, name = 'addTag'),
-    path('upcoming/edit/<int:exhibit_id>/tag/<int:tag_id>', views.edit_tag, name = 'editTag'),
+    re_path(r'^tag/create/', views.create_tag, name = 'addTag'),
+    re_path(r'^tag/<int:tag_id>/', views.edit_tag, name = 'editTag'),
     
-    # Image actions on edit page
-    path('upcoming/edit/<int:exhibit_id>/image/', views.create_image, name = 'addImage'),
-    path('upcoming/edit/<int:exhibit_id>/image/<int:image_id>', views.edit_image, name = 'editImage'),
+    # Image actions
+    re_path(r'^image/create/', views.create_image, name = 'addImage'),
+    re_path(r'^image/<int:image_id>/', views.edit_image, name = 'editImage'),
     
     # User actions on post MVP
     path('register', views.register, name = "register"),

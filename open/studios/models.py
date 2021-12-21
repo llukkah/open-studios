@@ -83,20 +83,6 @@ class Comment(models.Model):
         return self.comment
 
 
-# class Rotation(models.Model):
-#     rotation_id = models.AutoField(primary_key = True)
-#     delay = models.TimeField(auto_now = False, auto_now_add = False)
-    
-#     # Linked class
-#     current = models.ForeignKey(Exhibit, related_name='exhibit', default = 1, on_delete = models.CASCADE)
-    
-#     class Meta:
-#         verbose_name_plural = 'Rotations'
-    
-#     def __str__(self):
-#         return self.current.exhibit_name
-
-
 #*****Potential Post MVP*****
 
 # class User(models.Model):
