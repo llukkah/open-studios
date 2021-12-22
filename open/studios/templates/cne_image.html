@@ -6,13 +6,15 @@
 {% block content %}
     {% if action == 'create' %}
         <form action="{% url 'createImage' %}" method="POST">
-    {% else %}   
+    {% elif action == 'upcoming' %}   
+        <form action="{% url 'addImage' %}" method="POST">
+    {% elif action == 'edit' %}   
+        <form action="{% url 'creatEImage' image.image_id %}" method="POST">
+    {% elif action == 'change' %}   
         <form action="{% url 'editImage' image.image_id %}" method="POST">
     {% endif %}
 
     {% csrf_token %} 
-    <!-- {{ form.management_form }} -->
-
     <center>
         <div style="diplay: block;">
             <p><label style="padding-left: 8px; padding-right: 4px;">{{ form.name.name|title }}:</label><span>{{ form.name.as_widget }}</span></p>
@@ -20,7 +22,7 @@
             <label style="display: block; margin-left: 20rem; padding-left: 4px; padding-right: 8px;">{{ form.featured.name|title }}: {{ form.featured.as_widget }}</label>
         </div>
     </center>
-    {% if action == 'create' %}
+    {% if action == 'create' or action == 'upcoming' %}
             <input type="submit" name="create" value="Create" />
         </form>
     {% else %}
