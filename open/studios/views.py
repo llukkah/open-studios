@@ -233,9 +233,16 @@ def e_image(request, image_id, action, page):
 
 def create_image(request):
     action = 'create'
-    page = 'create' if 'upcoming' not in request.path else request.path
+    page = 'create' 
     c_image(request, action, page)
 
+def u_create_image(request):
+    action = 'create'
+    page = request.get_full_path()
+    print()
+    print(page)
+    print()
+    c_image(request, action, page)
 
 def edit_image(request, image_id):
     action = 'edit'
@@ -243,10 +250,6 @@ def edit_image(request, image_id):
     e_image(request, image_id, action, page)
 
 
-def u_create_image(request):
-    action = 'create'
-    page = request.path
-    c_image(request, action, page)
 
 def u_edit_image(request, image_id):
     action = 'edit'
