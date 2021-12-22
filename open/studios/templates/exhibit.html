@@ -30,7 +30,7 @@
         flex-direction: row;
     }
 </style>
-{% endblock %}
+{% endblock extrastyle %}
 {% block content %}
     <h1>{{ action|title }} Exhibit</h1>
     {% if action == 'create' %}
@@ -66,30 +66,39 @@
         <div class="box">
             {% if action == "edit" %}
                 {% for image in exhibit.pics.all %}
-                    <div style="display: block;  padding: 5rem;">
-                        {% if image.featured %}
-                            <span class="featured"><i>Featured Image</i></span>
-                        {% endif %}
-                        <br><img id="img" src="{{ image.url }}" style="height: 6.25rem"/><br>
-                        <label for="img">{{ image.name }}</label>
-                    </div>
+                    <a href="{% url 'editImage' image.image_id %}" style="text-decoration: none;">
+                        <div style="display: block;  padding: 5rem;">
+                            {% if image.featured %}
+                                <span class="featured"><i>Featured Image</i></span>
+                            {% endif %}
+                            <br><img id="img" src="{{ image.url }}" style="height: 6.25rem; margin-top: .625rem; margin-bottom: .75rem;"/><br>
+                            <label for="img">{{ image.name }}</label>
+                        </div>
+                    </a>
                 {% endfor %}
             {% endif %}
 
             {% if images != null %}
                 {% for image in images %}
-                    <div style="display: block; margin-top: .625rem; margin-bottom: .75rem;">
-                        {% if image.featured %}
-                            <span class="featured"><i>Featured Image</i></span><br>
-                        {% endif %}
-                        <img src="{{ image.url }}" style="width: 9.375rem"/><br>
-                        <label>{{ image.name }}</label>
-                    </div>
+                    {% if "upcoming" in uri %}
+                        <a href="{% url 'editImage' image.image_id  %}">
+                    {% else %}
+                        <a href="{% url 'creatEImage' image.image_id  %}">
+                    {% endif %}
+                            <div style="display: block; margin-top: .625rem; margin-bottom: .75rem;">
+
+                                {% if image.featured %}
+                                    <span class="featured"><i>Featured Image</i></span><br>
+                                {% endif %}
+                                <img src="{{ image.url }}" style="width: 9.375rem"/><br>
+                                <label>{{ image.name }}</label>
+                            </div>
+                        </a>
                 {% endfor %}
             {% endif %}
         </div>
-        <a href="{% url 'addImage' %}"><input type="button"  value="Add Image" /></a>
-        <a href="{% url 'addTag' %}"><input type="button"  value="Add Tag" /></a>
+        <a href="{% url 'createImage' %}"><input type="button"  value="Add Image" /></a>
+        <a href="{% url 'createTag' %}"><input type="button"  value="Add Tag" /></a>
         
         {% if action == 'create' %}
             <input type="submit" name="create" value="Create" />
