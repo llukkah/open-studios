@@ -43,9 +43,7 @@ class Exhibit(models.Model):
     
     def remove_featured(self):
         self.featured = False
-        self.featured_date = None
         self.revealed = True
-
 
 class Image(models.Model):
     image_id = models.AutoField(primary_key = True)

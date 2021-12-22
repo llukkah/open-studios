@@ -31,11 +31,13 @@ def main(request):
         next_exhibit.add_featured()
         next_exhibit.save()
         featured = next_exhibit
-        if coming_exhibit() != None:
-            next_exhibit = coming_exhibit()
+
+        if coming_exhibit() == '':
+            next_exhibit = reset()
+
         else:
-            reset()
-    
+            next_exhibit = coming_exhibit()
+   
     for image in featured.pics.all().order_by('-image_id'):
         if image.featured:
             images.append({
@@ -43,7 +45,7 @@ def main(request):
                 'url' : image.url,
                 'name' : image.name
             })
-    
+
     return render(request, 'main.html', context = {
                                             'featured' : featured,
                                             'next' : next_exhibit,
@@ -487,43 +489,29 @@ def edit_exhibit(request, exhibit_id):
 
 
 def get_featured():
-    for exhibit in Exhibit.objects.all().order_by('timestamp'):
+    for exhibit in Exhibit.objects.all().order_by('-timestamp'):
         if exhibit.featured:
             featured = exhibit
     return featured
 
 
 def coming_exhibit():
-    # exhibits = []
-    if len(Exhibit.objects.all()) > 1:
-        for exhibit in Exhibit.objects.all().order_by('-timestamp'):
-            if not exhibit.revealed and not exhibit.featured:
-                next_exhibit = exhibit            
-        return next_exhibit
+
+    if len(Exhibit.objects.filter(featured=False, revealed=False)) > 0:
+        next_exhibit = Exhibit.objects.filter(featured=False, revealed=False).first()
 
     else:
-        next_exhibit = None
-        return next_exhibit
+        next_exhibit = ''
 
-            # exhibits.append({
-            #     'name' : e.exhibit_name, 
-            #     'created' : e.timestamp, 
-            #     'id' : e.exhibit_id,
-            #     'featured' : e.featured,
-            #     'featured_date' : e.featured_date,
-            #     'revealed' : e.revealed})
-    # return exhibits[0]
+    return next_exhibit
 
 
 def reset():
-    cnt = 0
-    for exhibit in Exhibit.objects.all().order_by('exhibit_id'):
-        if cnt == 0:
-            exhibit.add_featured()
-        else:
-            exhibit.remove_featured()
-            exhibit.revealed = False
-        cnt += 1
+    exhibit = Exhibit.objects.all().order_by('featured_date').filter(featured = False, revealed = True).first()
+    exhibit.revealed = False
+    exhibit.save()
+
+    return exhibit
 
 
 # ===================================================================================================
