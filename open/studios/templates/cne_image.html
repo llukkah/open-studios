@@ -22,14 +22,19 @@
             <label style="display: block; margin-left: 20rem; padding-left: 4px; padding-right: 8px;">{{ form.featured.name|title }}: {{ form.featured.as_widget }}</label>
         </div>
     </center>
-    {% if action == 'create' or action == 'upcoming' %}
+    {% if action == 'create' %}
             <input type="submit" name="create" value="Create" />
         </form>
+    {% elif action == 'upcoming' %}
+            <input type="submit" name="create" value="Create" />
         </form>
-    {% else %}
+    {% elif action == 'edit' %}
             <input type="submit" name="save" value="Save" />
             <input type="submit" name="delete" value="Delete" />
         </form>
+    {% elif action == 'change' %} 
+            <input type="submit" name="save" value="Save" />
+            <input type="submit" name="delete" value="Delete" />
         </form>
     {% endif %}
 {% endblock %}
