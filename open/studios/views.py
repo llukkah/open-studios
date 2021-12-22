@@ -167,6 +167,7 @@ def about(request):
 # ---------------------------------------------- Images ---------------------------------------------
 path = ''
 
+# Create page
 def create_image(request):
     action = 'create'
     if request.method == 'GET':
@@ -187,6 +188,30 @@ def create_image(request):
             return render(request, 'cne_image.html', context = {'form' : form, 'action' : action})
 
 
+def create_edit_image(request, image_id):
+    action = 'edit'
+    if request.method == 'GET':
+        image = Image.objects.get(image_id)
+        form = ImageForm(data = {
+            'name' : image.name, 
+            'url' : image.url, 
+            'featured' : image.featured})
+        
+        return render(request, 'cne_image.html', context = {'form' : form, 'action' : action})
+    
+    if request.method == 'POST':
+        form = ImageForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            url = form.cleaned_data['url']
+            featured = form.cleaned_data['featured']
+            Image.objects.update_or_create(name = name, url = url, featured = featured)
+            return HttpResponseRedirect(reverse('create'))
+        else:
+            return render(request, 'cne_image.html', context = {'form' : form, 'action' : action})
+
+
+# Upcoming/edit page
 def upcoming_create_image(request):
     action = 'upcoming'
     global path
@@ -206,28 +231,6 @@ def upcoming_create_image(request):
             Image.objects.create(name = name, url = url, featured = featured)
             
             return HttpResponseRedirect(reverse('edit', kwargs={'exhibit_id' : e_id}))
-        else:
-            return render(request, 'cne_image.html', context = {'form' : form, 'action' : action})
-
-def create_edit_image(request, image_id):
-    action = 'edit'
-    if request.method == 'GET':
-        image = Image.objects.get(image_id)
-        form = ImageForm(initial = {
-            'name' : image.name, 
-            'url' : image.url, 
-            'featured' : image.featured})
-        
-        return render(request, 'cne_image.html', context = {'form' : form, 'action' : action})
-    
-    if request.method == 'POST':
-        form = ImageForm(request.POST)
-        if form.is_valid():
-            name = form.cleaned_data['name']
-            url = form.cleaned_data['url']
-            featured = form.cleaned_data['featured']
-            Image.objects.update_or_create(name = name, url = url, featured = featured)
-            return HttpResponseRedirect(reverse('create'))
         else:
             return render(request, 'cne_image.html', context = {'form' : form, 'action' : action})
 
@@ -363,7 +366,9 @@ def edit_exhibit(request, exhibit_id):
                 description = form.cleaned_data['description']
                 tags = form.cleaned_data['tags']
                 
-                Exhibit.objects.update(
+                exhibit = Exhibit.objects.filter(pk = exhibit_id)
+                
+                exhibit.update(
                     artist_name = artist_name,
                     email = email, 
                     bio = bio,
@@ -371,12 +376,12 @@ def edit_exhibit(request, exhibit_id):
                     exhibit_name = exhibit_name,
                     description = description)
                 
-                exhibit = Exhibit.objects.get(pk = exhibit_id)
-                
                 art = []
                 for image in Image.objects.filter(exhibit_name = None).order_by('image_id'):
                     if image.featured:
                         art.append(image)
+                
+                exhibit = Exhibit.objects.get(pk = exhibit_id)
                 
                 exhibit.tags.set(tags)
                 
