@@ -25,9 +25,11 @@
     {% if action == 'create' or action == 'upcoming' %}
             <input type="submit" name="create" value="Create" />
         </form>
+        </form>
     {% else %}
             <input type="submit" name="save" value="Save" />
             <input type="submit" name="delete" value="Delete" />
+        </form>
         </form>
     {% endif %}
 {% endblock %}
