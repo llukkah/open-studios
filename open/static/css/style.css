@@ -1,32 +1,32 @@
 /* Navigation for header.html */
 .nav{
     /* position: fixed; */
-    border-radius: 5px;
+    border-radius: .313rem;
     width: fit-content;
     height: auto;
     overflow: hidden;
     background-color: #444;
 }
 .nav a{
-    color: blue !important;
+    color: #0000ff !important;
     float: left;
     text-align: center;
-    font-size: 16px;
-    padding: 10px 12px;
+    font-size: 1rem;
+    padding: .625rem .75rem;
     text-decoration: none;
 }
 .nav h1{
     display: inline-block;
     padding-inline-start: 30%;
     font-weight: bolder;
-    font-size: xx-large;
+    font-size: 2rem;
     color: blue !important;
 }
 .nav-org{
     display: inline-block;
-    color: blue !important;
-    padding-top: 8px
-    padding-bottom: 8px;
+    color: #0000ff !important;
+    padding-top: 8rem;
+    padding-bottom: 8rem;
     margin-right: 1rem;
     font-size: 2rem;
     line-height: inherit;
@@ -37,18 +37,18 @@
     overflow: hidden;
 }
 .subnavbtn{
-    font-size: 20px !important;
+    font-size: 1.375rem !important;
     border: none;
     outline: none;
-    color: blue !important;
-    padding: 10px 0px;
+    color: #0000ff !important;
+    padding: .625rem 0rem;
     background-color: inherit;
     font-family: inherit;
     margin: 0;
 }
 .nav a:hover, .subnav:hover .subnavbtn{
     background-color: #111;
-    border-radius: 5px;
+    border-radius: .313rem;
     color: #0077ff;
 }
 .subnav-content{
@@ -56,25 +56,25 @@
     position: absolute;
     border-style: solid;
     border-color: #111 !important;
-    border-radius: 15px;
-    top: 62px !important;
-    left: 60px;
+    border-radius: .938rem;
+    top: 3.875rem !important;
+    left: 3.75rem;
     width: auto;
     z-index: 1;
 }
 .subnav-content a{
+    border-radius: .313rem;
     float: left;
-    margin: 0px;
-    color: blue;
+    margin: 0rem;
+    color: #0000ff;
 }
 .subnav-content a:focus, .subnav-content a:hover{
     background-color: #111;
-    border-radius: 5px;
-    color: blue;
+    color: #0000ff;
 }
 .subnav:hover .subnav-content{
     display: block;
-    border-radius: 5px;
+    border-radius: .313rem;
     background-color: #444;
     color: #0077ff;
     z-index: 1;
@@ -84,28 +84,28 @@
 }
 
 .hdr{
-    background-color: black !important;
+    background-color: #000000 !important;
     min-height: 100%;
     min-width: 100%;
     padding: 0.5em 0.5em 0.5em;
 }
 .hdr p{
-    color: gray;
-    font-size: 22px;
+    color: #808080;
+    font-size: 1.375rem;
     font-weight: bold;
     font-family:Arial, Helvetica, sans-serif;
 }
 .hdr a, .hdr label, .hdr form{
-    color: gray;
-    font-size: 22px;
+    color: #808080;
+    font-size: 1.375rem;
     font-family:Arial, Helvetica, sans-serif;
 }
 .hdr h1{
     text-align: center;
     font-weight: bolder;
     margin: 0;
-    color: blue;
+    color: #0000ff;
     text-align: center; 
-    font-size: 40px; 
-    margin-bottom: 15px;
+    font-size: 2.5rem; 
+    margin-bottom: .938rem;
 }

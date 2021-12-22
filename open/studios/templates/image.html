@@ -3,8 +3,8 @@
 <style>
     img{
         display: block;
-        margin: 10px auto 20px;
-        height: 600px; 
+        margin: .625rem auto 1.25rem;
+        height: 37.5rem; 
         width: auto; 
         overflow: auto;
         background-color: rgb(0, 0, 0); 
@@ -12,18 +12,17 @@
     }
     img:hover{
         display: block;
-        margin: 10px auto 20px;
+        margin: .625rem auto 1.25rem;
         height: 100rem; 
         width: auto; 
         overflow: auto;
-        box-shadow: 13px 13px 30px 13px 535353;
+        box-shadow: .813rem .813rem 1.875rem .813rem #535353;
     }
 </style>
 {% endblock %}
 {% block content %}
-<h1 style="font-size: 40px; text-align: center;">{{ image.name | title }}</h1>
+<h1 style="font-size: 2.5rem; text-align: center;">{{ image.name | title }}</h1>
 <div>
     <img src="{{ image.url }}" />
 </div>
-
 {% endblock %}

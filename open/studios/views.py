@@ -159,15 +159,21 @@ def about(request):
 
 
 
-# ---------------------------------------------------------------------------------------------------
+# ===================================================================================================
 # ----------------------------------------- Create and Edit -----------------------------------------
-# ---------------------------------------------------------------------------------------------------
+# ===================================================================================================
+
+
+# ---------------------------------------------- Images ---------------------------------------------
 
 
 def c_image(request, action, page):
     if request.method == 'GET':
         form = ImageForm()
-        return render(request, 'cne_image.html', context = {'form' : form, 'action' : action})
+        print()
+        print(page)
+        print()
+        return render(request, 'cne_image.html', context = {'form' : form, 'action' : action, 'uri' : page})
     
     if request.method == 'POST':
         # items = []
@@ -233,19 +239,23 @@ def create_image(request):
 
 def edit_image(request, image_id):
     action = 'edit'
-    page = 'create' if 'upcoming' not in request.path else request.path
+    page = 'create' if 'upcoming' not in path else path
     e_image(request, image_id, action, page)
 
 
-# def u_create_image(request):
-#     action = 'create'
-#     page = request.path
-#     c_image(request, action, page)
+def u_create_image(request):
+    action = 'create'
+    page = request.path
+    c_image(request, action, page)
 
-# def u_edit_image(request, image_id):
-#     action = 'edit'
-#     page = request.path
-#     e_image(request, image_id, action, page)
+def u_edit_image(request, image_id):
+    action = 'edit'
+    page = request.path
+    e_image(request, image_id, action, page)
+
+
+# ----------------------------------------------- Tags ----------------------------------------------
+
 
 def c_tag(request, action, page):
     if request.method == 'GET':
@@ -288,7 +298,7 @@ def create_tag(request):
 
 def edit_tag(request, tag_id):
     action = 'edit'
-    page = 'create' if 'upcoming' not in request.path else request.path
+    page = 'create' if 'upcoming' not in path else path
     e_tag(request, tag_id, action, page)
 
 
@@ -302,6 +312,9 @@ def edit_tag(request, tag_id):
 #     action = 'edit'
 #     page = request.path
 #     e_tag(request, tag_id, action, page)
+
+
+# --------------------------------------------- Exhibits --------------------------------------------
 
 
 def create_exhibit(request):
@@ -387,9 +400,7 @@ def create_exhibit(request):
 
 def edit_exhibit(request, exhibit_id):
     action = 'edit'
-    print()
-    print(request.path)
-    print()
+    
     if request.method == 'GET':
         
         exhibit = Exhibit.objects.get(pk = exhibit_id)
@@ -401,7 +412,7 @@ def edit_exhibit(request, exhibit_id):
         art = []
         for image in exhibit.pics.all().order_by('image_id'):
             if image.featured:
-                art.append(image.image_id)
+                art.append(image)
         
         images = []
         for image in Image.objects.filter(exhibit_name = None).order_by('image_id'):
@@ -428,13 +439,9 @@ def edit_exhibit(request, exhibit_id):
             tags.append(tag.tag_id)
         
         art = []
-        for image in exhibit.pics.all().order_by('image_id'):
-            if image.featured:
-                art.append(image.image_id)
-        
-        images = []
         for image in Image.objects.filter(exhibit_name = None).order_by('image_id'):
-            images.append(image)
+            if image.featured:
+                art.append(image)
         
         if form.is_valid():
             if 'save' in request.POST:
@@ -448,7 +455,8 @@ def edit_exhibit(request, exhibit_id):
                 
                 Exhibit.objects.update(
                     artist_name = artist_name,
-                    email = email, bio = bio,
+                    email = email, 
+                    bio = bio,
                     website = website,
                     exhibit_name = exhibit_name,
                     description = description)
@@ -470,15 +478,17 @@ def edit_exhibit(request, exhibit_id):
             return render(request, 'exhibit.html', context = {'form' : form, 'exhibit' : exhibit, 'images' : art} )
 
 
-# ---------------------------------------------------------------------------------------------------
+# ===================================================================================================
 # ------------------------------------------------- Logic -------------------------------------------
-# ---------------------------------------------------------------------------------------------------
+# ===================================================================================================
+
 
 def get_featured():
     for exhibit in Exhibit.objects.all().order_by('timestamp'):
         if exhibit.featured:
             featured = exhibit
     return featured
+
 
 def coming_exhibit():
     # exhibits = []
@@ -513,11 +523,14 @@ def reset():
         cnt += 1
 
 
+# ===================================================================================================
+# ------------------------------------------------- Users -------------------------------------------
+# ===================================================================================================
+
+
 def register(request):
     pass
 
-def login(request):
-    pass
 
-def rotation(request):
+def login(request):
     pass
