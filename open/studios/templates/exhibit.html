@@ -80,7 +80,7 @@
 
             {% if images != null %}
                 {% for image in images %}
-                    {% if "upcoming" in uri %}
+                    {% if action == 'edit' %}
                         <a href="{% url 'editImage' image.image_id  %}">
                     {% else %}
                         <a href="{% url 'creatEImage' image.image_id  %}">
@@ -97,8 +97,11 @@
                 {% endfor %}
             {% endif %}
         </div>
-        <a href="{% url 'createImage' %}"><input type="button"  value="Add Image" /></a>
-        <a href="{% url 'createTag' %}"><input type="button"  value="Add Tag" /></a>
+        {% if action == 'create' %}
+            <a href="{% url 'createImage' %}"><input type="button"  value="Add Image" /></a>
+        {% else %}
+            <a href="{% url 'addImage' %}"><input type="button"  value="Add Image" /></a>
+        {% endif %}
         
         {% if action == 'create' %}
             <input type="submit" name="create" value="Create" />
@@ -108,14 +111,3 @@
     </form>
     
 {% endblock %}
-
-<!-- <div class="image-formset">
-    {{ image_formset.management_form }}
-    {{ image_formset }}
-    <button type="submit" href="{% url 'create_image' }"/>
-</div>
-<div class="tag-formset">
-    {{ tag_formset.management_form }}
-    {{ tag_formset}}
-    <button type="submit" href="{% url 'create_tag' }"/>
-</div> -->

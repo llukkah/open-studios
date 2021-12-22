@@ -15,17 +15,11 @@ urlpatterns = [
     # Edit exhibit
     path('upcoming/edit/<int:exhibit_id>', views.edit_exhibit, name = 'edit'),
     
-    # Tag actions on edit page
-    path('create/tag/', views.create_tag, name = 'createTag'),
-    path('create/tag/<int:tag_id>/', views.edit_tag, name = 'editTag'),
-    path('upcoming/edit/<int:exhibit_id>/tag/', views.create_tag, name = 'createTag'),
-    path('upcoming/edit/<int:exhibit_id>/tag/<int:tag_id>/', views.edit_tag, name = 'editTag'),
-    
     # Image actions
     path('create/image/', views.create_image, name = 'createImage'),
-    path('create/image/<int:image_id>/', views.edit_image, name = 'creatEImage'),
-    path('upcoming/edit/<int:exhibit_id>/image/', views.u_create_image, name = 'addImage'),
-    path('upcoming/edit/<int:exhibit_id>/image/<int:image_id>/', views.u_edit_image, name = 'editImage'),
+    path('create/image/<int:image_id>/', views.create_edit_image, name = 'creatEImage'),
+    path('image/', views.upcoming_create_image, name = 'addImage'),
+    path('image/<int:image_id>/', views.upcoming_edit_image, name = 'editImage'),
     
     # User actions on post MVP
     path('register', views.register, name = "register"),
