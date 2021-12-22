@@ -507,14 +507,6 @@ def coming_exhibit():
 
 
 def reset():
-    # cnt = 0
-    # for exhibit in Exhibit.objects.all().order_by('exhibit_id'):
-    #     if cnt == 0:
-    #         exhibit.add_featured()
-    #     else:
-    #         exhibit.remove_featured()
-    #         exhibit.revealed = False
-    #     cnt += 1
     exhibit = Exhibit.objects.all().order_by('featured_date').filter(featured = False, revealed = True).first()
     exhibit.revealed = False
     exhibit.save()

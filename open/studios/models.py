@@ -45,7 +45,6 @@ class Exhibit(models.Model):
         self.featured = False
         self.revealed = True
 
-
 class Image(models.Model):
     image_id = models.AutoField(primary_key = True)
     name = models.CharField(max_length = 255)
