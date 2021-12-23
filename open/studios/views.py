@@ -144,7 +144,7 @@ def about(request):
         {'name' : 'Lee Harvey',
             'image' : '/static/media/images/lee.jpg', 
             'git' : 'https://github.com/VirtDev337', 
-            'linkedin' : 'https://www.linkedin.com/in/lee-harvey-jr?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BIvwSNWutSqaVtbFzP0%2BtHg%3D%3D'
+            'linkedin' : 'https://www.linkedin.com/in/lee-harvey-jr?lipi=urn%3Ali%3Apage%3Ad_flcreateagship3_profile_view_base_contact_details%3BIvwSNWutSqaVtbFzP0%2BtHg%3D%3D'
         }, 
         {'name' : 'Jason Rolle',
             'image' : '/static/media/images/jason.jpg',
@@ -190,36 +190,59 @@ def create_image(request):
 
 def create_edit_image(request, image_id):
     action = 'edit'
+    global path
+    print(path)
+    if 'upcoming' in path:
+        e_id = int(path.split("/")[-1])
+        page = 'edit'
+    else:
+        page = 'create'
+    
     if request.method == 'GET':
-        image = Image.objects.filter(image_id)
-        form = ImageForm(data = {
+        image = Image.objects.get(pk = image_id)
+        
+        form = ImageForm(initial = {
+            'image_id' : image.image_id,
             'name' : image.name, 
             'url' : image.url, 
             'featured' : image.featured})
         
-        return render(request, 'cne_image.html', context = {'form' : form, 'action' : action})
+        return render(request, 'cne_image.html', context = {'form' : form, 'action' : action, 'image' : image})
     
     if request.method == 'POST':
         form = ImageForm(request.POST)
         if form.is_valid():
-            name = form.cleaned_data['name']
-            url = form.cleaned_data['url']
-            featured = form.cleaned_data['featured']
-            Image.objects.update_or_create(name = name, url = url, featured = featured)
-            return HttpResponseRedirect(reverse('create'))
+            if 'save' in request.POST:
+                name = form.cleaned_data['name']
+                url = form.cleaned_data['url']
+                featured = form.cleaned_data['featured']
+                Image.objects.update_or_create(name = name, url = url, featured = featured)
+                path = ''
+                if page == 'edit':
+                    return HttpResponseRedirect(reverse(page, kwargs = {'exhibit_id' : e_id}))
+                else:
+                    return HttpResponseRedirect(reverse(page))
+            elif 'delete' in request.POST:
+                image = Image.objects.get(pk = image_id)
+                image.delete()
+                
+                path = ''
+                if page == 'edit':
+                    return HttpResponseRedirect(reverse(page, kwargs = {'exhibit_id' : e_id}))
+                else:
+                    return HttpResponseRedirect(reverse(page))
         else:
-            return render(request, 'cne_image.html', context = {'form' : form, 'action' : action})
+            image = Image.objects.get(pk = image_id)
+            return render(request, 'cne_image.html', context = {'form' : form, 'action' : action, 'image' : image})
 
 
 # Upcoming/edit page
 def upcoming_create_image(request):
     action = 'upcoming'
-    global path
-    e_id = int(path.split("/")[-1])
     
     if request.method == 'GET':
         form = ImageForm()
-        return render(request, 'cne_image.html', context = {'form' : form, 'action' : action, 'route' : path})
+        return render(request, 'cne_image.html', context = {'form' : form, 'action' : action})
     
     if request.method == 'POST':
         form = ImageForm(request.POST)
@@ -229,33 +252,6 @@ def upcoming_create_image(request):
             featured = form.cleaned_data['featured']
             
             Image.objects.create(name = name, url = url, featured = featured)
-            
-            return HttpResponseRedirect(reverse('edit', kwargs={'exhibit_id' : e_id}))
-        else:
-            return render(request, 'cne_image.html', context = {'form' : form, 'action' : action})
-
-
-def upcoming_edit_image(request, image_id):
-    action = 'change'
-    print(request.method)
-    if request.method == 'GET':
-        image = Image.objects.filter(image_id)
-        data = {
-            'name' : image.name, 
-            'url' : image.url, 
-            'featured' : image.featured}
-        form = ImageForm(data)
-        
-        return render(request, 'cne_image.html', context = {'form' : form, 'action' : action})
-    
-    if request.method == 'POST':
-        form = ImageForm(request.POST)
-        if form.is_valid():
-            name = form.cleaned_data['name']
-            url = form.cleaned_data['url']
-            featured = form.cleaned_data['featured']
-            Image.objects.update_or_create(name = name, url = url, featured = featured)
-            
             global path
             e_id = int(path.split("/")[-1])
             path = ''
@@ -320,7 +316,14 @@ def create_exhibit(request):
             exhibit[0].tags.set(tags)
             
             for image in images:
-                exhibit[0].pics.add(image)
+                if image.featured:
+                    if len(exhibit[0].pics.filter('featured')) <= 4:
+                        exhibit[0].pics.add(image)
+                    else:
+                        image.featured = False
+                        exhibit[0].pics.add(image)
+                else:
+                    exhibit[0].pics.add(image)
             
             return HttpResponseRedirect(reverse('upcoming'))
         else:
@@ -353,7 +356,7 @@ def edit_exhibit(request, exhibit_id):
             'description' : exhibit.description, 
             'tags' : tags})
         
-        return render(request, 'exhibit.html', context = {'form' : form, 'exhibit' : exhibit, 'action' : action, 'images' : images, 'route' : path})
+        return render(request, 'exhibit.html', context = {'form' : form, 'exhibit' : exhibit, 'action' : action, 'images' : images})
     
     if request.method == 'POST':
         form = ExhibitForm(request.POST)
@@ -390,7 +393,14 @@ def edit_exhibit(request, exhibit_id):
                 exhibit.tags.set(tags)
                 
                 for image in art:
-                    exhibit.pics.add(image)
+                    if image.featured:
+                        if len(exhibit.pics.filter('featured')) <= 4:
+                            exhibit.pics.add(image)
+                        else:
+                            image.featured = False
+                            exhibit.pics.add(image)
+                    else:
+                        exhibit.pics.add(image)
                 
             elif 'delete' in request.POST:
                 exhibit = Exhibit.objects.get(pk = exhibit_id)
@@ -415,7 +425,7 @@ def edit_exhibit(request, exhibit_id):
             for image in Image.objects.filter(exhibit_name = None).order_by('image_id'):
                 images.append(image)
             
-            return render(request, 'exhibit.html', context = {'form' : form, 'exhibit' : exhibit, 'images' : images, 'route' : path} )
+            return render(request, 'exhibit.html', context = {'form' : form, 'exhibit' : exhibit, 'images' : images} )
 
 
 # ===================================================================================================

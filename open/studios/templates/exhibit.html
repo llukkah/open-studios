@@ -73,7 +73,7 @@
             <div class="box">
                 {% if action == "edit" %}
                     {% for image in exhibit.pics.all %}
-                        <a href="{% url 'editImage' image.image_id %}" style="text-decoration: none;">
+                        <a href="{% url 'creatEImage' image.image_id %}" style="text-decoration: none;">
                             <div style="display: block;  padding: 5rem;">
                                 {% if image.featured %}
                                     <span class="featured"><i>Featured Image</i></span>
@@ -87,11 +87,7 @@
 
                 {% if images != null %}
                     {% for image in images %}
-                        {% if action == 'edit' %}
-                            <a href="{% url 'editImage' image.image_id  %}">
-                        {% else %}
                             <a href="{% url 'creatEImage' image.image_id  %}">
-                        {% endif %}
                                 <div style="display: block; margin-top: .3rem; margin-bottom: .3rem;">
 
                                     {% if image.featured %}

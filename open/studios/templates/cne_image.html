@@ -4,7 +4,7 @@
     h1{
         color: #0000ff;
     }
-    span{
+    input{
         color:#808080 !important;
     }
     label{
@@ -41,10 +41,8 @@
         <form action="{% url 'createImage' %}" method="POST">
     {% elif action == 'upcoming' %}   
         <form action="{% url 'addImage' %}" method="POST">
-    {% elif action == 'edit' %}   
+    {% else %}   
         <form action="{% url 'creatEImage' image.image_id %}" method="POST">
-    {% elif action == 'change' %}   
-        <form action="{% url 'editImage' image.image_id %}" method="POST">
     {% endif %}
 
     {% csrf_token %} 
@@ -63,14 +61,10 @@
         {% elif action == 'upcoming' %}
                 <input type="submit" name="create" value="Create" />
             </form>
-        {% elif action == 'edit' %}
-                <input type="submit" name="save" value="Save" />
-                <input type="submit" name="delete" value="Delete" />
-            </form>
-        {% elif action == 'change' %} 
+        {% else %}
                 <input type="submit" name="save" value="Save" />
                 <input type="submit" name="delete" value="Delete" />
             </form>
         {% endif %}
     </center>
-{% endblock %}
+{% endblock content %}
