@@ -108,7 +108,7 @@ def featured(request):
     
     if request.method == 'POST':  
         # The code starts by defining a variable called form, which is the object that is used to store data from the comment form. 
-        form = CommentForm(initial = request.POST)
+        form = CommentForm(data = request.POST)
         
         # Next, it defines a variable called featured which will hold the featured exhibit that is currently being displayed on the homepage.
         featured = Exhibit()
@@ -128,8 +128,8 @@ def featured(request):
                                 author = author, 
                                 exhibit = featured)
             
-            # Finally after creating these instances they return an HTTP response redirecting back to "featured" if everything went well with creating this new Comment instance.
-            return HttpResponseRedirect(reverse('featured'))
+        # Finally after creating these instances they return an HTTP response redirecting back to "featured" if everything went well with creating this new Comment instance.
+        return HttpResponseRedirect(reverse('featured'))
 
 
 # The code is a request for the upcoming page of exhibits.
