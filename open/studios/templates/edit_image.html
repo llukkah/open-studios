@@ -1,9 +1,0 @@
-{% extends 'header.html' %}
-{% block image %}
-    <h1>Edit {{image.name}}</h1>
-    <form action="{% url 'edit_image' image.id %}" method="POST">
-        {% csrf_token %} {{ form }}
-        <input type="submit" name="save" value="Save" />
-        <input type="submit" name="delete" value="Delete" />
-    </form>
-    {% block image %}
