@@ -78,8 +78,8 @@
 {% endblock extrastyle %}
 
 {% block content %}
-    <div style="padding-top: 3.5%;">
-        <h1 style="text-align: center; font-size: 2.5rem; margin-bottom: .938rem;">Upcoming Exhibits</h1>
+    <div>
+        <h1 style="text-align: center; font-size: 2.5rem; margin-bottom: 3.5rem;">Upcoming Exhibits</h1>
         {% for exhibit in exhibits %}
         <div style="display: flex;">
             <a class="card" href="{% url 'edit'  exhibit.exhibit_id %}">
