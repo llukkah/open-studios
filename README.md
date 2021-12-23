@@ -24,7 +24,7 @@
 ---
 
 <details>
-## <div align="center"><summary>Installation/Requirements</summary></div>
+  <summary>Installation/Requirements</summary>
 Open Studios requires [Python](https://www.python.org/) v3.9+  and [Django](https://www.djangoproject.com/) to run.
 ***
 
@@ -82,6 +82,7 @@ or
 <name-of-your-directory>\Scripts\deactivate.ps1
 ```
 </details>
+  
 ***
 
 ## <div align="center">MVP</div>
