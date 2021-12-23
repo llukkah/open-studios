@@ -11,6 +11,7 @@
     {% endblock extrastyle %}
     <nav class="nav">
         <a class="nav-org" href="{% url 'home' %}">Open Studios</a>
+        <a href="{% url 'about' %}">About</a>
         <div class="subnav">
             <button class="subnavbtn">Exhibits<div class="triangle"></div></button>
             <div class="subnav-content">
@@ -18,9 +19,8 @@
                 <a href="{% url 'featured' %}">Featured</a>
                 <a href="{% url 'upcoming' %}">Upcoming</a>
             </div>
-
         </div>
-        <a href="{% url 'about' %}">About</a>
+        
     </nav>
 </head>
 <body class="hdr">
