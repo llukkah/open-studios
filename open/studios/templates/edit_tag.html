@@ -1,9 +1,0 @@
-{% extends 'header.html' %}
-{% block tag %}
-    <h1>Edit {{tag.name}}</h1>
-    <form action="{% url 'edit_tag' tag.id %}" method="POST">
-        {% csrf_token %} {{ form }}
-        <input type="submit" name="save" value="Save" />
-        <input type="submit" name="delete" value="Delete" />
-    </form>
-{% endblock %}
