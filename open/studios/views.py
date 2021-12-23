@@ -237,19 +237,7 @@ def upcoming_create_image(request):
 
 def upcoming_edit_image(request, image_id):
     action = 'change'
-    global path
-    e_id = int(path.split("/")[-1])
     
-    if request.method == 'GET':
-        image = Image.objects.get(image_id)
-        form = ImageForm(initial = {
-            'name' : image.name, 
-            'url' : image.url, 
-            'featured' : image.featured,
-            'route' : path})
-        
-        return render(request, 'cne_image.html', context = {'form' : form, 'action' : action})
-
     if request.method == 'POST':
         form = ImageForm(request.POST)
         if form.is_valid():
@@ -257,9 +245,21 @@ def upcoming_edit_image(request, image_id):
             url = form.cleaned_data['url']
             featured = form.cleaned_data['featured']
             Image.objects.update_or_create(name = name, url = url, featured = featured)
+            
+            global path
+            e_id = int(path.split("/")[-1])
             return HttpResponseRedirect(reverse('edit', kwargs={'exhibit_id' : e_id}))
         else:
             return render(request, 'cne_image.html', context = {'form' : form, 'action' : action})
+    else:
+        image = Image.objects.all().filter(image_id)
+        data = {
+            'name' : image.name, 
+            'url' : image.url, 
+            'featured' : image.featured}
+        form = ImageForm(data)
+        
+        return render(request, 'cne_image.html', context = {'form' : form, 'action' : action})
 
 
 # --------------------------------------------- Exhibits --------------------------------------------
@@ -349,7 +349,7 @@ def edit_exhibit(request, exhibit_id):
             'website' : exhibit.website, 
             'exhibit_name' : exhibit.exhibit_name,
             'description' : exhibit.description, 
-            })
+            'tags' : tags})
         
         return render(request, 'exhibit.html', context = {'form' : form, 'exhibit' : exhibit, 'action' : action, 'images' : images, 'route' : path})
     
@@ -378,15 +378,17 @@ def edit_exhibit(request, exhibit_id):
                 
                 art = []
                 for image in Image.objects.filter(exhibit_name = None).order_by('image_id'):
-                    if image.featured:
-                        art.append(image)
+                    art.append(image)
                 
                 exhibit = Exhibit.objects.get(pk = exhibit_id)
+                
+                for tag in exhibit.tags.all():
+                    tags.append(tag.tag_id)
                 
                 exhibit.tags.set(tags)
                 
                 for image in art:
-                    exhibit.pics.update_or_create(image)
+                    exhibit.pics.add(image)
                 
             elif 'delete' in request.POST:
                 exhibit = Exhibit.objects.get(pk = exhibit_id)
