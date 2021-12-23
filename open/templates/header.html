@@ -6,8 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Studios</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
     {% block extrastyle %}
+    <link rel="icon" href="{% static 'favicon.ico' %}">
     {% endblock extrastyle %}
     <nav class="nav">
         <a class="nav-org" href="{% url 'home' %}">Open Studios</a>
