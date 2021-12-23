@@ -27,9 +27,9 @@
 
     <center>
         <div style="diplay: block;">
-            <p><label style="padding-left: 8px; padding-right: 4px;">{{ form.name.name|title }}:</label><input>{{ form.name.as_widget }}</input></p>
-            <p><label style="padding-left: 4px; padding-right: 8px;">{{ form.url.name|title }}:</label><input>{{ form.url.as_widget }}</input></p>
-            <label style="display: block; margin-left: 20rem; padding-left: 4px; padding-right: 8px;">{{ form.featured.name|title }}:</label><input>{{ form.featured.as_widget }}</input>
+            <p><label style="padding-left: 8px; padding-right: 4px;">{{ form.name.name|title }}:</label><input="text" name="name" value="{{ form.name.as_widget }}"/></p>
+            <p><label style="padding-left: 4px; padding-right: 8px;">{{ form.url.name|title }}:</label><input="text" name="url" value="{{ form.url.as_widget }}"/></p>
+            <label style="display: block; margin-left: 20rem; padding-left: 4px; padding-right: 8px;">{{ form.featured.name|title }}:</label><input="checkbox" name="featured" value="{{ form.featured.as_widget }}"/>
         </div>
     </center>
     
