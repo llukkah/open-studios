@@ -20,7 +20,11 @@
 
 ### <div align="center">  <table><tr><th>Llukkah Delos Reyes</th><th>Lee Harvey</th><th>Chris Linton </th><th>Jason Rolle </th></tr><tr><td align="center">[@llukkah](https://www.github.com/llukkah) </td><td align="center">[@VirtDev337](https://github.com/VirtDev337) <td align="center">[@Kwyjib0](https://github.com/Kwyjib0)</td><td align="center">[@JasonRolle1990](https://github.com/JasonRolle1990)</td></tr></table></div>
 ---
-## <div align="center">Installation/Requirements</div>
+[User Guide](Open_Studios_User_Guide.pdf)
+---
+
+<details>
+## <div align="center"><summary>Installation/Requirements</summary></div>
 Open Studios requires [Python](https://www.python.org/) v3.9+  and [Django](https://www.djangoproject.com/) to run.
 ***
 
@@ -77,6 +81,7 @@ or
 or
 <name-of-your-directory>\Scripts\deactivate.ps1
 ```
+</details>
 ***
 
 ## <div align="center">MVP</div>
