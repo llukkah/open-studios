@@ -14,6 +14,8 @@
             display: flex;
             flex-wrap: wrap;
             flex-direction: row;
+            margin-left: auto;
+            margin-right: auto;
         }
         .comment-box {
         display: grid;
@@ -33,7 +35,7 @@
                     <img src="{{ image.url }}" height="300" />
                 </a>    
                 <br>
-                <h6 style="color: #ffffff; font-size: .875rem; margin-top: .5rem;">{{ image.name }}</h6>
+                <h6 style="color: #ffffff; font-size: .875rem; margin-top: .5rem; text-decoration: none;">{{ image.name }}</h6>
             </div>
         {% endfor %}
     </div>
