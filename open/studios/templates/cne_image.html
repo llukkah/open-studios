@@ -10,6 +10,30 @@
     label{
         color: #808080 !important;
     }
+    .fields{
+        diplay: block; 
+        margin-right: auto; 
+        margin-left: auto;
+    }
+    .name{
+        margin-left: -20px; 
+        padding-right: 4px;
+    }
+    .url{
+        padding-left: 4px; 
+        padding-right: 8px;
+    }
+    .urlp{
+        margin-bottom: .2rem;
+    }
+    .featured{
+        display: block; 
+        margin-left: 8rem; 
+        margin-top: 0rem; 
+        margin-bottom: 2rem; 
+        padding-left: 4px; 
+        padding-right: 8px;
+    }
 </style>
 {% endblock %}
 {% block content %}
@@ -17,35 +41,30 @@
         <form action="{% url 'createImage' %}" method="POST">
     {% elif action == 'upcoming' %}   
         <form action="{% url 'addImage' %}" method="POST">
-    {% elif action == 'edit' %}   
+    {% else %}   
         <form action="{% url 'creatEImage' image.image_id %}" method="POST">
-    {% elif action == 'change' %}   
-        <form action="{% url 'editImage' image.image_id %}" method="POST">
     {% endif %}
 
     {% csrf_token %} 
 
     <center>
-        <div style="diplay: block;">
-            <p><label style="padding-left: 8px; padding-right: 4px;">{{ form.name.name|title }}:</label><input="text" name="name" value="{{ form.name.as_widget }}"/></p>
-            <p><label style="padding-left: 4px; padding-right: 8px;">{{ form.url.name|title }}:</label><input="text" name="url" value="{{ form.url.as_widget }}"/></p>
-            <label style="display: block; margin-left: 20rem; padding-left: 4px; padding-right: 8px;">{{ form.featured.name|title }}:</label><input="checkbox" name="featured" value="{{ form.featured.as_widget }}"/>
+        <div class="fields">
+            <p><label class="name">{{ form.name.name|title }}:</label><span>{{ form.name.as_widget }}</span></p>
+            <p class="urlp"><label class="url">{{ form.url.name|title }}:</label><span>{{ form.url.as_widget }}</span></p>
+            <label class="featured">{{ form.featured.name|title }}: {{ form.featured.as_widget }}</label>
         </div>
+        
+        
+        {% if action == 'create' %}
+                <input type="submit" name="create" value="Create" />
+            </form>
+        {% elif action == 'upcoming' %}
+                <input type="submit" name="create" value="Create" />
+            </form>
+        {% else %}
+                <input type="submit" name="save" value="Save" />
+                <input type="submit" name="delete" value="Delete" />
+            </form>
+        {% endif %}
     </center>
-    
-    {% if action == 'create' %}
-            <input type="submit" name="create" value="Create" />
-        </form>
-    {% elif action == 'upcoming' %}
-            <input type="submit" name="create" value="Create" />
-        </form>
-    {% elif action == 'edit' %}
-            <input type="submit" name="save" value="Save" />
-            <input type="submit" name="delete" value="Delete" />
-        </form>
-    {% elif action == 'change' %} 
-            <input type="submit" name="save" value="Save" />
-            <input type="submit" name="delete" value="Delete" />
-        </form>
-    {% endif %}
-{% endblock %}
+{% endblock content %}

@@ -5,8 +5,8 @@ from .models import *
 
 
 class ImageForm(forms.Form):
-    name = forms.CharField(max_length = 255)
-    url = forms.URLField(label = "Image URL", max_length = 200)
+    name = forms.CharField(max_length = 255, required = True)
+    url = forms.URLField(label = "Image URL", max_length = 200, required = True)
     featured = forms.BooleanField(widget = forms.CheckboxInput, required = False)
     
     class Meta:
