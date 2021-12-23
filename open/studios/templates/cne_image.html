@@ -4,7 +4,7 @@
     h1{
         color: #0000ff;
     }
-    span{
+    input{
         color:#808080 !important;
     }
     label{
@@ -27,9 +27,9 @@
 
     <center>
         <div style="diplay: block;">
-            <p><label style="padding-left: 8px; padding-right: 4px;">{{ form.name.name|title }}:</label><span>{{ form.name.as_widget }}</span></p>
-            <p><label style="padding-left: 4px; padding-right: 8px;">{{ form.url.name|title }}:</label><span>{{ form.url.as_widget }}</span></p>
-            <label style="display: block; margin-left: 20rem; padding-left: 4px; padding-right: 8px;">{{ form.featured.name|title }}: {{ form.featured.as_widget }}</label>
+            <p><label style="padding-left: 8px; padding-right: 4px;">{{ form.name.name|title }}:</label><input>{{ form.name.as_widget }}</input></p>
+            <p><label style="padding-left: 4px; padding-right: 8px;">{{ form.url.name|title }}:</label><input>{{ form.url.as_widget }}</input></p>
+            <label style="display: block; margin-left: 20rem; padding-left: 4px; padding-right: 8px;">{{ form.featured.name|title }}:</label><input>{{ form.featured.as_widget }}</input>
         </div>
     </center>
     
