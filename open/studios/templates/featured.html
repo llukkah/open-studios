@@ -25,7 +25,7 @@
 {% endblock extrastyle %}
 
 {% block content %}
-<h2>{{ exhibit.exhibit_name }}</h2>
+<h1 style="font-size: 4rem;">{{ exhibit.exhibit_name }}</h1>
     <p>{{ exhibit.description }}</p>
     <br>
     <div class="box">
@@ -42,7 +42,7 @@
     <br>
 
 
-<h3 style="color: #ffffff; font-size: 1.25rem">{{ exhibit.artist_name }}</h3>
+<h2 style="color: #888888; font-size: 2rem">Artist: {{ exhibit.artist_name }}</h2>
     <p>{{ exhibit.bio }}</p>
     <hr>
     <h2 style="color: #ffffff;">Share Your Comments:</h2>
