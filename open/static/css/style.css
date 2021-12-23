@@ -11,23 +11,15 @@
     color: #0000ff !important;
     float: left;
     text-align: center;
-    font-size: 1rem;
+    font-size: 2rem;
     padding: .625rem .75rem;
     text-decoration: none;
 }
-/* .nav h1{
-    display: inline-block;
-    padding-inline-start: 30%;
-    font-weight: bolder;
-    font-size: 2rem;
-    color: blue !important;
-} */
 .nav-org{
     display: inline-block;
     color: #0000ff !important;
     padding-top: 8rem;
     padding-bottom: 8rem;
-    margin-right: 1rem;
     font-size: 2rem;
     line-height: inherit;
     white-space: nowrap;
@@ -37,14 +29,15 @@
     overflow: hidden;
 }
 .subnavbtn{
-    font-size: 1.375rem !important;
+    font-size: 1.31rem !important;
     border: none;
     outline: none;
     color: #0000ff !important;
-    padding: .625rem 0rem;
+    padding: .625rem .5rem;
     background-color: inherit;
     font-family: inherit;
     margin: 0;
+    display: fit-content;
 }
 .nav a:hover, .subnav:hover .subnavbtn{
     background-color: #111;
@@ -117,5 +110,6 @@
     border-right: .625rem solid transparent;
     border-top: .625rem solid #0000ff;
     margin-top: .625rem;
+    margin-left: .2rem;
     float:right;
 }
