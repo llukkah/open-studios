@@ -7,6 +7,9 @@
             padding: .625rem;
             box-shadow: .188rem .188rem 1.25rem .188rem #888888;
         }
+        a{
+            text-decoration: none;
+        }
         .box {
             display: flex;
             flex-wrap: wrap;
@@ -15,6 +18,7 @@
         .comment-box {
         display: grid;
         grid-template-columns: repeat(auto-fill,minmax(10rem, 1fr));
+        }
     </style>
 {% endblock extrastyle %}
 
@@ -24,7 +28,7 @@
     <br>
     <div class="box">
         {% for image in images %}
-            <div style="display: block;  padding: 5rem;">
+            <div style="display: block; margin-right: auto; margin-left: auto;  padding: 6rem;">
                 <a href="{% url 'image' image.name %}">
                     <img src="{{ image.url }}" height="300" />
                 </a>    

@@ -16,6 +16,9 @@
         position: absolute;
         margin-left: 9.375rem;
     }
+    .row {
+        display:flex;
+    }
     .featured{
         color:rgb(0, 0, 0); 
         padding: .25rem;
@@ -61,53 +64,57 @@
             <label for="form.email.as_widget" style="padding-left: 4px; padding-right: 8px;">{{ form.website.name|title }}:</label>
             {{ form.website.as_widget }}
         </div> -->
-        {% csrf_token %} 
-        {{ form }}
-        <div class="box">
-            {% if action == "edit" %}
-                {% for image in exhibit.pics.all %}
-                    <a href="{% url 'editImage' image.image_id %}" style="text-decoration: none;">
-                        <div style="display: block;  padding: 5rem;">
-                            {% if image.featured %}
-                                <span class="featured"><i>Featured Image</i></span>
-                            {% endif %}
-                            <br><img id="img" src="{{ image.url }}" style="height: 6.25rem; margin-top: .625rem; margin-bottom: .75rem;"/><br>
-                            <label for="img">{{ image.name }}</label>
-                        </div>
-                    </a>
-                {% endfor %}
-            {% endif %}
-
-            {% if images != null %}
-                {% for image in images %}
-                    {% if action == 'edit' %}
-                        <a href="{% url 'editImage' image.image_id  %}">
-                    {% else %}
-                        <a href="{% url 'creatEImage' image.image_id  %}">
-                    {% endif %}
-                            <div style="display: block; margin-top: .625rem; margin-bottom: .75rem;">
-
+        <div class="row">
+            {% csrf_token %} 
+            <div style="display: inline-block; width: auto;">
+                {{ form.as_p }}
+            </div>
+            <div class="box">
+                {% if action == "edit" %}
+                    {% for image in exhibit.pics.all %}
+                        <a href="{% url 'editImage' image.image_id %}" style="text-decoration: none;">
+                            <div style="display: block;  padding: 5rem;">
                                 {% if image.featured %}
-                                    <span class="featured"><i>Featured Image</i></span><br>
+                                    <span class="featured"><i>Featured Image</i></span>
                                 {% endif %}
-                                <img src="{{ image.url }}" style="width: 9.375rem"/><br>
-                                <label>{{ image.name }}</label>
+                                <br><img id="img" src="{{ image.url }}" style="height: 6.25rem; margin-top: .625rem; margin-bottom: .75rem;"/><br>
+                                <label for="img">{{ image.name }}</label>
                             </div>
                         </a>
-                {% endfor %}
-            {% endif %}
+                    {% endfor %}
+                {% endif %}
+
+                {% if images != null %}
+                    {% for image in images %}
+                        {% if action == 'edit' %}
+                            <a href="{% url 'editImage' image.image_id  %}">
+                        {% else %}
+                            <a href="{% url 'creatEImage' image.image_id  %}">
+                        {% endif %}
+                                <div style="display: block; margin-top: .625rem; margin-bottom: .75rem;">
+
+                                    {% if image.featured %}
+                                        <span class="featured"><i>Featured Image</i></span><br>
+                                    {% endif %}
+                                    <img src="{{ image.url }}" style="width: 9.375rem"/><br>
+                                    <label>{{ image.name }}</label>
+                                </div>
+                            </a>
+                    {% endfor %}
+                {% endif %}
+            </div>
         </div>
-        {% if action == 'create' %}
-            <a href="{% url 'createImage' %}"><input type="button"  value="Add Image" /></a>
-        {% else %}
-            <a href="{% url 'addImage' %}"><input type="button"  value="Add Image" /></a>
-        {% endif %}
-        
-        {% if action == 'create' %}
-            <input type="submit" name="create" value="Create" />
-        {% else %}
-            <input type="submit" name="save" value="Save" /><input type="submit" name="delete" value="Delete" />
-        {% endif %}
-    </form>
+            {% if action == 'create' %}
+                <a href="{% url 'createImage' %}"><input type="button"  value="Add Image" /></a>
+            {% else %}
+                <a href="{% url 'addImage' %}"><input type="button"  value="Add Image" /></a>
+            {% endif %}
+            
+            {% if action == 'create' %}
+                <input type="submit" name="create" value="Create" />
+            {% else %}
+                <input type="submit" name="save" value="Save" /><input type="submit" name="delete" value="Delete" />
+            {% endif %}
+        </form>
     
 {% endblock %}

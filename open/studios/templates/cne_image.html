@@ -1,6 +1,15 @@
 {% extends 'header.html' %}
 {% block extrastyle %}
 <style>
+    h1{
+        color: #0000ff;
+    }
+    span{
+        color:#808080 !important;
+    }
+    label{
+        color: #808080 !important;
+    }
 </style>
 {% endblock %}
 {% block content %}
@@ -15,6 +24,7 @@
     {% endif %}
 
     {% csrf_token %} 
+
     <center>
         <div style="diplay: block;">
             <p><label style="padding-left: 8px; padding-right: 4px;">{{ form.name.name|title }}:</label><span>{{ form.name.as_widget }}</span></p>
@@ -22,6 +32,7 @@
             <label style="display: block; margin-left: 20rem; padding-left: 4px; padding-right: 8px;">{{ form.featured.name|title }}: {{ form.featured.as_widget }}</label>
         </div>
     </center>
+    
     {% if action == 'create' %}
             <input type="submit" name="create" value="Create" />
         </form>

@@ -6,6 +6,8 @@
     }
     .column {
         padding: .063rem;
+        margin-right: auto;
+        margin-left: .3%;
     }
     a.card:link {
         margin-left: 2%;
@@ -28,12 +30,17 @@
         transform: scale(1.01, 1.01);
         box-shadow: .813rem .813rem 1.875rem .813rem #535353;
     }
-    .card:hover p, .card:hover .title{
+    .card:hover p, .card:hover .title, .card:hover .click{
         color: #87cefa !important;
     }
     .column img{
-        height: 25rem;
-
+        height: 20rem;
+        width: auto;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 0rem;
+        padding-top: 0rem;
+        object-fit: scale-down;
     }
     .title{
         margin: 0;
@@ -49,18 +56,23 @@
     h1{
         color: #0000ff;
     }
+    b{
+        font-size: 2rem;
+    }
     p{
         color:#000000 !important;
+        font-style: normal !important;
     }
-    img{
-        max-width: 85%;
-        height: auto;
-        object-fit: scale-down;
-        margin-top: 0rem;
-        padding-top: 0rem;
-    }
-    label{
+    .card label{
         color: rgb(0, 0, 0) !important;
+        padding-bottom: 0rem;
+        margin-bottom: 0rem;
+    }
+    .click{
+        color: #ffffff; 
+        float: right; 
+        font-size: 2.5rem; 
+        margin-right: 2.5rem;
     }
 </style>
 {% endblock extrastyle %}
@@ -77,7 +89,7 @@
                         {% for image in images %}
                             {% if image.collection == exhibit.exhibit_id %}
                             <div class="column">
-                                    <label class="title">{{ image.name }}</label>
+                                    <label for="img" class="title">{{ image.name }}</label><br>
                                     <img src="{{ image.url }}" alt="image missing"/>
                             </div>
                             {% endif %}
@@ -85,11 +97,12 @@
                     </div>
                     <br>
                     <div style="padding: .625rem">
-                        {{ exhibit.exhibit_name }} -
-                        {% for tag in exhibit.tags.all %}
-                            <span class="tags"><label> {{ tag.name }} </label></span>            
-                        {% endfor %}
-                        <span style="color: #ffffff; font-size: 2.5rem; float: right; margin-right: 2.5rem;">CLICK TO EDIT</span>
+                        <p><b>{{ exhibit.exhibit_name }} -</b>
+                            {% for tag in exhibit.tags.all %}
+                                <span class="tags"><label> {{ tag.name }} </label></span>            
+                            {% endfor %}
+                            <span class="click">CLICK TO EDIT</span>
+                        </p>
                     </div>
                 </div>
             </a>

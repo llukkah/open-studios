@@ -237,19 +237,7 @@ def upcoming_create_image(request):
 
 def upcoming_edit_image(request, image_id):
     action = 'change'
-    global path
-    e_id = int(path.split("/")[-1])
     
-    if request.method == 'GET':
-        image = Image.objects.get(image_id)
-        form = ImageForm(initial = {
-            'name' : image.name, 
-            'url' : image.url, 
-            'featured' : image.featured,
-            'route' : path})
-        
-        return render(request, 'cne_image.html', context = {'form' : form, 'action' : action})
-
     if request.method == 'POST':
         form = ImageForm(request.POST)
         if form.is_valid():
@@ -257,9 +245,21 @@ def upcoming_edit_image(request, image_id):
             url = form.cleaned_data['url']
             featured = form.cleaned_data['featured']
             Image.objects.update_or_create(name = name, url = url, featured = featured)
+            
+            global path
+            e_id = int(path.split("/")[-1])
             return HttpResponseRedirect(reverse('edit', kwargs={'exhibit_id' : e_id}))
         else:
             return render(request, 'cne_image.html', context = {'form' : form, 'action' : action})
+    else:
+        image = Image.objects.all().filter(image_id)
+        data = {
+            'name' : image.name, 
+            'url' : image.url, 
+            'featured' : image.featured}
+        form = ImageForm(data)
+        
+        return render(request, 'cne_image.html', context = {'form' : form, 'action' : action})
 
 
 # --------------------------------------------- Exhibits --------------------------------------------
