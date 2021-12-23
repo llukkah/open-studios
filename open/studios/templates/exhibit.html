@@ -1,21 +1,6 @@
 {% extends 'header.html' %}
 {% block extrastyle %}
 <style>
-    /* input[type='text'],
-    input[type='text'],
-    input[type='email'],    
-    input[type='url'],
-    input[type='checkbox'],
-    textarea {
-        display: block;
-    }
-    textarea {
-        display: block;
-    } */
-    #tag{
-        position: absolute;
-        margin-left: 9.375rem;
-    }
     .row {
         display:flex;
     }
@@ -23,7 +8,8 @@
         color:rgb(0, 0, 0); 
         padding: .25rem;
         background-color: #add8e6; 
-        margin: 1.25rem;
+        margin: 1.75rem;
+        margin-bottom: .25rem;
         border-radius: .625rem;
         font-size: .8rem;
     }
@@ -31,6 +17,21 @@
         display: flex;
         flex-wrap: wrap;
         flex-direction: row;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .box img{
+        display: flex;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: .2rem;
+        margin-top: .3rem;
+        height: 6.25rem; 
+    }
+    .box label{
+        display: flex;
+        margin-top: -1rem;
+        text-align: center;
     }
 </style>
 {% endblock extrastyle %}
@@ -77,8 +78,8 @@
                                 {% if image.featured %}
                                     <span class="featured"><i>Featured Image</i></span>
                                 {% endif %}
-                                <br><img id="img" src="{{ image.url }}" style="height: 6.25rem; margin-top: .625rem; margin-bottom: .75rem;"/><br>
-                                <label for="img">{{ image.name }}</label>
+                                <br><img src="{{ image.url }}"/><br>
+                                <label>{{ image.name }}</label>
                             </div>
                         </a>
                     {% endfor %}
@@ -91,12 +92,12 @@
                         {% else %}
                             <a href="{% url 'creatEImage' image.image_id  %}">
                         {% endif %}
-                                <div style="display: block; margin-top: .625rem; margin-bottom: .75rem;">
+                                <div style="display: block; margin-top: .3rem; margin-bottom: .3rem;">
 
                                     {% if image.featured %}
                                         <span class="featured"><i>Featured Image</i></span><br>
                                     {% endif %}
-                                    <img src="{{ image.url }}" style="width: 9.375rem"/><br>
+                                    <img src="{{ image.url }}"/><br>
                                     <label>{{ image.name }}</label>
                                 </div>
                             </a>
