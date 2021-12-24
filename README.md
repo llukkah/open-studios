@@ -24,8 +24,10 @@
 ---
 
 <details>
-  <summary>Installation/Requirements</summary>
+  <summary>Installation/Requirements</summary><br>
+  
 Open Studios requires [Python](https://www.python.org/) v3.9+  and [Django](https://www.djangoproject.com/) to run.
+  
 ***
 
 ### To run Open Studios-
