@@ -12,6 +12,7 @@
         }
         .box {
             display: flex;
+            float: left;
             flex-wrap: wrap;
             flex-direction: row;
             margin-left: auto;
@@ -19,55 +20,55 @@
         }
         .comment-box {
             display: grid;
-            grid-template-columns: repeat(auto-fill,minmax(10rem, 1fr));
+            grid-template-columns: repeat(auto-fill,minmax(25rem, 1fr));
         }
     </style>
 {% endblock extrastyle %}
 
 {% block content %}
-<h1 style="font-size: 2.5rem;">{{ exhibit.exhibit_name }}</h1>
-    <p>{{ exhibit.description }}</p>
-    <br>
-    <div class="box">
-        {% for image in images %}
-            <div style="display: block; margin-right: auto; margin-left: auto;  padding: 6rem;">
-                <a href="{% url 'image' image.name %}">
-                    <img src="{{ image.url }}" height="300" />
-                </a>    
-                <br>
-                <h6 style="color: #ffffff; font-size: .875rem; margin-top: .5rem; text-decoration: none;">{{ image.name }}</h6>
-            </div>
-        {% endfor %}
-    </div>
-    <br>
-
-
-<h2 style="color: #888888; font-size: 2rem">Artist: {{ exhibit.artist_name }}</h2>
-    <p>{{ exhibit.bio }}</p>
-    <hr>
-    <h2 style="color: #ffffff;">Share Your Comments:</h2>
-<div class="box">
-    <form action="{% url 'featured' %}" method="POST">
-        {% csrf_token %}
-        <div style="display: block;">
-            <label>{{ form.comment.name|title }}</label><br>
-            <span>{{ form.comment.as_widget }}</span><br>
-            <label>{{ form.author.name|title }}</label><br>
-            <span>{{ form.author.as_widget }}</span>
-            <input type="submit" value="Submit" />
-        </div>
-    </form>
-    <hr style="margin-left: 5rem; margin-right: 1.25rem;">
-    <div class="comment-box">
-        <div style="display: inline-flex;">
-            {% for comment in comments %}
-                <div style="display: block; word-wrap: normal;">
-                    <ul>
-                        <li style="color: #ffffff; text-decoration: none; font-size: 1.25rem;">{{ comment.comment }}<br>{{ comment.author }}</li>
-                    </ul>
+    <h1 style="font-size: 2.5rem;">{{ exhibit.exhibit_name }}</h1>
+        <p>{{ exhibit.description }}</p>
+        <br>
+        <div class="box">
+            {% for image in images %}
+                <div style="display: block; margin-right: auto; margin-left: auto;  padding: 6rem;">
+                    <a href="{% url 'image' image.name %}">
+                        <img src="{{ image.url }}" height="300" />
+                    </a>    
+                    <br>
+                    <h6 style="color: #ffffff; font-size: .875rem; margin-top: .5rem; text-decoration: none;">{{ image.name }}</h6>
                 </div>
             {% endfor %}
         </div>
+        <br>
+
+
+    <h2 style="color: #888888; font-size: 2rem">Artist: {{ exhibit.artist_name }}</h2>
+        <p>{{ exhibit.bio }}</p>
+        <hr>
+        <h2 style="color: #ffffff;">Share Your Comments:</h2>
+    <div class="box">
+        <form action="{% url 'featured' %}" method="POST">
+            {% csrf_token %}
+            <div style="display: block;">
+                <label>{{ form.comment.name|title }}</label><br>
+                <span>{{ form.comment.as_widget }}</span><br>
+                <label>{{ form.author.name|title }}</label><br>
+                <span>{{ form.author.as_widget }}</span>
+                <input type="submit" value="Submit" />
+            </div>
+        </form>
+        <hr style="margin-left: 5rem; margin-right: 1.25rem;">
+        <div class="comment-box">
+            <div style="display: inline-flex;">
+                {% for comment in comments %}
+                    <div style="display: block; word-wrap: normal;">
+                        <ul>
+                            <aside style="color: #ffffff; text-decoration: none; font-size: 1.25rem;">{{ comment.comment }}<br>{{ comment.author }}</aside>
+                        </ul>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
     </div>
-</div>
 {% endblock %}

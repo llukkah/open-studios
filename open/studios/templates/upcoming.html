@@ -5,9 +5,10 @@
         display:flex;
     }
     .column {
+        display: flex;
         padding: .063rem;
         margin-right: auto;
-        margin-left: .3%;
+        margin-left: auto;
     }
     a.card:link {
         margin-left: 2%;
@@ -34,7 +35,7 @@
         color: #87cefa !important;
     }
     .column img{
-        height: 20rem;
+        height: 18rem;
         width: auto;
         margin-left: auto;
         margin-right: auto;
@@ -43,7 +44,7 @@
         object-fit: scale-down;
     }
     .title{
-        margin: 0;
+        margin: -1.6rem;
         position: absolute;
     }
     .tags{
@@ -83,15 +84,15 @@
         {% for exhibit in exhibits %}
         <div style="display: flex;">
             <a class="card" href="{% url 'edit'  exhibit.exhibit_id %}">
-                <div style="margin-left: 5rem;">
+                <div style="margin-left: 1.5rem;">
                     <p>{{ exhibit.description }}</p>
                     <div class="row">
                         {% for image in images %}
                             {% if image.collection == exhibit.exhibit_id %}
-                            <div class="column">
-                                    <label for="img" class="title">{{ image.name }}</label><br>
-                                    <img src="{{ image.url }}" alt="image missing"/>
-                            </div>
+                                <div class="column">
+                                        <label class="title">{{ image.name }}</label><br><br>
+                                        <img src="{{ image.url }}" alt="image missing"/>
+                                </div>
                             {% endif %}
                         {% endfor %}
                     </div>
