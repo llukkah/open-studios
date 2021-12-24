@@ -264,7 +264,6 @@ def create_edit_image(request, image_id):
         
         # The code checks if the form has been validated or not.
         if form.is_valid():
-            
             if 'save' in request.POST:
                 # If it has, then some data from the form are cleaned up and saved in an instance of Image called image.
                 name = form.cleaned_data['name']
