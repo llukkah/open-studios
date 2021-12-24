@@ -521,7 +521,8 @@ def edit_exhibit(request, exhibit_id):
                 # Then iterate over the images checking for the featured attribute.  Any Image instances with the featured attribute enabled, the number of current featured images is checked to ensure no more than four are assigned this attribute.
                 for image in art:
                     if image.featured:
-                        if len(exhibit.pics.filter('featured')) <= 3:
+                        cnt = exhibit.pics.filter('featured').count()
+                        if cnt <= 3:
                             exhibit.pics.add(image)
                         else:
                             # If there are already four featured images, change the featured attribute and add the image to the exhibit.
