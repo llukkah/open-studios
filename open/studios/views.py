@@ -272,7 +272,7 @@ def create_edit_image(request, image_id):
                 featured = form.cleaned_data['featured']
                 
                 image = Image.objects.filter(image_id = image_id)
-                image.objects.update(name = name, url = url, featured = featured)
+                image.update(name = name, url = url, featured = featured)
                 
                 
                 path = ''

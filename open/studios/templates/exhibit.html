@@ -42,33 +42,22 @@
     {% else %}   
         <form action="{% url 'edit' exhibit.exhibit_id %}" method="POST">
     {% endif %} 
-        <!-- <div class="column" style="size: 100%">
-            
-                <p>
-                    <div style="display: block; width: auto; padding-left: 4px; padding-right: 4px;">
-                        <label style="position: relative; padding-left: 4px; padding-right: 5px;">
-                            Artist Name:
-                        </label>
-                        <span>
-                            {{ form.artist_name.as_widget }}
-                        </span>
-                    </div>
-                </p>
-                <p>
-                    <div style="display: inline-block; width: auto; padding-left: 4px; padding-right: 4px;">
-                        <label for="form.email.as_widget" style="padding-left: 4px; padding-right: 5px;">{{ form.email.name|title }}:</label>{{ form.email.as_widget }}
-                    </div>
-                </p>
-        </div>
-        <br>
-        <div style="display: inline-block">
-            <label for="form.email.as_widget" style="padding-left: 4px; padding-right: 8px;">{{ form.website.name|title }}:</label>
-            {{ form.website.as_widget }}
-        </div> -->
+        
         <div class="row">
             {% csrf_token %} 
             <div style="display: inline-block; width: auto;">
                 {{ form.as_p }}
+                {% if action == 'create' %}
+                    <a href="{% url 'createImage' %}"><input type="button"  value="Add Image" /></a>
+                {% else %}
+                    <a href="{% url 'addImage' %}"><input type="button"  value="Add Image" /></a>
+                {% endif %}
+                
+                {% if action == 'create' %}
+                    <input type="submit" name="create" value="Create" />
+                {% else %}
+                    <input type="submit" name="save" value="Save" /><input type="submit" name="delete" value="Delete" />
+                {% endif %}
             </div>
             <div class="box">
                 {% if action == "edit" %}
@@ -101,17 +90,6 @@
                 {% endif %}
             </div>
         </div>
-            {% if action == 'create' %}
-                <a href="{% url 'createImage' %}"><input type="button"  value="Add Image" /></a>
-            {% else %}
-                <a href="{% url 'addImage' %}"><input type="button"  value="Add Image" /></a>
-            {% endif %}
-            
-            {% if action == 'create' %}
-                <input type="submit" name="create" value="Create" />
-            {% else %}
-                <input type="submit" name="save" value="Save" /><input type="submit" name="delete" value="Delete" />
-            {% endif %}
-        </form>
+    </form>
     
 {% endblock %}
