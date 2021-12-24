@@ -1,12 +1,12 @@
 # <h1><div align="center">Open Studios</div></h1>
 
   
-***
+<br>
 
  ## <div align="center">Open Studios has gone digital!</div>
 
 
-  - The concept of Open Studios came from a yearly event in New York where artists of all kinds opened their personal studios for all to enjoy, experience and witness.
+- The concept of Open Studios came from a yearly event in New York where artists of all kinds opened their personal studios for all to enjoy, experience and witness.
 
 - With this sense of community, comradery, and support there was no need to navigate politics and contracts of a gallery or museum for an artist to be showcased.
 
@@ -16,18 +16,18 @@
 
 ---
 
+
 ## <div align="center">Our Development Team</div>
 
-### <div align="center">  <table><tr><th>Llukkah Delos Reyes</th><th>Lee Harvey</th><th>Chris Linton </th><th>Jason Rolle </th></tr><tr><td align="center">[@llukkah](https://www.github.com/llukkah) </td><td align="center">[@VirtDev337](https://github.com/VirtDev337) <td align="center">[@Kwyjib0](https://github.com/Kwyjib0)</td><td align="center">[@JasonRolle1990](https://github.com/JasonRolle1990)</td></tr></table></div>
----
-[User Guide](Open_Studios_User_Guide.pdf)
+### <div align="center">  <table><tr><th>Llukkah Delos Reyes</th><th>Lee Harvey</th><th>Chris Linton </th><th>Jason Rolle </th></tr><tr><td align="center">[@llukkah](https://www.github.com/llukkah) </td><td align="center">[@VirtDev337](https://github.com/VirtDev337) <td align="center">[@Kwyjib0](https://github.com/Kwyjib0)</td><td align="center">[@JasonRolle1990](https://github.com/JasonRolle1990)</td></tr></table></div><br>
 ---
 
-<details>
-  <summary>Installation/Requirements</summary><br>
-  
-Open Studios requires [Python](https://www.python.org/) v3.9+  and [Django](https://www.djangoproject.com/) to run.
-  
+<div align="center"><h2><a href="Open_Studios_User_Guide.pdf">User Guide</a></h2></div>
+
+
+
+## <div align="center">Installation/Requirements</div>
+#### <div align="center">Open Studios requires [Python](https://www.python.org/) v3.9+ and [Django](https://www.djangoproject.com/) to run.</div>
 ***
 
 ### To run Open Studios-
@@ -83,20 +83,23 @@ or
 or
 <name-of-your-directory>\Scripts\deactivate.ps1
 ```
-</details>
   
 ***
-
+<br>
 ## <div align="center">MVP</div>
 
-  
-- Full CRUD capabilities:
---  create your own art exhibit
---  navigate between featured and upcoming art exhibits
---  update and edit an art exhibit and images of related works
--- delete art exhibits and related images
-  
+<ul>
+<li>Full CRUD capabilities:</li>
+  <ul>
+    <li>create your own art exhibit</li>
+    <li>navigate between featured and upcoming art exhibits</li>
+    <li>update and edit an art exhibit and images of related works</li>
+    <li>delete art exhibits and related images</li>
+  </ul>
+</ul>
+
 ---
+<br>  
   
 ## <div align="center"> WireFrames </div>
 
