@@ -30,7 +30,7 @@
 #### <div align="center">Open Studios requires [Python](https://www.python.org/) v3.9+ and [Django](https://www.djangoproject.com/) to run.</div>
 ***
 
-### To run Open Studios-
+### To run Open Studios:
 ### 1. Create a directory where you will run a virtual environment. The files for running the virtual environment will be saved in this directory:
 ```
 mkdir <name-of-your-directory>
@@ -45,12 +45,11 @@ python3 -m venv <name-of-your-virtual-environment>
 ```
 ### 3. Run the virtual environment:
 ##### On Windows:
-Windows Powershell users:
+
 ```
 <name-of-your-directory>\Scripts\activate.bat  
 or  
 <name-of-your-directory>\Scripts\activate.ps1
-
 ```
 ##### On Unix, Linux or MacOS:
 ```
