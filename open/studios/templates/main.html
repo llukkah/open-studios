@@ -70,7 +70,11 @@
 {% block content %}
     <div>
         <h1>Open Studios</h1>
-        <br><br>
+        <br>
+        {% for message in messages %}
+            <center style="color: rgb(0, 183, 255); font-size: 2rem;">[ {{ message }} ]</center>
+        {% endfor %}
+        <br>
         
         <div style="display: flex;">
             <a href="{% url 'featured' %}">

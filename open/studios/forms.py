@@ -1,6 +1,8 @@
 from django import forms
 from django.forms import formset_factory
 from django.forms.widgets import HiddenInput
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 from .models import *
 
 
@@ -63,3 +65,9 @@ class ExhibitForm(forms.Form):
     tags = forms.MultipleChoiceField(choices = choices, required = False)
     
     description = forms.CharField(max_length = 500, widget = forms.Textarea, required=True)
+
+# Customize inherited default Django user creation form 
+class CreateUserForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password1', 'password2']

@@ -81,6 +81,10 @@
 {% block content %}
     <div>
         <h1 style="text-align: center; font-size: 2.5rem; margin-bottom: 3.5rem;">Upcoming Exhibits</h1>
+        {% for message in messages %}
+            <center style= "text-align: center; color: rgb(0, 195, 255); font-size: 3.5rem;">[ {{ message }} ]</center>
+            <br>
+        {% endfor %}
         {% for exhibit in exhibits %}
         <div style="display: flex;">
             <a class="card" href="{% url 'edit'  exhibit.exhibit_id %}">

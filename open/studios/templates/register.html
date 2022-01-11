@@ -1,0 +1,21 @@
+{% extends 'header.html' %}
+{% block extrastyle %}
+{% endblock extrastyle %}
+
+{% block content %}
+<h1>Register</h1>
+<form method="POST" action="">
+    {% csrf_token %}
+    <p>{{ form.username.label }}
+    {{ form.username }}</p>
+    <p>{{ form.email.label }}
+    {{ form.email }}</p>
+    <p>{{ form.password1.label }}
+    {{ form.password1 }}</p>
+    <p>{{ form.password2.label }}
+    {{ form.password2 }}</p>
+    <input type="submit" name="Create User">
+    {{ form.errors }}
+</form>
+<p>Already have an account: <a href={% url 'login' %}>Login</a></p>
+{% endblock %}
