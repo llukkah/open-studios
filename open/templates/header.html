@@ -21,10 +21,13 @@
                 <a href="{% url 'upcoming' %}">Upcoming</a>
             </div>
         </div>
-        
-    </nav>
+    </nav>    
 </head>
 <body class="hdr">
+    {% if request.user.id != None %}
+        <span style="color:#0000ff ;">Hello, {{ request.user }} </span>        
+        <a style="color:#0000ff ;" href="{% url 'logout' %}">Logout</a>
+    {% endif %}
     {% block content %}
     {% endblock %}
 </body>

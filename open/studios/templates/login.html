@@ -1,0 +1,17 @@
+{% extends 'header.html' %}
+{% block extrastyle %}
+{% endblock extrastyle %}
+
+{% block content %}
+<h1>Login</h1>
+<form method="POST" action="">
+    {% csrf_token %}
+    <p><input type="text" name="username" placeholder="-Username-"></p>
+    <p><input type="text" name="password" placeholder="-Password-"></p>
+    <p><input type="submit" name="Login"></p>
+</form>
+{% for message in messages %}
+    <p>{{ message }}</p>
+{% endfor %}
+<p>Don't have an account: <a href={% url 'register' %}>Sign Up</a></p>
+{% endblock %}

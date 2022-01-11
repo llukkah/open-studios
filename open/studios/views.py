@@ -1,10 +1,14 @@
 from django.db.models.fields import NullBooleanField
 from django.http import response
 from django.http.response import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.conf import settings
 from django.forms import formset_factory
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from .models import *
 from .forms import *
 import datetime
@@ -347,7 +351,8 @@ def upcoming_create_image(request):
 
 # --------------------------------------------- Exhibits --------------------------------------------
 
-
+# Require login to create an exhibit
+@login_required(login_url='login')
 # This code is used to create an Exhibit instance.
 def create_exhibit(request):
     action = 'create'
@@ -436,7 +441,8 @@ def create_exhibit(request):
             # Should the form not be valid, returns the user to the create exhibit page with the entered information for editing.
             return render(request, 'exhibit.html', context = {'form' : form, 'tags' : tags, 'images' : images} )
 
-
+# Require login to edit an exhibit
+@login_required(login_url='login')
 # This code is used to edit an Exhibit instance.
 def edit_exhibit(request, exhibit_id):
     # The first line of code defines what type of action this function will perform, to be passed to the exhibit template for defining what is displayed to the user.
@@ -445,35 +451,41 @@ def edit_exhibit(request, exhibit_id):
     # Next it accessed the global variable path that has the dynamic uri for the exhibit being edited.
     global path
     
-    # Then we assign the global variable path with the dynamically created edit exhibit uri.
+    # Then we assign the global variable path with the dynamically created edit exhibit url.
     path = request.get_full_path()
     
     if request.method == 'GET':
         # The code starts by getting the Exhibit with the ID of "exhibit_id" from the database and saving it to a variable called "exhibit".
         exhibit = Exhibit.objects.get(pk = exhibit_id)
-        
-        # The next line iterates through all of the tags in Tag objects associated with this Exhibit instance and appends them to an array called tags.
-        tags = []
-        for tag in exhibit.tags.all():
-            tags.append(tag.tag_id)
-        
-        images = []
-        #Next, the code iterates over Image instances with the exhibit_name set to None. This is to display any images that are not associated with an exhibit.
-        for image in Image.objects.filter(exhibit_name = None).order_by('image_id'):
-            images.append(image)
-        
-        # Next, we create an instance of ExhibitForm using initial parameters that will be passed into render().
-        form = ExhibitForm(initial = {
-            'artist_name' : exhibit.artist_name, 
-            'email' : exhibit.email, 
-            'bio' : exhibit.bio,  
-            'website' : exhibit.website, 
-            'exhibit_name' : exhibit.exhibit_name,
-            'description' : exhibit.description, 
-            'tags' : tags})
-        
-        # Finally, we return a response to the client with our newly created form in HTML format.
-        return render(request, 'exhibit.html', context = {'form' : form, 'exhibit' : exhibit, 'action' : action, 'images' : images})
+        user = request.user.profile
+
+        if user == exhibit.profile:
+            
+            # The next line iterates through all of the tags in Tag objects associated with this Exhibit instance and appends them to an array called tags.
+            tags = []
+            for tag in exhibit.tags.all():
+                tags.append(tag.tag_id)
+            
+            images = []
+            #Next, the code iterates over Image instances with the exhibit_name set to None. This is to display any images that are not associated with an exhibit.
+            for image in Image.objects.filter(exhibit_name = None).order_by('image_id'):
+                images.append(image)
+            
+            # Next, we create an instance of ExhibitForm using initial parameters that will be passed into render().
+            form = ExhibitForm(initial = {
+                'artist_name' : exhibit.artist_name, 
+                'email' : exhibit.email, 
+                'bio' : exhibit.bio,  
+                'website' : exhibit.website, 
+                'exhibit_name' : exhibit.exhibit_name,
+                'description' : exhibit.description, 
+                'tags' : tags})
+            
+            # Finally, we return a response to the client with our newly created form in HTML format.
+            return render(request, 'exhibit.html', context = {'form' : form, 'exhibit' : exhibit, 'action' : action, 'images' : images})
+        else:
+            messages.error(request, 'You are not authorized to edit that exhibit!')
+            return redirect('upcoming')
     
     if request.method == 'POST':
         # The code starts by defining a variable called form, which is the object that is storing data from the exhibit form.
@@ -617,10 +629,56 @@ def reset():
 # ------------------------------------------------- Users -------------------------------------------
 # ===================================================================================================
 
-
 def register(request):
-    pass
+    # Check if user is already logged in and redirect
+    if request.user.is_authenticated:
+        return redirect('home')
+    else:
+        # Defines a variable called form, which creates a form object.
+        form = CreateUserForm()
+        if request.method == 'POST':
+            # Defines a variable called form, which is the object that is storing data from the create user form and passes in POST data.
+            form = CreateUserForm(request.POST)
+            # Validate form
+            if form.is_valid():
+                # Save form to create user               
+                user = form.save()
+                # Get username from form
+                username = form.cleaned_data.get('username')
+                Profile.objects.create(user=user)
+                '''
+                also create new profile
+                '''
+                # Display a flash message
+                messages.success(request, 'Account was created for ' + username)
+                # Redirect to login page after user profile is created
+                return redirect('login')
 
+    return render(request=request, template_name='register.html', context={'form':form})
 
-def login(request):
-    pass
+def login_user(request):
+    # Check if user is already logged in and redirect
+    if request.user.is_authenticated:
+        return redirect('home')
+    else:
+        if request.method == 'POST':
+            # Define variables and assign values from login input fields.
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+            # Authenticate username and password
+            user = authenticate(request, username=username, password=password)
+            # Check if there is an authenticated user
+            if user is not None:
+                # Use Django method to login user
+                login(request, user)
+
+                messages.success(request, 'You are now logged in as ' + username + '. You may now edit any existing exhibits or create a new one.')              
+                return redirect('home')
+            else:
+                messages.info(request, "Username or password is incorrect.")            
+    
+    return render(request=request, template_name='login.html', context={})
+
+def logout_user(request):
+    logout(request)
+    return redirect('login')
