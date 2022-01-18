@@ -4,18 +4,34 @@
 
 {% block content %}
 <h1>Register</h1>
-<form method="POST" action="">
-    {% csrf_token %}
-    <p>{{ form.username.label }}
-    {{ form.username }}</p>
-    <p>{{ form.email.label }}
-    {{ form.email }}</p>
-    <p>{{ form.password1.label }}
-    {{ form.password1 }}</p>
-    <p>{{ form.password2.label }}
-    {{ form.password2 }}</p>
-    <input type="submit" name="Create User">
-    {{ form.errors }}
-</form>
-<p>Already have an account: <a href={% url 'login' %}>Login</a></p>
+<center>
+    <form method="POST" action="">
+        {% csrf_token %}
+        <div>
+            {{ form.username.label }}
+            {{ form.username }}
+        </div>
+        <br>
+        <div style="position: static; display: inline-flex; text-align: center">
+            <label style="margin-right: .5rem">
+                {{ form.email.label }}</label>
+            <span style="margin-right: .5rem; margin-bottom: 1.5rem">    
+                {{ form.email }}
+            </span>
+        </div>
+            <br>
+            <div>
+                {{ form.password1.label }}
+                {{ form.password1 }}
+            </div>
+            <br>
+            <div style="margin-bottom: 1.5rem">
+                {{ form.password2.label }}
+                {{ form.password2 }}
+            </div>
+        <input type="submit" name="create-user" value="Create">
+        {{ form.errors }}
+    </form>
+    <p>Already have an account: <a href={% url 'login' %}>Login</a></p>
+</center>
 {% endblock %}
