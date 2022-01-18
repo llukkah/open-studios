@@ -1,37 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    {% load static %}
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Studios</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
-    {% block extrastyle %}
-    <link rel="icon" href="{% static 'favicon.ico' %}">
-    {% endblock extrastyle %}
-    <nav class="nav">
-        <a class="nav-org" href="{% url 'home' %}">Open Studios</a>
-        <a href="{% url 'about' %}">About</a>
-        <div class="subnav">
-            <button class="subnavbtn">Exhibits<div class="triangle"></div></button>
-            <div class="subnav-content">
-                <a href="{% url 'create' %}">Create</a>
-                <a href="{% url 'featured' %}">Featured</a>
-                <a href="{% url 'upcoming' %}">Upcoming</a>
-            </div>
-        </div>
-    </nav>    
-</head>
-<body class="hdr">
-    {% if request.user.id != None %}
-        <span style="color:#0000ff ;">Hello, {{ request.user }} </span>        
-        <a style="color:#0000ff ;" href="{% url 'logout' %}">Logout</a>
-    {% endif %}
-    {% block content %}
-    {% endblock %}
-</body>
+	<head>
+		{% load static %}
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Studios</title>
+		<link
+			rel="stylesheet"
+			href="{% static 'css/style.css' %}"
+			type="text/css"
+		/>
+		{% block extrastyle %}
+		<link rel="icon" href="{% static favicon %}" />
+		{% endblock extrastyle %}
+		<grid-wrap class="inline">
+			<nav class="nav">
+				<a class="nav-org" href="{% url 'home' %}">Open Studios</a>
+				<div class="subnav">
+					<button class="subnavbtn">
+						Profile
+						<div class="triangle"></div>
+					</button>
+					<div class="subnav-content-user">
+						<a href="{% url 'register' %}">Register</a>
+						<a href="{% url 'login' %}">Login</a>
+						<a href="{% url 'logout' %}">Logout</a>
+					</div>
+				</div>
+				<a href="{% url 'about' %}">About</a>
+				<div class="subnav">
+					<button class="subnavbtn">
+						Exhibits
+						<div class="triangle"></div>
+					</button>
+					<div class="subnav-content-exhibit">
+						<a href="{% url 'create' %}">Create</a>
+						<a href="{% url 'featured' %}">Featured</a>
+						<a href="{% url 'upcoming' %}">Upcoming</a>
+					</div>
+				</div>
+			</nav>
+			{% if request.user.id != None %}
+			<label class="dot"></label>
+			<span class="user">
+				<h3>Hello, {{ request.user }}</h3>
+			</span>
+			{% endif %}
+		</grid-wrap>
+	</head>
+	<body class="hdr">
+		{% block content %} {% endblock %}
+	</body>
 </html>
-
-
-    

@@ -1,5 +1,4 @@
 from django import forms
-from django.forms import formset_factory
 from django.forms.widgets import HiddenInput
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -18,9 +17,6 @@ class ImageForm(forms.Form):
             'url', 
             'featured')
 
-# ImageFormSet = formset_factory(ImageForm, extra = 10, max_num = 20)
-    # upload = forms.ClearableFileInput()
-
 
 class CommentForm(forms.Form):
     comment = forms.CharField(max_length = 500, widget = forms.Textarea, required = False)
@@ -32,8 +28,6 @@ class CommentForm(forms.Form):
         fk_name = 'comments'
         fields = ('comment', 'author')
 
-# CommentFormSet = inlineformset_factory(CommentForm, extra = 1)
-
 
 class TagForm(forms.Form):
     name = forms.CharField(max_length = 255)
@@ -44,8 +38,6 @@ class TagForm(forms.Form):
         fk_name = 'tags'
         fields = ('name')
         min_num = 1
-
-TagFormSet = formset_factory(TagForm, extra = 5)
 
 
 class ExhibitForm(forms.Form):

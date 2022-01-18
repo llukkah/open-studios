@@ -17,7 +17,7 @@ urlpatterns = [
     
     # Image actions
     path('create/image/', views.create_image, name = 'createImage'),
-    path('/image/<int:image_id>/', views.create_edit_image, name = 'creatEImage'),
+    path('image/<int:image_id>/', views.create_edit_image, name = 'creatEImage'),
     path('image/', views.upcoming_create_image, name = 'addImage'),
     
     # User actions on post MVP
