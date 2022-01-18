@@ -1,115 +1,168 @@
 /* Navigation for header.html */
-.nav{
-    /* position: fixed; */
-    border-radius: .313rem;
-    width: fit-content;
-    height: auto;
-    overflow: hidden;
-    background-color: #444;
+.inline {
+	display: flex;
 }
-.nav a{
-    color: #0000ff !important;
-    float: left;
-    text-align: center;
-    font-size: 2rem;
-    padding: .625rem .75rem;
-    text-decoration: none;
+.nav {
+	border-radius: 0.313rem;
+	width: fit-content;
+	height: 3rem;
+	overflow: hidden;
+	background-color: #444;
+	font-weight: bold;
 }
-.nav-org{
-    display: inline-block;
-    color: #0000ff !important;
-    padding-top: 8rem;
-    padding-bottom: 8rem;
-    font-size: 2rem;
-    line-height: inherit;
-    white-space: nowrap;
+.nav a {
+	color: #0000ff !important;
+	float: left;
+	text-align: center;
+	font-size: 2rem;
+	padding: 0.625rem 0.75rem;
+	text-decoration: none;
 }
-.subnav{    
-    float: left;
-    overflow: hidden;
+.nav-org {
+	display: inline-block;
+	color: #0000ff !important;
+	padding-top: 6rem;
+	padding-bottom: 6rem;
+	font-size: 2rem;
+	line-height: inherit;
+	white-space: nowrap;
 }
-.subnavbtn{
-    font-size: 1.31rem !important;
-    border: none;
-    outline: none;
-    color: #0000ff !important;
-    padding: .625rem .5rem;
-    background-color: inherit;
-    font-family: inherit;
-    margin: 0;
-    display: fit-content;
+.user {
+	postition: relative;
+	color: #0000ff !important;
+	margin-top: -0.5rem;
+	right: auto;
+	line-height: inherit;
+	white-space: nowrap;
 }
-.nav a:hover, .subnav:hover .subnavbtn{
-    background-color: #111;
-    border-radius: .313rem;
-    color: #0077ff;
+.subnav {
+	float: left;
+	overflow: hidden;
 }
-.subnav-content{
-    display: none;
-    position: absolute;
-    border-style: solid;
-    border-color: #111 !important;
-    border-radius: .938rem;
-    top: 3.875rem !important;
-    left: 3.75rem;
-    width: auto;
-    z-index: 1;
+.subnavbtn {
+	font-size: 1.31rem !important;
+	border: none;
+	outline: none;
+	color: #0000ff !important;
+	padding: 0.6rem 0.3625rem;
+	background-color: inherit;
+	font-family: inherit;
+	font-weight: bold;
+	margin: 0;
+	display: fit-content;
 }
-.subnav-content a{
-    border-radius: .313rem;
-    float: left;
-    margin: 0rem;
-    color: #0000ff;
+.nav a:hover,
+.subnav:hover .subnavbtn {
+	background-color: #111;
+	border-radius: 0.313rem;
+	color: #0077ff;
 }
-.subnav-content a:focus, .subnav-content a:hover{
-    background-color: #111;
-    color: #0000ff;
+.subnav-content-user {
+	display: none;
+	position: absolute;
+	border-style: solid;
+	border-color: #111 !important;
+	border-radius: 0.938rem;
+	top: 3.8rem !important;
+	left: 3.875rem;
+	width: auto;
+	z-index: 1;
 }
-.subnav:hover .subnav-content{
-    display: block;
-    border-radius: .313rem;
-    background-color: #444;
-    color: #0077ff;
-    z-index: 1;
+.subnav-content-exhibit {
+	display: none;
+	position: absolute;
+	border-style: solid;
+	border-color: #111 !important;
+	border-radius: 0.938rem;
+	top: 3.8rem !important;
+	left: 16rem;
+	width: auto;
+	z-index: 1;
 }
-.nav-org:focus,.nav-org:hover{
-    color: #0077ff;
+.subnav-content-user a {
+	border-radius: 0.313rem;
+	float: left;
+	color: #0000ff;
+}
+.subnav-content-exhibit a {
+	border-radius: 0.313rem;
+	float: left;
+	color: #0000ff;
+}
+.subnav-content-user a:focus,
+.subnav-content-user a:hover {
+	background-color: #111;
+	color: #0000ff;
+}
+.subnav-content-exhibit a:focus,
+.subnav-content-exhibit a:hover {
+	background-color: #111;
+	color: #0000ff;
+}
+.subnav:hover .subnav-content-user {
+	display: block;
+	border-radius: 0.313rem;
+	background-color: #444;
+	color: #0077ff;
+	z-index: 1;
+}
+.subnav:hover .subnav-content-exhibit {
+	display: block;
+	border-radius: 0.313rem;
+	background-color: #444;
+	color: #0077ff;
+	z-index: 1;
+}
+.nav-org:focus,
+.nav-org:hover {
+	color: #0077ff;
 }
 
-.hdr{
-    background-color: #000000 !important;
-    min-height: 100%;
-    min-width: 100%;
-    padding: 0.3em 0.3em 0.3em;
+.hdr {
+	background-color: #000000 !important;
+	min-height: 100%;
+	min-width: 100%;
+	padding: 0.3em 0.3em 0.3em;
 }
-.hdr p{
-    color: #808080;
-    font-size: 1.375rem;
-    font-weight: bold;
-    font-family:Arial, Helvetica, sans-serif;
+.hdr p {
+	color: #808080;
+	font-size: 1.375rem;
+	font-weight: bold;
+	font-family: Arial, Helvetica, sans-serif;
 }
-.hdr a, .hdr label, .hdr form{
-    color: #808080;
-    font-size: 1.375rem;
-    font-family:Arial, Helvetica, sans-serif;
+.hdr a,
+.hdr label,
+.hdr form {
+	color: #808080;
+	font-size: 1.375rem;
+	font-family: Arial, Helvetica, sans-serif;
 }
-.hdr h1{
-    text-align: center;
-    font-weight: bolder;
-    margin: 0;
-    color: #0000ff;
-    text-align: center; 
-    font-size: 2.5rem; 
-    margin-bottom: .938rem;
+.hdr h1 {
+	position: static;
+	text-align: center;
+	font-weight: bolder;
+	margin: 0;
+	color: #0000ff;
+	text-align: center;
+	font-size: 2.5rem;
+	margin-bottom: 0.938rem;
 }
-/* from stack overflow: https://stackoverflow.com/questions/29836988/how-do-i-add-a-caret-down-wards-using-css-next-to-link-anchor-tag */
 .triangle {
-    width: 0; 
-    height: 0; 
-    border-left: .625rem solid transparent;
-    border-right: .625rem solid transparent;
-    border-top: .625rem solid #0000ff;
-    margin-top: .625rem;
-    margin-left: .2rem;
-    float:right;
+	width: 0;
+	height: 0;
+	border-left: 0.625rem solid transparent;
+	border-right: 0.625rem solid transparent;
+	border-top: 0.625rem solid #0000ff;
+	margin-top: 0.625rem;
+	margin-left: 0.2rem;
+	float: right;
+}
+.dot {
+	margin: 1rem 0.7rem;
+	height: 15px;
+	width: 15px;
+	background-color: #0000ff;
+	border-radius: 50%;
+	display: inline-block;
+	float: left;
 }
