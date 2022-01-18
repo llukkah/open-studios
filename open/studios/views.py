@@ -13,6 +13,7 @@ from .models import *
 from .forms import *
 import datetime
 
+favicon = '/static/media/images/favicon.ico'
 
 
 
@@ -423,10 +424,12 @@ def create_exhibit(request):
             exhibit[0].tags.set(tags)
             
             # Then iterate over the images checking for the featured attribute.  Any Image instances with the featured attribute enabled, the number of current featured images is checked to ensure no more than four are assigned this attribute.
+            count = 0
             for image in images:
                 if image.featured:
-                    if len(exhibit[0].pics.filter('featured')) <= 3:
+                    if count <= 3:
                         exhibit[0].pics.add(image)
+                        count += 1
                     else:
                         # If there are already four featured images, change the featured attribute and add the image to the exhibit.
                         image.featured = False
@@ -442,7 +445,7 @@ def create_exhibit(request):
             return render(request, 'exhibit.html', context = {'form' : form, 'tags' : tags, 'images' : images} )
 
 # Require login to edit an exhibit
-@login_required(login_url='login')
+@login_required(login_url = 'login')
 # This code is used to edit an Exhibit instance.
 def edit_exhibit(request, exhibit_id):
     # The first line of code defines what type of action this function will perform, to be passed to the exhibit template for defining what is displayed to the user.
@@ -599,10 +602,10 @@ def get_featured():
 # The code is a function that compiles the next featured Exhibit object.
 def coming_exhibit():
     # The code starts by checking if there are any exhibits that have been featured and revealed.
-    if len(Exhibit.objects.filter(featured=False, revealed=False)) > 0:
+    if len(Exhibit.objects.filter(featured = False, revealed = False)) > 0:
         
         # If so, the first exhibit not featured or revealed is selected and returned.
-        next_exhibit = Exhibit.objects.filter(featured=False, revealed=False).first()
+        next_exhibit = Exhibit.objects.filter(featured = False, revealed = False).first()
     else:
         
         # Otherwise, it returns an empty string.
@@ -636,6 +639,7 @@ def register(request):
     else:
         # Defines a variable called form, which creates a form object.
         form = CreateUserForm()
+        
         if request.method == 'POST':
             # Defines a variable called form, which is the object that is storing data from the create user form and passes in POST data.
             form = CreateUserForm(request.POST)
@@ -643,12 +647,14 @@ def register(request):
             if form.is_valid():
                 # Save form to create user               
                 user = form.save()
+                
                 # Get username from form
                 username = form.cleaned_data.get('username')
+                
+                # also create new profile
                 Profile.objects.create(user=user)
-                '''
-                also create new profile
-                '''
+                
+                
                 # Display a flash message
                 messages.success(request, 'Account was created for ' + username)
                 # Redirect to login page after user profile is created
@@ -681,4 +687,4 @@ def login_user(request):
 
 def logout_user(request):
     logout(request)
-    return redirect('login')
+    return redirect('home')

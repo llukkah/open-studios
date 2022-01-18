@@ -14,7 +14,7 @@ class Tag(models.Model):
         return self.name
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, null=True, on_delete = models.CASCADE)
 
     class Meta:
         verbose_name_plural = 'Profiles'
