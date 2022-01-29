@@ -57,16 +57,15 @@ class Exhibit(models.Model):
 
 class Image(models.Model):
     image_id = models.AutoField(primary_key = True)
-    name = models.CharField(max_length = 255)
-    url = models.URLField(max_length = 200)
+    url = models.URLField(max_length = 200, null = True, blank = True)
     featured = models.BooleanField(default = False)
+    name = models.CharField(max_length = 255)
+    # File Upload
+    upload = models.ImageField(upload_to = "images/", blank = True, null = True, max_length=255)
     
     # Linked class
     exhibit_name = models.ForeignKey(Exhibit, related_name = 'pics', null = True, on_delete = models.DO_NOTHING)
     
-    # File Upload
-    # upload = models.ImageField(upload_to = "upload/", blank = True, max_length=255)
-    # description = models.CharField()
     
     class Meta:
         verbose_name_plural = 'Images'
@@ -89,10 +88,3 @@ class Comment(models.Model):
     
     def __str__(self):
         return self.comment
-
-
-#*****Potential Post MVP*****
-
-# class User(models.Model):
-
-# class Security(models.Model):
