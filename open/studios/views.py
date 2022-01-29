@@ -215,15 +215,15 @@ def create_image(request):
     if request.method == 'POST':
         # The code starts by defining a variable called form, which is the object that is storing data from the image form.
         form = ImageForm(request.POST)
-        if form.is_valid():
-            
+        if form.is_valid():  
             # Next it assigns the cleaned data to variables that match the attributes in a Image object.
             name = form.cleaned_data['name']
             url = form.cleaned_data['url']
+            upload = form.cleaned_data['upload']
             featured = form.cleaned_data['featured']
             
             # Then it creates a new Image instance with its own set of fields.
-            Image.objects.create(name = name, url = url, featured = featured)
+            Image.objects.create(name = name, url = url, upload = upload, featured = featured)
             
             # Finally it returns to the create exhibit page.
             return HttpResponseRedirect(reverse(action))
@@ -258,6 +258,7 @@ def create_edit_image(request, image_id):
             'image_id' : image.image_id,
             'name' : image.name, 
             'url' : image.url, 
+            'upload' : image.upload,
             'featured' : image.featured})
         
         # Finally, we return a response to the client with our newly created form in HTML format.
@@ -273,10 +274,11 @@ def create_edit_image(request, image_id):
                 # If it has, then some data from the form are cleaned up and saved in an instance of Image called image.
                 name = form.cleaned_data['name']
                 url = form.cleaned_data['url']
+                upload = form.cleaned_data['upload']
                 featured = form.cleaned_data['featured']
                 
                 image = Image.objects.filter(image_id = image_id)
-                image.update(name = name, url = url, featured = featured)
+                image.update(name = name, url = url, upload = upload, featured = featured)
                 
                 
                 path = ''
@@ -325,14 +327,14 @@ def upcoming_create_image(request):
         # The code starts by defining a variable called form, which is the object that is storing data from the image form.
         form = ImageForm(request.POST)
         if form.is_valid():
-            
             # Next it assigns the cleaned data to variables that match the attributes in a Image object.
             name = form.cleaned_data['name']
             url = form.cleaned_data['url']
+            upload = form.cleaned_data['upload']
             featured = form.cleaned_data['featured']
             
             # Then it creates a new Image instance with its own set of fields.
-            Image.objects.create(name = name, url = url, featured = featured)
+            Image.objects.create(name = name, url = url, upload = upload, featured = featured)
             
             # Next it accessed the global variable path that has the dynamic uri for the exhibit being edited.
             global path
@@ -351,6 +353,7 @@ def upcoming_create_image(request):
 
 
 # --------------------------------------------- Exhibits --------------------------------------------
+
 
 # Require login to create an exhibit
 @login_required(login_url='login')
@@ -443,6 +446,7 @@ def create_exhibit(request):
         else:
             # Should the form not be valid, returns the user to the create exhibit page with the entered information for editing.
             return render(request, 'exhibit.html', context = {'form' : form, 'tags' : tags, 'images' : images} )
+
 
 # Require login to edit an exhibit
 @login_required(login_url = 'login')

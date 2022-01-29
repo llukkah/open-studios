@@ -38,11 +38,11 @@
 {% endblock %}
 {% block content %}
     {% if action == 'create' %}
-        <form action="{% url 'createImage' %}" method="POST">
+        <form action="{% url 'createImage' %}" method="POST" enctype="multipart/form-data">
     {% elif action == 'upcoming' %}   
-        <form action="{% url 'addImage' %}" method="POST">
+        <form action="{% url 'addImage' %}" method="POST" enctype="multipart/form-data">
     {% else %}   
-        <form action="{% url 'creatEImage' image.image_id %}" method="POST">
+        <form action="{% url 'creatEImage' image.image_id %}" method="POST" enctype="multipart/form-data">
     {% endif %}
 
     {% csrf_token %} 
@@ -51,19 +51,20 @@
         <div class="fields">
             <p><label class="name">{{ form.name.name|title }}:</label><span>{{ form.name.as_widget }}</span></p>
             <p class="urlp"><label class="url">{{ form.url.name|title }}:</label><span>{{ form.url.as_widget }}</span></p>
+            <p>or</p>
+            <p class="urlp"><label class="url">{{ form.upload.name|title }}:</label><span>{{ form.upload.as_widget }}</span></p>
             <label class="featured">{{ form.featured.name|title }}: {{ form.featured.as_widget }}</label>
         </div>
         
-        
         {% if action == 'create' %}
-                <input type="submit" name="create" value="Create" />
+                <input type="submit" name="create" value="Create"/>
             </form>
         {% elif action == 'upcoming' %}
-                <input type="submit" name="create" value="Create" />
+                <input type="submit" name="create" value="Create"/>
             </form>
         {% else %}
-                <input type="submit" name="save" value="Save" />
-                <input type="submit" name="delete" value="Delete" />
+                <input type="submit" name="save" value="Save"/>
+                <input type="submit" name="delete" value="Delete"/>
             </form>
         {% endif %}
     </center>

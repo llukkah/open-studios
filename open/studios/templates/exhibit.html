@@ -1,95 +1,107 @@
-{% extends 'header.html' %}
-{% block extrastyle %}
+{% extends 'header.html' %} {% block extrastyle %}
 <style>
-    .row {
-        display:flex;
-    }
-    .featured{
-        color:rgb(0, 0, 0); 
-        padding: .25rem;
-        background-color: #add8e6; 
-        margin: 1.75rem;
-        margin-bottom: .25rem;
-        border-radius: .625rem;
-        font-size: .8rem;
-    }
-    .box {
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: row;
-        margin-left: auto;
-        margin-right: auto;
-    }
-    .box img{
-        display: flex;
-        margin-left: auto;
-        margin-right: auto;
-        margin-bottom: .2rem;
-        margin-top: .3rem;
-        height: 6.25rem; 
-    }
-    .box label{
-        display: flex;
-        margin-top: -1rem;
-        text-align: center;
-    }
+	.row {
+		display: flex;
+	}
+	.featured {
+		color: rgb(0, 0, 0);
+		padding: 0.25rem;
+		background-color: #add8e6;
+		margin: 1.75rem;
+		margin-bottom: 0.25rem;
+		border-radius: 0.625rem;
+		font-size: 0.8rem;
+	}
+	.box {
+		display: flex;
+		flex-wrap: wrap;
+		flex-direction: row;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	.box img {
+		display: flex;
+		margin-left: auto;
+		margin-right: auto;
+		margin-bottom: 0.2rem;
+		margin-top: 0.3rem;
+		height: 6.25rem;
+	}
+	.box label {
+		display: flex;
+		margin-top: -1rem;
+		text-align: center;
+	}
 </style>
-{% endblock extrastyle %}
-{% block content %}
-    <h1>{{ action|title }} Exhibit</h1>
-    {% if action == 'create' %}
-        <form action="{% url 'create' %}" method="POST">
-    {% else %}   
-        <form action="{% url 'edit' exhibit.exhibit_id %}" method="POST">
-    {% endif %} 
-        
-        <div class="row">
-            {% csrf_token %} 
-            <div style="display: inline-block; width: auto;">
-                {{ form.as_p }}
-                {% if action == 'create' %}
-                    <a href="{% url 'createImage' %}"><input type="button"  value="Add Image" /></a>
-                {% else %}
-                    <a href="{% url 'addImage' %}"><input type="button"  value="Add Image" /></a>
-                {% endif %}
-                
-                {% if action == 'create' %}
-                    <input type="submit" name="create" value="Create" />
-                {% else %}
-                    <input type="submit" name="save" value="Save" /><input type="submit" name="delete" value="Delete" />
-                {% endif %}
-            </div>
-            <div class="box">
-                {% if action == "edit" %}
-                    {% for image in exhibit.pics.all %}
-                        <a href="{% url 'creatEImage' image.image_id %}" style="text-decoration: none;">
-                            <div style="display: block;  padding: 5rem;">
-                                {% if image.featured %}
-                                    <span class="featured"><i>Featured Image</i></span>
-                                {% endif %}
-                                <br><img src="{{ image.url }}"/><br>
-                                <label>{{ image.name }}</label>
-                            </div>
-                        </a>
-                    {% endfor %}
-                {% endif %}
+{% endblock extrastyle %} {% block content %}
+<h1>{{ action|title }} Exhibit</h1>
+{% if action == 'create' %}
+<form action="{% url 'create' %}" method="POST">
+	{% else %}
+	<form action="{% url 'edit' exhibit.exhibit_id %}" method="POST">
+		{% endif %}
 
-                {% if images != null %}
-                    {% for image in images %}
-                            <a href="{% url 'creatEImage' image.image_id  %}">
-                                <div style="display: block; margin-top: .3rem; margin-bottom: .3rem;">
+		<div class="row">
+			{% csrf_token %}
+			<div style="display: inline-block; width: auto">
+				{{ form.as_p }} 
+				{% if action == 'create' %}
+					<a href="{% url 'createImage' %}"><input type="button" value="Add Image"/></a>
+				{% else %}
+					<a href="{% url 'addImage' %}"><input type="button" value="Add Image"/></a>
+				{% endif %} 
 
-                                    {% if image.featured %}
-                                        <span class="featured"><i>Featured Image</i></span><br>
-                                    {% endif %}
-                                    <img src="{{ image.url }}"/><br>
-                                    <label>{{ image.name }}</label>
-                                </div>
-                            </a>
-                    {% endfor %}
-                {% endif %}
-            </div>
-        </div>
-    </form>
-    
-{% endblock %}
+				{% if action == 'create' %}
+					<input type="submit" name="create" value="Create"/>
+				{% else %}
+					<input type="submit" name="save" value="Save"/><input type="submit" name="delete" value="Delete"/>
+				{% endif %}
+			</div>
+			<div class="box">
+				{% if action == "edit" %} 
+					{% for image in exhibit.pics.all %}
+						<a href="{% url 'creatEImage' image.image_id %}" style="text-decoration: none">
+							<div style="display: block; padding: 5rem">
+								{% if image.featured %}
+									<span class="featured">
+										<i>Featured Image</i>
+									</span>
+								{% endif %}
+								{% if image.url %}
+									<img src="{{ image.url }}"/><br/>
+								{% else %}
+									<img src="media/{{ image.upload }}"/><br/>
+								{% endif %}
+								<label>{{ image.name }}</label>
+							</div>
+						</a>
+					{% endfor %} 
+				{% endif %} 
+				
+				{% if images != null %} 
+					{% for image in images %}
+						<a href="{% url 'creatEImage' image.image_id  %}">
+							<div style=" display: block;
+									margin-top: 0.3rem;
+									margin-bottom: 0.3rem;">
+								{% if image.featured %}
+									<span class="featured">
+										<i>Featured Image</i>
+									</span><br/>
+								{% endif %}
+								{% if image.url %}
+									<img src="{{ image.url }}"/><br/>
+								{% else %}
+									<img src="media/{{ image.upload }}"/><br/>
+								{% endif %}
+								<label>{{ image.name }}</label>
+							</div>
+						</a>
+					{% endfor %} 
+				{% endif %}
+			</div>
+		</div>
+	</form>
+
+	{% endblock %}
+</form>
