@@ -1,8 +1,10 @@
-DateTime==4.3
+asgiref==3.5.2
 dbus-python==1.2.16
-Django==3.2.8
-django-jquery==3.1.0
-html5lib==1.0.1
+Django==4.0.6
 httplib2==0.14.0
-Pillow==7.0.0
+Pillow==9.2.0
+pytz==2022.1
+six==1.16.0
 sqlparse==0.4.2
+webencodings==0.5.1
+zope.interface==5.4.0
